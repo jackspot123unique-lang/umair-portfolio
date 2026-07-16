@@ -1,0 +1,671 @@
+{
+  "profilePic": null,
+  "logoPic": null,
+  "hero": {
+    "eyebrowName": "Umair Ahmad",
+    "line1": "Mechanical",
+    "line2": "BIM",
+    "line3": "Engineer",
+    "titles": [
+      {
+        "id": 1,
+        "icon": "🏗️",
+        "color": "blue",
+        "text": "MEP Revit Modeler & Detailer"
+      },
+      {
+        "id": 2,
+        "icon": "🌬️",
+        "color": "teal",
+        "text": "HVAC Ducting Modeler & Detailer"
+      },
+      {
+        "id": 3,
+        "icon": "🔧",
+        "color": "gold",
+        "text": "HVAC Piping Modeler & Detailer"
+      },
+      {
+        "id": 4,
+        "icon": "📐",
+        "color": "blue",
+        "text": "BIM Coordinator · Clash Detection Expert"
+      }
+    ],
+    "desc": "Delivering precision <strong>MEP BIM models</strong>, detailed HVAC ducting & piping layouts for international projects. Based in Pakistan — open to <span class=\"hl\">UAE · KSA · Qatar</span>.",
+    "keywords": [
+      {
+        "text": "Revit MEP",
+        "type": "bim"
+      },
+      {
+        "text": "Navisworks",
+        "type": "bim"
+      },
+      {
+        "text": "HVAC Ducting",
+        "type": "hvac"
+      },
+      {
+        "text": "Piping Systems",
+        "type": "hvac"
+      },
+      {
+        "text": "BIM Coordination",
+        "type": "bim"
+      },
+      {
+        "text": "Clash Detection",
+        "type": "hvac"
+      },
+      {
+        "text": "Shop Drawings",
+        "type": "bim"
+      },
+      {
+        "text": "LOD 300–450",
+        "type": "bim"
+      },
+      {
+        "text": "SolidWorks",
+        "type": "sw"
+      },
+      {
+        "text": "ANSYS",
+        "type": "sim"
+      },
+      {
+        "text": "ABAQUS",
+        "type": "sim"
+      },
+      {
+        "text": "COMSOL",
+        "type": "sim"
+      },
+      {
+        "text": "ISO 19650",
+        "type": "std"
+      },
+      {
+        "text": "AutoCAD",
+        "type": "hvac"
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "Who I Am",
+    "title": "About <em>Umair Ahmad</em>",
+    "desc": "A detail-driven Mechanical BIM Engineer with real international project experience.",
+    "blocks": [
+      {
+        "id": 1,
+        "title": "Professional Profile",
+        "color": "blue",
+        "text": "I am a <strong>Mechanical BIM Engineer</strong> and <strong>MEP Revit Modeler & Detailer</strong> with hands-on experience at <strong>BIMTEQ</strong>."
+      },
+      {
+        "id": 2,
+        "title": "HVAC Ducting & Piping",
+        "color": "teal",
+        "text": "Specialized in <strong>HVAC Ducting Modeling & Detailing</strong> using <strong>Autodesk Revit MEP</strong>."
+      },
+      {
+        "id": 3,
+        "title": "BIM Coordination",
+        "color": "gold",
+        "text": "Using <strong>Autodesk Navisworks</strong>, I perform full multidisciplinary BIM coordination."
+      },
+      {
+        "id": 4,
+        "title": "Simulation & Analysis",
+        "color": "lav",
+        "text": "Skills in <strong>SolidWorks</strong>, <strong>ANSYS</strong>, <strong>ABAQUS</strong>, and <strong>COMSOL</strong>."
+      }
+    ],
+    "capabilities": [
+      {
+        "id": 1,
+        "icon": "🏗️",
+        "bg": "rgba(41,128,185,.12)",
+        "title": "MEP Revit Modeling",
+        "desc": "Full MEP system models to LOD 300–450."
+      },
+      {
+        "id": 2,
+        "icon": "🌬️",
+        "bg": "rgba(26,188,156,.12)",
+        "title": "HVAC Ducting",
+        "desc": "Supply, return, and exhaust duct systems."
+      },
+      {
+        "id": 3,
+        "icon": "🔧",
+        "bg": "rgba(230,126,34,.12)",
+        "title": "Piping Modeling",
+        "desc": "Chilled water, drainage piping systems."
+      },
+      {
+        "id": 4,
+        "icon": "🔍",
+        "bg": "rgba(142,68,173,.12)",
+        "title": "Clash Detection",
+        "desc": "Navisworks-based clash detection."
+      },
+      {
+        "id": 5,
+        "icon": "📐",
+        "bg": "rgba(192,57,43,.12)",
+        "title": "Shop Drawings",
+        "desc": "MEP shop and coordination drawings."
+      }
+    ],
+    "infoPills": [
+      "📍 Peshawar, Pakistan",
+      "🎓 B.Sc. ME — UET Mardan",
+      "🌐 Open: UAE · KSA · Qatar",
+      "🗣️ English · Urdu · Pashto"
+    ]
+  },
+  "cc": {
+    "eyebrow": "Strengths",
+    "title": "Core <em>Competence</em>",
+    "desc": "Key strengths across BIM, MEP, simulation.",
+    "items": [
+      {
+        "id": 1,
+        "icon": "🎯",
+        "title": "Precision Modeling",
+        "desc": "Accurate LOD 400-450 BIM models."
+      },
+      {
+        "id": 2,
+        "icon": "🤝",
+        "title": "Team Coordination",
+        "desc": "Effective multidisciplinary collaboration."
+      },
+      {
+        "id": 3,
+        "icon": "⚡",
+        "title": "Fast Delivery",
+        "desc": "Quick turnaround on shop drawings."
+      },
+      {
+        "id": 4,
+        "icon": "🌍",
+        "title": "International Exposure",
+        "desc": "US healthcare and commercial projects."
+      }
+    ]
+  },
+  "experiences": [
+    {
+      "id": 1,
+      "role": "BIM Engineer",
+      "date": "Aug 2025 – May 2026",
+      "company": "BIMTEQ — Lahore, Pakistan · American Houston HQ (USA)",
+      "bullets": [
+        "Developed <strong>MEP BIM models up to LOD 400–450</strong> in Revit MEP for multi-floor US healthcare and commercial projects — covering HVAC ducting, chilled water, ventilation and plumbing networks.",
+        "Performed <strong>clash detection & BIM coordination</strong> using Navisworks; identified and resolved <strong>100+ interdisciplinary MEP clashes</strong> across mechanical, electrical and plumbing systems.",
+        "Designed and optimized <strong>HVAC ducting and piping layouts</strong> in Revit & AutoCAD, ensuring compliance with project specs and international design standards.",
+        "Prepared detailed <strong>MEP shop drawings and technical documentation</strong> to support fabrication, installation and site execution.",
+        "Collaborated with <strong>multidisciplinary teams</strong> (architectural, structural, MEP) to deliver US client projects on time."
+      ],
+      "tags": [
+        "Revit MEP",
+        "Navisworks",
+        "HVAC Ducting",
+        "Piping Systems",
+        "Clash Detection",
+        "BIM Coordination"
+      ],
+      "files": []
+    }
+  ],
+  "interns": [
+    {
+      "id": 1,
+      "title": "Pakistan Locomotive Factory, Risalpur",
+      "co": "Risalpur · Aug 2023 · 1 Month",
+      "desc": "Hands-on exposure to large-scale <strong>mechanical systems</strong> and locomotive manufacturing operations, observing machining, assembly and maintenance workflows in an industrial setting.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "title": "Aircraft Rebuild Factory — PAC Kamra",
+      "co": "PAC Kamra · Jul–Aug 2024 · 2 Weeks",
+      "desc": "Engineering operations exposure at an aircraft rebuild facility — observed <strong>precision engineering, quality control and overhaul processes</strong> for aerospace components.",
+      "files": []
+    }
+  ],
+  "projectCategories": [
+    {
+      "key": "bim",
+      "name": "BIM/MEP Projects",
+      "color": "#2980b9",
+      "icon": "🔵"
+    },
+    {
+      "key": "sw",
+      "name": "SolidWorks Projects",
+      "color": "#e67e22",
+      "icon": "🟠"
+    },
+    {
+      "key": "sim",
+      "name": "Simulation Projects",
+      "color": "#8e44ad",
+      "icon": "🟣"
+    },
+    {
+      "key": "fyp",
+      "name": "Final Year Design Project",
+      "color": "#f1c40f",
+      "icon": "⭐"
+    }
+  ],
+  "projects": {
+    "bim": [
+      {
+        "id": 1,
+        "num": "BIM-01",
+        "name": "HCA Healthcare – Clearlake Campus",
+        "sub": "6-Floor Healthcare Facility · USA",
+        "desc": "Developed full <strong>MEP BIM models to LOD 400–450</strong> in Revit MEP for a 6-floor US healthcare facility. Modeled and detailed <strong>HVAC ducting, chilled water and ventilation networks, and plumbing systems</strong> across all floors. Performed multidisciplinary <strong>clash detection in Navisworks</strong> and produced coordinated <strong>MEP shop drawings</strong> for fabrication and site execution.",
+        "files": []
+      },
+      {
+        "id": 2,
+        "num": "BIM-02",
+        "name": "Baytown Campus – Borden Street",
+        "sub": "4-Floor Renovation · USA",
+        "desc": "Produced coordinated <strong>3D MEP renovation models</strong> for a 4-floor US campus building. Carried out <strong>clash detection</strong> across mechanical, electrical and plumbing systems and prepared <strong>HVAC, piping and electrical shop drawings</strong> with full BIM coordination to align with existing site conditions.",
+        "files": []
+      },
+      {
+        "id": 3,
+        "num": "BIM-03",
+        "name": "New Caney I.S.D – Elementary School",
+        "sub": "New Build · USA",
+        "desc": "Delivered <strong>HVAC and plumbing Revit modeling</strong> for a new-build US elementary school. Handled <strong>piping population, clash detection and interdisciplinary coordination</strong> strictly per the issued project drawings and international design standards.",
+        "files": []
+      }
+    ],
+    "sw": [
+      {
+        "id": 1,
+        "num": "SW-01",
+        "name": "Steam Engine with Horizontal Beam",
+        "sub": "3D Assembly · Motion Study",
+        "desc": "Built a fully functional <strong>steam engine 3D assembly</strong> in SolidWorks, applying mechanical mates and running a <strong>motion study</strong> to validate the kinematics of the horizontal beam linkage.",
+        "files": []
+      },
+      {
+        "id": 2,
+        "num": "SW-02",
+        "name": "Four-Cylinder Engine Model",
+        "sub": "3D Assembly · Kinematics",
+        "desc": "Modeled a detailed <strong>4-cylinder engine assembly</strong> with crankshaft, pistons and connecting rods, and performed a <strong>motion study</strong> to analyze the reciprocating-to-rotary mechanism.",
+        "files": []
+      },
+      {
+        "id": 3,
+        "num": "SW-03",
+        "name": "6-Cylinder Radial Engine",
+        "sub": "Advanced 3D Assembly",
+        "desc": "Created an advanced <strong>6-cylinder radial engine</strong> assembly in SolidWorks with synchronized piston motion and master-rod kinematics through a full motion study.",
+        "files": []
+      },
+      {
+        "id": 4,
+        "num": "SW-04",
+        "name": "Hybrid Food Dehydrator 3D Model",
+        "sub": "FYDP · Fabrication Model",
+        "desc": "Produced the complete <strong>SolidWorks 3D model</strong> of the Final Year Design Project hybrid food dehydrator, used as the basis for fabrication and assembly.",
+        "files": []
+      },
+      {
+        "id": 5,
+        "num": "SW-05",
+        "name": "FEA on Stirling Engine",
+        "sub": "FEA · Stress Analysis",
+        "desc": "Performed <strong>finite element analysis</strong> on Stirling engine components, evaluating <strong>Von Mises stress</strong> distribution and structural integrity under operating loads.",
+        "files": []
+      },
+      {
+        "id": 6,
+        "num": "SW-06",
+        "name": "Shell & Tube Heat Exchanger",
+        "sub": "Design + CFD Simulation",
+        "desc": "Completed the <strong>full design of a shell & tube heat exchanger</strong> plus <strong>CFD simulation</strong> — generating temperature, velocity and pressure profiles to validate heat-transfer performance.",
+        "files": []
+      }
+    ],
+    "sim": [
+      {
+        "id": 1,
+        "num": "ANSYS-01",
+        "name": "Static Structural Analysis on Beams",
+        "sub": "ANSYS Mechanical",
+        "desc": "Conducted <strong>static structural analysis</strong> on beams in ANSYS, evaluating stress distribution, deflection and factor of safety under applied loading.",
+        "files": []
+      },
+      {
+        "id": 2,
+        "num": "ANSYS-02",
+        "name": "Steady-State Thermal on Plates",
+        "sub": "ANSYS Thermal",
+        "desc": "Performed <strong>steady-state thermal analysis</strong> on plates to study heat distribution and temperature gradients across the geometry.",
+        "files": []
+      },
+      {
+        "id": 3,
+        "num": "ANSYS-03",
+        "name": "Fluid Flow in Pipes & Ducts",
+        "sub": "ANSYS CFX · CFD",
+        "desc": "Ran <strong>CFD flow analysis using ANSYS CFX</strong> for fluid flow through pipes and ducts, examining velocity fields, pressure drop and flow behavior.",
+        "files": []
+      },
+      {
+        "id": 4,
+        "num": "ABAQUS-01",
+        "name": "Bullet Impact Simulation",
+        "sub": "Explicit Dynamics",
+        "desc": "Simulated <strong>high-velocity bullet impact on a metal plate</strong> in Abaqus using <strong>explicit dynamics</strong> — studying stress waves, failure behavior and applying advanced meshing techniques.",
+        "files": []
+      },
+      {
+        "id": 5,
+        "num": "COMSOL-01",
+        "name": "Microscale Droplet Formation",
+        "sub": "Multiphase CFD",
+        "desc": "Modeled <strong>1-second transient oil/water droplet formation</strong> in COMSOL Multiphysics, analyzing pressure, velocity and volume-fraction in a multiphase microscale flow.",
+        "files": []
+      }
+    ],
+    "fyp": [
+      {
+        "id": 1,
+        "num": "FYDP",
+        "name": "Design & Fabrication of Affordable Hybrid Food Dehydrator",
+        "sub": "Solar/DC/AC · IoT · Arduino & ESP8266 · SolidWorks",
+        "desc": "Designed and fabricated a low-cost <strong>hybrid food dehydrator</strong> powered by a combined <strong>Solar / DC / AC system</strong>. Integrated <strong>IoT monitoring via Arduino & ESP8266</strong> and a <strong>servo-controlled heat/shading mechanism</strong> for temperature regulation. Delivered a full <strong>SolidWorks design model</strong> followed by physical fabrication and testing.",
+        "tags": [
+          "Solar Energy",
+          "IoT",
+          "Arduino",
+          "ESP8266",
+          "Servo Control",
+          "SolidWorks"
+        ],
+        "files": []
+      }
+    ]
+  },
+  "galleryCategories": [
+    "BIM / MEP",
+    "HVAC Ducting",
+    "Piping Systems",
+    "SolidWorks",
+    "ANSYS / Simulation",
+    "Final Year Project"
+  ],
+  "gallery": [],
+  "skills": {
+    "eyebrow": "Technical Arsenal",
+    "title": "Skills & <em>Software</em>",
+    "desc": "Full-spectrum mechanical engineering skill set.",
+    "categories": [
+      {
+        "id": 1,
+        "icon": "🏗️",
+        "bg": "rgba(41,128,185,.10)",
+        "name": "BIM & MEP Tools",
+        "skills": [
+          {
+            "text": "Revit MEP",
+            "level": "adv"
+          },
+          {
+            "text": "Navisworks",
+            "level": "adv"
+          },
+          {
+            "text": "AutoCAD",
+            "level": "int"
+          },
+          {
+            "text": "BIM Coordination",
+            "level": "std"
+          },
+          {
+            "text": "Clash Detection",
+            "level": "std"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "icon": "🌬️",
+        "bg": "rgba(26,188,156,.10)",
+        "name": "HVAC & Piping",
+        "skills": [
+          {
+            "text": "HVAC Ducting Design",
+            "level": "adv"
+          },
+          {
+            "text": "Piping Modeling",
+            "level": "adv"
+          },
+          {
+            "text": "Chilled Water Systems",
+            "level": "std"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "icon": "⚙️",
+        "bg": "rgba(230,126,34,.10)",
+        "name": "CAD / Simulation",
+        "skills": [
+          {
+            "text": "SolidWorks",
+            "level": "adv"
+          },
+          {
+            "text": "ANSYS",
+            "level": "adv"
+          },
+          {
+            "text": "ABAQUS",
+            "level": "int"
+          },
+          {
+            "text": "COMSOL",
+            "level": "int"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "icon": "📋",
+        "bg": "rgba(142,68,173,.10)",
+        "name": "Standards & Soft Skills",
+        "skills": [
+          {
+            "text": "ISO 19650",
+            "level": "std"
+          },
+          {
+            "text": "MS Excel",
+            "level": "adv"
+          },
+          {
+            "text": "Team Collaboration",
+            "level": "neu"
+          }
+        ]
+      }
+    ],
+    "bars": [
+      {
+        "name": "Revit MEP",
+        "pct": 95
+      },
+      {
+        "name": "Navisworks",
+        "pct": 92
+      },
+      {
+        "name": "HVAC Ducting",
+        "pct": 90
+      },
+      {
+        "name": "Piping Modeling",
+        "pct": 88
+      },
+      {
+        "name": "SolidWorks",
+        "pct": 90
+      },
+      {
+        "name": "ANSYS",
+        "pct": 85
+      },
+      {
+        "name": "AutoCAD",
+        "pct": 78
+      },
+      {
+        "name": "ABAQUS / COMSOL",
+        "pct": 72
+      }
+    ]
+  },
+  "education": {
+    "eyebrow": "Academic Background",
+    "title": "Education & <em>Certifications</em>",
+    "degrees": [
+      {
+        "id": 1,
+        "deg": "B.Sc. Mechanical Engineering",
+        "sch": "University of Engineering & Technology, Mardan",
+        "year": "2021 – 2025",
+        "gpa": "CGPA: 3.53 / 4.0",
+        "files": []
+      },
+      {
+        "id": 2,
+        "deg": "F.Sc. Pre-Engineering",
+        "sch": "Government College Peshawar",
+        "year": "2018 – 2020",
+        "gpa": "881/1100 (80%)",
+        "files": []
+      },
+      {
+        "id": 3,
+        "deg": "SSC — Science",
+        "sch": "Hira Public School, Peshawar",
+        "year": "2016 – 2018",
+        "gpa": "997/1100 (90.63%)",
+        "files": []
+      }
+    ],
+    "certs": [
+      {
+        "id": 1,
+        "name": "2-Day Workshop — SolidWorks",
+        "year": "Aug 2022",
+        "files": []
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Workshop Technology",
+        "year": "Sep 2022",
+        "files": []
+      },
+      {
+        "id": 3,
+        "name": "4th Intl Workshop — Reverse Engineering",
+        "year": "Dec 2022",
+        "files": []
+      },
+      {
+        "id": 4,
+        "name": "5th Intl Workshop — Reverse Engineering",
+        "year": "Dec 2023",
+        "files": []
+      },
+      {
+        "id": 5,
+        "name": "6th Intl Workshop — Reverse Engineering",
+        "year": "Dec 2024",
+        "files": []
+      },
+      {
+        "id": 6,
+        "name": "Student Volunteer — Orientation, UET Mardan",
+        "year": "Sep 2024",
+        "files": []
+      },
+      {
+        "id": 7,
+        "name": "Student Volunteer — Welcome Party, UET Mardan",
+        "year": "Oct 2024",
+        "files": []
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Get In Touch",
+    "title": "Let's <em>Connect</em>",
+    "desc": "Available for BIM Engineer · MEP Revit Modeler · HVAC roles in GCC.",
+    "gccFlags": "🇦🇪 🇸🇦 🇶🇦",
+    "gcc": "Actively seeking opportunities in UAE · Saudi Arabia · Qatar",
+    "cards": [
+      {
+        "id": 1,
+        "icon": "✉️",
+        "label": "Email",
+        "value": "engr.umair.ahmad111@gmail.com",
+        "link": "mailto:engr.umair.ahmad111@gmail.com"
+      },
+      {
+        "id": 2,
+        "icon": "💬",
+        "label": "WhatsApp",
+        "value": "+92-308-8025062",
+        "link": "https://wa.me/923088025062"
+      },
+      {
+        "id": 3,
+        "icon": "📞",
+        "label": "Phone",
+        "value": "+92-308-8025062",
+        "link": "tel:+923088025062"
+      },
+      {
+        "id": 4,
+        "icon": "🔗",
+        "label": "LinkedIn",
+        "value": "umair-ahmad-03585b366",
+        "link": "https://www.linkedin.com/in/umair-ahmad-03585b366/"
+      },
+      {
+        "id": 5,
+        "icon": "📍",
+        "label": "Location",
+        "value": "Peshawar, KPK, Pakistan",
+        "link": ""
+      },
+      {
+        "id": 6,
+        "icon": "🌐",
+        "label": "Open To",
+        "value": "UAE · Saudi Arabia · Qatar",
+        "link": ""
+      }
+    ]
+  }
+}
