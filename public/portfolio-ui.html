@@ -281,6 +281,10 @@ body.admin-mode .ptab.on .ptab-x{display:inline-flex}
 .fyp-card .pcard-name{font-size:22px}
 .fyp-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .fyp-tag{background:rgba(41,128,185,.10);border:1px solid rgba(41,128,185,.22);color:var(--sky);font-size:11px;padding:5px 13px;border-radius:20px;font-weight:600}
+.pcard-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.pcard-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;background:rgba(41,128,185,.08);border:1px solid rgba(41,128,185,.20);color:var(--sky)}
+.pw-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+.pw-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:4px 9px;border-radius:4px;background:rgba(26,188,156,.08);border:1px solid rgba(26,188,156,.20);color:var(--teal)}
 
 #projectwork{background:var(--bg2)}
 .pw-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:36px}
@@ -296,6 +300,7 @@ body.admin-mode .ptab.on .ptab-x{display:inline-flex}
 .pw-img-wrap:hover::after{transform:translate(-50%,-50%) scale(1)}
 .pw-placeholder{width:100%;height:210px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg),var(--bg2));font-size:44px;color:var(--muted)}
 .pw-item-body{padding:18px 20px;flex:1}
+.pw-item-no-image .pw-item-body{padding:22px 20px}
 .pw-item-cat{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
 .pw-item-title{font-weight:700;font-size:14.5px;color:var(--navy);margin-bottom:7px}
 .pw-item-desc{font-size:12.5px;color:var(--muted);line-height:1.65}
@@ -326,6 +331,9 @@ body.admin-mode .sp-x{display:inline-block}
 .sbar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--sky),var(--teal));width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
 
 #education{background:var(--bg2)}
+#certifications{background:var(--white)}
+.edu-single-layout,.cert-single-layout{max-width:760px}
+.cert-single-layout .cert-item{margin-bottom:12px}
 .edu-layout{display:grid;grid-template-columns:1fr 1fr;gap:44px}
 .edu-col-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
 .edu-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:12px;transition:all var(--tr)}
@@ -440,6 +448,7 @@ footer span{color:var(--sky);font-weight:600}
 .fs-content{max-width:95vw;max-height:85vh;display:flex;align-items:center;justify-content:center;margin-top:30px}
 .fs-content img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 12px 60px rgba(0,0,0,.6)}
 .fs-content iframe{width:90vw;height:85vh;border:none;border-radius:8px;background:#fff}
+.fs-content iframe.fs-public-preview{pointer-events:auto}
 .fs-content .fs-doc{background:#fff;border-radius:14px;padding:50px 40px;text-align:center;color:var(--text);max-width:500px}
 .fs-content .fs-doc-icon{font-size:80px;margin-bottom:20px}
 .fs-content .fs-doc h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:12px}
@@ -493,7 +502,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <li><a href="#about">About</a></li><li><a href="#competence">Competence</a></li>
 <li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li>
 <li><a href="#projectwork">Gallery</a></li><li><a href="#skills">Skills</a></li>
-<li><a href="#education">Education</a></li><li><a href="#contact">Contact</a></li>
+<li><a href="#education">Education</a></li><li><a href="#certifications">Certifications</a></li><li><a href="#contact">Contact</a></li>
 </ul>
 <button class="nav-burger" id="burger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
 </nav>
@@ -501,7 +510,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <a href="#about" onclick="closeMobile()">About</a><a href="#competence" onclick="closeMobile()">Competence</a>
 <a href="#experience" onclick="closeMobile()">Experience</a><a href="#projects" onclick="closeMobile()">Projects</a>
 <a href="#projectwork" onclick="closeMobile()">Gallery</a><a href="#skills" onclick="closeMobile()">Skills</a>
-<a href="#education" onclick="closeMobile()">Education</a><a href="#contact" onclick="closeMobile()">Contact</a>
+<a href="#education" onclick="closeMobile()">Education</a><a href="#certifications" onclick="closeMobile()">Certifications</a><a href="#contact" onclick="closeMobile()">Contact</a>
 </nav>
 
 <section class="hero" id="home">
@@ -580,7 +589,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <button class="sec-remove-cat-btn" onclick="removeGalleryCategoryModal()" style="right:56px">✕ Remove Gallery Cat</button>
 <div class="container">
 <div class="pw-header"><div class="reveal"><div class="sec-eyebrow" id="pwEy">Visual Gallery</div><h2 class="sec-title" id="pwTitleEl">Projects <em>Work</em></h2><div class="sec-divider"></div><p class="sec-desc" id="pwDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('pw')">✎ Edit Header</button></div></div>
-<button class="btn btn-teal reveal" onclick="addGalleryItem()">＋ Add Project Image</button></div>
+<button class="btn btn-teal reveal" onclick="addGalleryItem()">＋ Add Project Work</button></div>
 <div class="pw-grid" id="pwGrid"></div>
 </div></section>
 
@@ -592,9 +601,13 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 </div></section>
 
 <section id="education"><div class="container">
-<div class="sec-head reveal"><div class="sec-eyebrow" id="eduEy">Academic Background</div><h2 class="sec-title" id="eduTitle">Education & <em>Certifications</em></h2><div class="sec-divider"></div><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('edu')">✎ Edit Header</button></div></div>
-<div class="edu-layout"><div class="reveal"><div class="edu-col-title"><span>Academic Degrees</span><button class="cc-btn cc-add" onclick="addDegree()" style="display:none;font-size:10px;padding:5px 10px" id="addDegBtn">＋ Add</button></div><div id="degList"></div></div>
-<div class="reveal"><div class="edu-col-title"><span>Certifications & Workshops</span><button class="cc-btn cc-add" onclick="addCert()" style="display:none;font-size:10px;padding:5px 10px" id="addCertBtn">＋ Add</button></div><div id="certList"></div></div></div>
+<div class="sec-head reveal"><div class="sec-eyebrow" id="eduEy">Academic Background</div><h2 class="sec-title" id="eduTitle">Education</h2><div class="sec-divider"></div><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('edu')">✎ Edit Header</button></div></div>
+<div class="edu-single-layout"><div class="reveal"><div class="edu-col-title"><span>Academic Degrees</span><button class="cc-btn cc-add" onclick="addDegree()" style="display:none;font-size:10px;padding:5px 10px" id="addDegBtn">＋ Add</button></div><div id="degList"></div></div></div>
+</div></section>
+
+<section id="certifications"><div class="container">
+<div class="sec-head reveal"><div class="sec-eyebrow" id="certEy">Professional Development</div><h2 class="sec-title" id="certTitle">Certifications & <em>Workshops</em></h2><div class="sec-divider"></div><p class="sec-desc" id="certDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('cert')">✎ Edit Header</button></div></div>
+<div class="cert-single-layout reveal"><div class="edu-col-title"><span>Certifications & Workshops</span><button class="cc-btn cc-add" onclick="addCert()" style="display:none;font-size:10px;padding:5px 10px" id="addCertBtn">＋ Add</button></div><div id="certList"></div></div>
 </div></section>
 
 <section id="contact"><button class="sec-add-btn" onclick="addContactCard()">＋ Add Contact Card</button>
@@ -798,9 +811,21 @@ function toggleMobile(){$('mobileMenu').classList.toggle('open');$('burger').cla
 function closeMobile(){$('mobileMenu').classList.remove('open');$('burger').classList.remove('open')}
 function attachReveal(){const o=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')}),{threshold:.08});document.querySelectorAll('.reveal,.reveal-right').forEach(el=>o.observe(el))}
 
-const phrases=['MEP Revit Modeler & Detailer','HVAC Ducting Specialist','BIM Coordination Expert','Clash Detection Engineer'];
+// The animated role line reads directly from the editable Title / Role cards.
+// Any newly added role is therefore included automatically in the same animation.
+function getTypingPhrases(){
+const roles=(data.hero&&data.hero.titles?data.hero.titles:[]).map(t=>(t.text||'').trim()).filter(Boolean);
+return roles.length?roles:['MEP Revit Modeler & Detailer'];
+}
 let pi=0,ci=0,del=false;
-function typeLoop(){const e=$('typedText');if(!e)return;const p=phrases[pi];if(!del){e.textContent=p.slice(0,++ci);if(ci===p.length){del=true;setTimeout(typeLoop,1800);return}setTimeout(typeLoop,55)}else{e.textContent=p.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(typeLoop,300);return}setTimeout(typeLoop,30)}}
+function typeLoop(){
+const e=$('typedText');if(!e)return;
+const phrases=getTypingPhrases();
+pi=pi%phrases.length;
+const phrase=phrases[pi];
+if(!del){e.textContent=phrase.slice(0,++ci);if(ci===phrase.length){del=true;setTimeout(typeLoop,1800);return}setTimeout(typeLoop,55)}
+else{e.textContent=phrase.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(typeLoop,300);return}setTimeout(typeLoop,30)}
+}
 
 function showTab(key,btn){document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));const pane=document.getElementById('tp-'+key);if(pane)pane.classList.add('on');if(btn)btn.classList.add('on')}
 
@@ -874,41 +899,56 @@ return `<div class="file-preview ${compressed?'compressed':''}">
 
 function openFsPreview(file){
 const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload');
+const source=file.url||file.data,adminPreview=isAdmin;
 title.textContent=file.name;
-const source=file.url||file.data;
-dl.onclick=()=>{const a=document.createElement('a');a.href=source;a.download=file.name;document.body.appendChild(a);a.click();a.remove()};
-if(isImage(file.name)){content.innerHTML=`<img src="${source}" alt="${esc(file.name)}">`}
-else if(isPdf(file.name)){content.innerHTML=`<iframe src="${source}"></iframe>`}
-else{const ext=file.name.split('.').pop().toUpperCase();content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This is a ${esc(ext)} file. Browsers cannot preview Office documents directly. Click Download to view.</p><button class="fs-btn" style="background:var(--sky);color:#fff" onclick="document.getElementById('fsDownload').click()">⬇ Download File</button></div>`}
+dl.style.display=adminPreview?'inline-flex':'none';
+dl.onclick=adminPreview?()=>{const a=document.createElement('a');a.href=source;a.download=file.name;document.body.appendChild(a);a.click();a.remove()}:null;
+content.oncontextmenu=event=>{if(!isAdmin)event.preventDefault()};
+if(isImage(file.name)){
+content.innerHTML=`<img src="${source}" alt="${esc(file.name)}" draggable="false">`;
+}else if(isPdf(file.name)){
+const separator=source.includes('#')?'&':'#';
+const previewSource=adminPreview?source:`${source}${separator}toolbar=0&navpanes=0&scrollbar=1`;
+content.innerHTML=adminPreview?`<iframe src="${previewSource}"></iframe>`:`<iframe class="fs-public-preview" sandbox="allow-scripts" src="${previewSource}" title="${esc(file.name)}"></iframe>`;
+}else if(adminPreview){
+const ext=file.name.split('.').pop().toUpperCase();
+content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This is a ${esc(ext)} file. Browsers cannot preview Office documents directly. Click Download to view.</p><button class="fs-btn" style="background:var(--sky);color:#fff" onclick="document.getElementById('fsDownload').click()">⬇ Download File</button></div>`;
+}else{
+content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>Preview-only access is enabled. This file type can be downloaded by an administrator only.</p></div>`;
+}
 ov.classList.add('open');
 }
 function closeFsPreview(){$('fsOverlay').classList.remove('open');$('fsContent').innerHTML=''}
 $('fsOverlay').addEventListener('click',e=>{if(e.target===$('fsOverlay'))closeFsPreview()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('fsOverlay').classList.contains('open'))closeFsPreview()});
+document.addEventListener('keydown',e=>{const previewOpen=$('fsOverlay').classList.contains('open');if(e.key==='Escape'&&previewOpen)closeFsPreview();if(previewOpen&&!isAdmin&&(e.ctrlKey||e.metaKey)&&['s','p'].includes(e.key.toLowerCase()))e.preventDefault()});
 
-function renderFiles(files,owner,ownerType){
+function renderFiles(files,owner,ownerType,projectCategory=null){
 if(!files||!files.length)return '';
-return `<div class="attached-files">${files.map((f,i)=>`<span class="afile" onclick="previewFileByRef('${ownerType}',${owner},${i})"><span class="afile-icon">${getFileIcon(f.name)}</span><span class="afile-name">${esc(f.name)}</span><button type="button" class="afile-x" onclick="event.stopPropagation();removeAttachedFile('${ownerType}',${owner},${i})">✕</button></span>`).join('')}</div>`;
+const categoryArg=projectCategory?`, '${projectCategory}'`:',null';
+return `<div class="attached-files">${files.map((f,i)=>`<span class="afile" onclick="previewFileByRef('${ownerType}',${owner},${i}${categoryArg})"><span class="afile-icon">${getFileIcon(f.name)}</span><span class="afile-name">${esc(f.name)}</span><button type="button" class="afile-x" onclick="event.stopPropagation();removeAttachedFile('${ownerType}',${owner},${i}${categoryArg})">✕</button></span>`).join('')}</div>`;
 }
 
-function previewFileByRef(type,id,idx){
+function previewFileByRef(type,id,idx,projectCategory=null){
 let f=null;
 if(type==='exp'){const o=data.experiences.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='int'){const o=data.interns.find(x=>x.id===id);if(o)f=o.files[idx]}
-else if(type==='proj'){for(const k of Object.keys(data.projects)){const o=data.projects[k].find(x=>x.id===id);if(o){f=o.files[idx];break}}}
+else if(type==='proj'){
+const o=projectCategory?(data.projects[projectCategory]||[]).find(x=>x.id===id):Object.values(data.projects).flat().find(x=>x.id===id);
+if(o)f=o.files[idx];
+}
 else if(type==='deg'){const o=data.education.degrees.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='cert'){const o=data.education.certs.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='gal'){const o=data.gallery.find(x=>x.id===id);if(o)f=o.files[idx]}
 if(f)openFsPreview(f);
 }
 
-function removeAttachedFile(type,id,idx){
+function removeAttachedFile(type,id,idx,projectCategory=null){
 if(!isAdmin)return;
 if(!confirm('Remove this file?'))return;
 let target=null;
 if(type==='exp')target=data.experiences.find(x=>x.id===id);
 else if(type==='int')target=data.interns.find(x=>x.id===id);
-else if(type==='proj'){for(const k of Object.keys(data.projects)){const o=data.projects[k].find(x=>x.id===id);if(o){target=o;break}}}
+else if(type==='proj')target=projectCategory?(data.projects[projectCategory]||[]).find(x=>x.id===id):Object.values(data.projects).flat().find(x=>x.id===id);
 else if(type==='deg')target=data.education.degrees.find(x=>x.id===id);
 else if(type==='cert')target=data.education.certs.find(x=>x.id===id);
 else if(type==='gal')target=data.gallery.find(x=>x.id===id);
@@ -1018,21 +1058,22 @@ function removeCC(id){if(!confirm('Remove?'))return;data.cc.items=data.cc.items.
 
 // EXP
 function renderExperience(){
-$('expTimeline').innerHTML=data.experiences.map(x=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${x.bullets.map(b=>`<li><span>${b}</span></li>`).join('')}</ul><div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,'exp')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editExperience(${x.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('exp',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeExperience(${x.id})">✕ Remove</button></div></div></div>`).join('');
-$('internRow').innerHTML=data.interns.map(x=>`<div class="intern-card"><div class="intern-title">${esc(x.title)}</div><div class="intern-co">${esc(x.co)}</div><div class="intern-desc">${esc(x.desc)}</div>${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`).join('')}
+$('expTimeline').innerHTML=data.experiences.map(x=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${x.bullets.map(b=>`<li><span>${b}</span></li>`).join('')}</ul><div class="tag-row">${(x.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,'exp')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editExperience(${x.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('exp',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeExperience(${x.id})">✕ Remove</button></div></div></div>`).join('');
+$('internRow').innerHTML=data.interns.map(x=>`<div class="intern-card"><div class="intern-title">${esc(x.title)}</div><div class="intern-co">${esc(x.co)}</div><div class="intern-desc">${esc(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`).join('')}
+
 function addExperience(){openEditModal('Add Experience','Add a new job',[{type:'text',key:'role',label:'Job Title',required:true},{type:'text',key:'company',label:'Company & Location',required:true},{type:'text',key:'date',label:'Date Range',required:true},{type:'textarea',key:'bullets',label:'Bullets (one per line)',required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)'},{type:'files',key:'files',label:'Upload Files'}],v=>{data.experiences.unshift({id:uid(),role:v.role,company:v.company,date:v.date,bullets:v.bullets.split('\n').filter(Boolean),tags:v.tags.split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});renderAll()},true)}
 function editExperience(id){const x=data.experiences.find(e=>e.id===id);if(!x)return;openEditModal('Edit Experience','',[{type:'text',key:'role',label:'Job Title',value:x.role,required:true},{type:'text',key:'company',label:'Company',value:x.company,required:true},{type:'text',key:'date',label:'Date',value:x.date,required:true},{type:'textarea',key:'bullets',label:'Bullets',value:x.bullets.join('\n'),required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags',value:x.tags.join(', ')}],v=>{x.role=v.role;x.company=v.company;x.date=v.date;x.bullets=v.bullets.split('\n').filter(Boolean);x.tags=v.tags.split(',').map(s=>s.trim()).filter(Boolean);renderExperience()},true)}
 function removeExperience(id){if(!confirm('Remove?'))return;data.experiences=data.experiences.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
-function addIntern(){openEditModal('Add Internship','',[{type:'text',key:'title',label:'Title',required:true},{type:'text',key:'co',label:'Location & Duration',required:true},{type:'textarea',key:'desc',label:'Description',required:true,rows:4},{type:'files',key:'files',label:'Upload Files'}],v=>{data.interns.push({id:uid(),title:v.title,co:v.co,desc:v.desc,files:v._files||[]});renderExperience()})}
-function editIntern(id){const x=data.interns.find(i=>i.id===id);if(!x)return;openEditModal('Edit Internship','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'text',key:'co',label:'Location & Duration',value:x.co,required:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:4}],v=>{x.title=v.title;x.co=v.co;x.desc=v.desc;renderExperience()})}
+function addIntern(){openEditModal('Add Internship','',[{type:'text',key:'title',label:'Title',required:true},{type:'text',key:'co',label:'Location & Duration',required:true},{type:'textarea',key:'desc',label:'Description',required:true,rows:4},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Manufacturing, HVAC, Quality Control'},{type:'files',key:'files',label:'Upload Files'}],v=>{data.interns.push({id:uid(),title:v.title,co:v.co,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});renderExperience()})}
+function editIntern(id){const x=data.interns.find(i=>i.id===id);if(!x)return;openEditModal('Edit Internship','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'text',key:'co',label:'Location & Duration',value:x.co,required:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:4},{type:'text',key:'tags',label:'Tags (comma separated)',value:(x.tags||[]).join(', ')}],v=>{x.title=v.title;x.co=v.co;x.desc=v.desc;x.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);renderExperience()})}
 function removeIntern(id){if(!confirm('Remove?'))return;data.interns=data.interns.filter(x=>x.id!==id);renderExperience();savePortfolio(true)}
 
-function uploadTo(type,id){openEditModal('Upload Files','Attach images, PDFs, docs',[{type:'files',key:'files',label:'Select Files'}],v=>{
+function uploadTo(type,id,projectCategory=null){openEditModal('Upload Files','Attach images, PDFs, docs',[{type:'files',key:'files',label:'Select Files'}],v=>{
 let t;if(type==='exp')t=data.experiences.find(x=>x.id===id);
 else if(type==='int')t=data.interns.find(x=>x.id===id);
 else if(type==='deg')t=data.education.degrees.find(x=>x.id===id);
 else if(type==='cert')t=data.education.certs.find(x=>x.id===id);
-else if(type==='proj'){for(const k of Object.keys(data.projects)){const f=data.projects[k].find(x=>x.id===id);if(f){t=f;break}}}
+else if(type==='proj')t=projectCategory?(data.projects[projectCategory]||[]).find(x=>x.id===id):Object.values(data.projects).flat().find(x=>x.id===id);
 if(t){if(!t.files)t.files=[];t.files=t.files.concat(v._files||[]);renderAll();showToast(`✅ ${(v._files||[]).length} file(s) uploaded!`,'success')}})}
 
 function renderProjectTabs(){
@@ -1046,8 +1087,9 @@ data.projectCategories.forEach(cat=>{
 const pane=document.getElementById('tp-'+cat.key);if(!pane)return;
 const items=data.projects[cat.key]||[];
 pane.innerHTML=items.map(p=>{
-const isFyp=cat.key==='fyp';
-return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p.num)}</div><div class="pcard-name">${esc(p.name)}</div>${p.sub?`<div class="pcard-sub">${esc(p.sub)}</div>`:''}<div class="pcard-desc">${p.desc}</div>${isFyp&&p.tags?`<div class="fyp-tags">${p.tags.map(t=>`<span class="fyp-tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(p.files,p.id,'proj')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editProject('${cat.key}',${p.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('proj',${p.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeProject('${cat.key}',${p.id})">✕ Remove</button></div></div>`;
+const isFyp=cat.key==='fyp',tags=p.tags||[];
+const tagMarkup=tags.length?`<div class="${isFyp?'fyp-tags':'pcard-tags'}">${tags.map(t=>`<span class="${isFyp?'fyp-tag':'pcard-tag'}">${esc(t)}</span>`).join('')}</div>`:'';
+return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p.num)}</div><div class="pcard-name">${esc(p.name)}</div>${p.sub?`<div class="pcard-sub">${esc(p.sub)}</div>`:''}<div class="pcard-desc">${p.desc}</div>${tagMarkup}${renderFiles(p.files,p.id,'proj',cat.key)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editProject('${cat.key}',${p.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('proj',${p.id},'${cat.key}')">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeProject('${cat.key}',${p.id})">✕ Remove</button></div></div>`;
 }).join('');
 });
 }
@@ -1058,17 +1100,21 @@ function removeProjectCategoryModal(){if(!isAdmin)return;const opts=data.project
 
 function removeProjectCategoryById(key){if(!isAdmin)return;if(!confirm('Remove this category and ALL its projects?'))return;data.projectCategories=data.projectCategories.filter(c=>c.key!==key);delete data.projects[key];renderAll();savePortfolio(true);showToast('🗑️ Category removed','info')}
 
-function addProject(){const catOpts=data.projectCategories.map(c=>({value:c.key,label:c.icon+' '+c.name}));openEditModal('Add Project','',[{type:'select',key:'cat',label:'Category',value:data.projectCategories[0]?.key||'bim',options:catOpts,allowCustom:true},{type:'text',key:'num',label:'Project Number / Tag',required:true},{type:'text',key:'name',label:'Project Name',required:true},{type:'text',key:'sub',label:'Subtitle (optional)'},{type:'textarea',key:'desc',label:'Description',required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (for FYP — comma separated)'},{type:'files',key:'files',label:'Upload Files'}],v=>{let catKey=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){const nm=custom.value.trim();catKey=nm.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key:catKey,name:nm,color:'#3498db',icon:'📂'});data.projects[catKey]=[]}const p={id:uid(),num:v.num,name:v.name,sub:v.sub,desc:v.desc,files:v._files||[]};if(v.tags)p.tags=v.tags.split(',').map(s=>s.trim()).filter(Boolean);if(!data.projects[catKey])data.projects[catKey]=[];data.projects[catKey].push(p);renderAll()},true)}
+function addProject(){const catOpts=data.projectCategories.map(c=>({value:c.key,label:c.icon+' '+c.name}));openEditModal('Add Project','',[{type:'select',key:'cat',label:'Category',value:data.projectCategories[0]?.key||'bim',options:catOpts,allowCustom:true},{type:'text',key:'num',label:'Project Number / Tag',required:true},{type:'text',key:'name',label:'Project Name',required:true},{type:'text',key:'sub',label:'Subtitle (optional)'},{type:'textarea',key:'desc',label:'Description',required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Revit MEP, Navisworks, HVAC'},{type:'files',key:'files',label:'Upload Files'}],v=>{let catKey=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){const nm=custom.value.trim();catKey=nm.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key:catKey,name:nm,color:'#3498db',icon:'📂'});data.projects[catKey]=[]}const p={id:uid(),num:v.num,name:v.name,sub:v.sub,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]};if(!data.projects[catKey])data.projects[catKey]=[];data.projects[catKey].push(p);renderAll()},true)}
 
-function editProject(cat,id){const p=(data.projects[cat]||[]).find(x=>x.id===id);if(!p)return;const f=[{type:'text',key:'num',label:'Project Number',value:p.num,required:true},{type:'text',key:'name',label:'Project Name',value:p.name,required:true},{type:'text',key:'sub',label:'Subtitle',value:p.sub||''},{type:'textarea',key:'desc',label:'Description',value:p.desc,required:true,rows:5,hint:'HTML allowed'}];if(cat==='fyp'||p.tags)f.push({type:'text',key:'tags',label:'Tags',value:(p.tags||[]).join(', ')});openEditModal('Edit Project','',[...f],v=>{p.num=v.num;p.name=v.name;p.sub=v.sub;p.desc=v.desc;if(v.tags!==undefined)p.tags=v.tags.split(',').map(s=>s.trim()).filter(Boolean);renderAll()},true)}
+function editProject(cat,id){const p=(data.projects[cat]||[]).find(x=>x.id===id);if(!p)return;const f=[{type:'text',key:'num',label:'Project Number',value:p.num,required:true},{type:'text',key:'name',label:'Project Name',value:p.name,required:true},{type:'text',key:'sub',label:'Subtitle',value:p.sub||''},{type:'textarea',key:'desc',label:'Description',value:p.desc,required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',value:(p.tags||[]).join(', ')}];openEditModal('Edit Project','',f,v=>{p.num=v.num;p.name=v.name;p.sub=v.sub;p.desc=v.desc;p.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);renderAll()},true)}
 function removeProject(cat,id){if(!confirm('Remove?'))return;data.projects[cat]=data.projects[cat].filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
-function renderGallery(){const g=$('pwGrid');if(!data.gallery.length){g.innerHTML='<div class="pw-empty"><div class="pw-empty-icon">🖼️</div><p>No project images yet.<br>Click <strong>"＋ Add Project Image"</strong> to add.</p></div>';return}g.innerHTML=data.gallery.map(item=>`<div class="pw-item">${item.img?`<div class="pw-img-wrap" onclick="openFsPreview({name:'${esc(item.title)}.jpg',data:'${item.img}'})"><img class="pw-item-img" src="${item.img}" alt="${esc(item.title)}" loading="lazy"></div>`:'<div class="pw-placeholder">🖼️</div>'}<div class="pw-item-body"><div class="pw-item-cat">${esc(item.cat)}</div><div class="pw-item-title">${esc(item.title)}</div>${item.desc?`<div class="pw-item-desc">${esc(item.desc)}</div>`:''}</div>${renderFiles(item.files,item.id,'gal')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editGalleryItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadToGallery(${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeGalleryItem(${item.id})">✕ Remove</button></div></div>`).join('')}
+function renderGallery(){
+const g=$('pwGrid');
+if(!data.gallery.length){g.innerHTML='<div class="pw-empty"><div class="pw-empty-icon">🖼️</div><p>No project work yet.<br>Click <strong>"＋ Add Project Work"</strong> to add.</p></div>';return}
+g.innerHTML=data.gallery.map(item=>`<div class="pw-item pw-item-no-image"><div class="pw-item-body"><div class="pw-item-cat">${esc(item.cat)}</div><div class="pw-item-title">${esc(item.title)}</div>${item.desc?`<div class="pw-item-desc">${esc(item.desc)}</div>`:''}${(item.tags||[]).length?`<div class="pw-tags">${item.tags.map(t=>`<span class="pw-tag">${esc(t)}</span>`).join('')}</div>`:''}</div>${renderFiles(item.files,item.id,'gal')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editGalleryItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadToGallery(${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeGalleryItem(${item.id})">✕ Remove</button></div></div>`).join('')
+}
 
-function uploadToGallery(id){openEditModal('Upload Files to Gallery','',[{type:'files',key:'files',label:'Select Files'}],v=>{const t=data.gallery.find(x=>x.id===id);if(t){if(!t.files)t.files=[];t.files=t.files.concat(v._files||[]);renderAll()}})}
-function addGalleryItem(){if(!isAdmin)return showToast('⚠️ Admin mode required.','error');const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Add Project to Gallery','',[{type:'text',key:'title',label:'Project Title',required:true},{type:'select',key:'cat',label:'Category',value:data.galleryCategories[0]||'Other',options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',rows:3},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{if(!v.title)return;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}const firstImg=(v._files||[]).find(f=>f.type&&f.type.startsWith('image/'));data.gallery.unshift({id:uid(),title:v.title,cat,desc:v.desc,img:firstImg?firstImg.data:null,files:v._files||[]});renderGallery()})}
+function uploadToGallery(id){openEditModal('Upload Files to Gallery','',[{type:'files',key:'files',label:'Select Files'}],v=>{const t=data.gallery.find(x=>x.id===id);if(t){const newFiles=v._files||[];if(!t.files)t.files=[];t.files=t.files.concat(newFiles);const firstImg=newFiles.find(f=>f.type&&f.type.startsWith('image/'));if(firstImg)t.img=firstImg.url||firstImg.data||t.img;renderAll()}})}
+function addGalleryItem(){if(!isAdmin)return showToast('⚠️ Admin mode required.','error');const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Add Project to Gallery','',[{type:'text',key:'title',label:'Project Title',required:true},{type:'select',key:'cat',label:'Category',value:data.galleryCategories[0]||'Other',options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',rows:3},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Revit MEP, HVAC, Shop Drawings'},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{if(!v.title)return;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}const firstImg=(v._files||[]).find(f=>f.type&&f.type.startsWith('image/'));data.gallery.unshift({id:uid(),title:v.title,cat,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),img:firstImg?(firstImg.url||firstImg.data):null,files:v._files||[]});renderGallery()})}
 function removeGalleryCategoryModal(){if(!isAdmin)return;const opts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Remove Gallery Category','',[{type:'select',key:'cat',label:'Select Category',value:opts[0]?.value,options:opts}],v=>{const used=data.gallery.some(g=>g.cat===v.cat);if(used&&!confirm('Some items use this category. Remove anyway?'))return;data.galleryCategories=data.galleryCategories.filter(c=>c!==v.cat);showToast('🗑️ Category removed','info')})}
-function editGalleryItem(id){const x=data.gallery.find(g=>g.id===id);if(!x)return;const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Edit Gallery Item','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'select',key:'cat',label:'Category',value:x.cat,options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:3}],v=>{x.title=v.title;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}x.cat=cat;x.desc=v.desc;renderGallery()})}
+function editGalleryItem(id){const x=data.gallery.find(g=>g.id===id);if(!x)return;const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Edit Gallery Item','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'select',key:'cat',label:'Category',value:x.cat,options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:3},{type:'text',key:'tags',label:'Tags (comma separated)',value:(x.tags||[]).join(', ')}],v=>{x.title=v.title;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}x.cat=cat;x.desc=v.desc;x.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);renderGallery()})}
 function removeGalleryItem(id){if(!isAdmin||!confirm('Remove?'))return;data.gallery=data.gallery.filter(x=>x.id!==id);renderGallery();savePortfolio(true)}
 
 function renderSkills(){$('skEy').textContent=data.skills.eyebrow;$('skTitle').innerHTML=data.skills.title;$('skDesc').textContent=data.skills.desc;
@@ -1085,10 +1131,19 @@ function addSkillBar(){openEditModal('Add Skill Bar','',[{type:'text',key:'name'
 function editSkillBar(i){const b=data.skills.bars[i];if(!b)return;openEditModal('Edit Skill Bar','',[{type:'text',key:'name',label:'Name',value:b.name,required:true},{type:'text',key:'pct',label:'Percentage',value:String(b.pct),required:true}],v=>{b.name=v.name;b.pct=Math.max(0,Math.min(100,parseInt(v.pct)||0));renderSkills()})}
 function removeSkillBar(i){if(!confirm('Remove?'))return;data.skills.bars.splice(i,1);renderSkills();savePortfolio(true)}
 
+function ensureSeparatedEducationContent(){
+if(!data.education)data.education={};
+if(data.education.title==='Education & <em>Certifications</em>')data.education.title='Education';
+if(!data.certifications)data.certifications={eyebrow:'Professional Development',title:'Certifications & <em>Workshops</em>',desc:'Professional certifications, workshops and continuing learning.'};
+}
+
 function renderEducation(){
+ensureSeparatedEducationContent();
 $('eduEy').textContent=data.education.eyebrow;$('eduTitle').innerHTML=data.education.title;
+$('certEy').textContent=data.certifications.eyebrow;$('certTitle').innerHTML=data.certifications.title;$('certDesc').textContent=data.certifications.desc||'';
 $('degList').innerHTML=data.education.degrees.map(d=>`<div class="edu-card"><div class="edu-deg">${esc(d.deg)}</div><div class="edu-sch">${esc(d.sch)}</div><div class="edu-meta"><span>${esc(d.year)}</span><span class="edu-gpa">${esc(d.gpa)}</span></div>${renderFiles(d.files,d.id,'deg')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editDegree(${d.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('deg',${d.id})">📎 Files</button><button class="cc-btn cc-remove" onclick="removeDegree(${d.id})">✕ Remove</button></div></div>`).join('');
 $('certList').innerHTML=data.education.certs.map(c=>`<div class="cert-item"><div class="cert-head"><span class="cert-name">${esc(c.name)}</span><span class="cert-yr">${esc(c.year)}</span></div>${renderFiles(c.files,c.id,'cert')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editCert(${c.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('cert',${c.id})">📎 Files</button><button class="cc-btn cc-remove" onclick="removeCert(${c.id})">✕ Remove</button></div></div>`).join('')}
+
 function addDegree(){openEditModal('Add Degree','',[{type:'text',key:'deg',label:'Degree',required:true},{type:'text',key:'sch',label:'School / University',required:true},{type:'row',fields:[{type:'text',key:'year',label:'Year',required:true},{type:'text',key:'gpa',label:'GPA / Grade'}]},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{data.education.degrees.push({id:uid(),deg:v.deg,sch:v.sch,year:v.year,gpa:v.gpa,files:v._files||[]});renderAll()})}
 function editDegree(id){const d=data.education.degrees.find(x=>x.id===id);if(!d)return;openEditModal('Edit Degree','',[{type:'text',key:'deg',label:'Degree',value:d.deg,required:true},{type:'text',key:'sch',label:'School',value:d.sch,required:true},{type:'row',fields:[{type:'text',key:'year',label:'Year',value:d.year,required:true},{type:'text',key:'gpa',label:'GPA',value:d.gpa}]},{type:'files',key:'files',label:'Upload More Files (multiple)'}],v=>{d.deg=v.deg;d.sch=v.sch;d.year=v.year;d.gpa=v.gpa;if(v._files&&v._files.length){if(!d.files)d.files=[];d.files=d.files.concat(v._files)}renderEducation()})}
 function removeDegree(id){if(!confirm('Remove?'))return;data.education.degrees=data.education.degrees.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
@@ -1113,7 +1168,7 @@ function addContactCard(){openEditModal('Add Contact Card','',[{type:'text',key:
 function editContactCard(id){const c=data.contact.cards.find(x=>x.id===id);if(!c)return;openEditModal('Edit Contact Card','',[{type:'text',key:'icon',label:'Emoji',value:c.icon},{type:'text',key:'label',label:'Label',value:c.label,required:true},{type:'text',key:'value',label:'Value',value:c.value,required:true},{type:'text',key:'link',label:'Link',value:c.link}],v=>{c.icon=v.icon;c.label=v.label;c.value=v.value;c.link=v.link;renderContact()})}
 function removeContactCard(id){if(!confirm('Remove?'))return;data.contact.cards=data.contact.cards.filter(x=>x.id!==id);renderContact();savePortfolio(true)}
 
-function editSectionHeader(key){const map={about:{o:data.about},cc:{o:data.cc},exp:{o:{eyebrow:$('expEy').textContent,title:$('expTitle').innerHTML,desc:$('expDesc').textContent}},proj:{o:{eyebrow:$('projEy').textContent,title:$('projTitle').innerHTML,desc:$('projDesc').textContent}},pw:{o:{eyebrow:$('pwEy').textContent,title:$('pwTitleEl').innerHTML,desc:$('pwDesc').textContent}},sk:{o:data.skills},edu:{o:data.education},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
+function editSectionHeader(key){const map={about:{o:data.about},cc:{o:data.cc},exp:{o:{eyebrow:$('expEy').textContent,title:$('expTitle').innerHTML,desc:$('expDesc').textContent}},proj:{o:{eyebrow:$('projEy').textContent,title:$('projTitle').innerHTML,desc:$('projDesc').textContent}},pw:{o:{eyebrow:$('pwEy').textContent,title:$('pwTitleEl').innerHTML,desc:$('pwDesc').textContent}},sk:{o:data.skills},edu:{o:data.education},cert:{o:data.certifications},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
 
 // ════════ CONTACT FORM — secure server API ════════
 function sendMessage(){
@@ -1131,7 +1186,7 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 
 function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderGallery();renderSkills();renderEducation();renderContact();attachReveal()}
 
-async function bootPortfolio(){await loadData();renderAll();setTimeout(typeLoop,800)}
+async function bootPortfolio(){await loadData();ensureSeparatedEducationContent();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();
 </script>
 </body>

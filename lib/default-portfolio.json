@@ -227,14 +227,24 @@
       "title": "Pakistan Locomotive Factory, Risalpur",
       "co": "Risalpur · Aug 2023 · 1 Month",
       "desc": "Hands-on exposure to large-scale <strong>mechanical systems</strong> and locomotive manufacturing operations, observing machining, assembly and maintenance workflows in an industrial setting.",
-      "files": []
+      "files": [],
+      "tags": [
+        "Mechanical Systems",
+        "Manufacturing",
+        "Maintenance"
+      ]
     },
     {
       "id": 2,
       "title": "Aircraft Rebuild Factory — PAC Kamra",
       "co": "PAC Kamra · Jul–Aug 2024 · 2 Weeks",
       "desc": "Engineering operations exposure at an aircraft rebuild facility — observed <strong>precision engineering, quality control and overhaul processes</strong> for aerospace components.",
-      "files": []
+      "files": [],
+      "tags": [
+        "Aerospace",
+        "Quality Control",
+        "Overhaul"
+      ]
     }
   ],
   "projectCategories": [
@@ -271,7 +281,12 @@
         "name": "HCA Healthcare – Clearlake Campus",
         "sub": "6-Floor Healthcare Facility · USA",
         "desc": "Developed full <strong>MEP BIM models to LOD 400–450</strong> in Revit MEP for a 6-floor US healthcare facility. Modeled and detailed <strong>HVAC ducting, chilled water and ventilation networks, and plumbing systems</strong> across all floors. Performed multidisciplinary <strong>clash detection in Navisworks</strong> and produced coordinated <strong>MEP shop drawings</strong> for fabrication and site execution.",
-        "files": []
+        "files": [],
+        "tags": [
+          "Revit MEP",
+          "Navisworks",
+          "BIM Coordination"
+        ]
       },
       {
         "id": 2,
@@ -279,7 +294,12 @@
         "name": "Baytown Campus – Borden Street",
         "sub": "4-Floor Renovation · USA",
         "desc": "Produced coordinated <strong>3D MEP renovation models</strong> for a 4-floor US campus building. Carried out <strong>clash detection</strong> across mechanical, electrical and plumbing systems and prepared <strong>HVAC, piping and electrical shop drawings</strong> with full BIM coordination to align with existing site conditions.",
-        "files": []
+        "files": [],
+        "tags": [
+          "Revit MEP",
+          "Navisworks",
+          "BIM Coordination"
+        ]
       },
       {
         "id": 3,
@@ -287,7 +307,12 @@
         "name": "New Caney I.S.D – Elementary School",
         "sub": "New Build · USA",
         "desc": "Delivered <strong>HVAC and plumbing Revit modeling</strong> for a new-build US elementary school. Handled <strong>piping population, clash detection and interdisciplinary coordination</strong> strictly per the issued project drawings and international design standards.",
-        "files": []
+        "files": [],
+        "tags": [
+          "Revit MEP",
+          "Navisworks",
+          "BIM Coordination"
+        ]
       }
     ],
     "sw": [
@@ -297,7 +322,12 @@
         "name": "Steam Engine with Horizontal Beam",
         "sub": "3D Assembly · Motion Study",
         "desc": "Built a fully functional <strong>steam engine 3D assembly</strong> in SolidWorks, applying mechanical mates and running a <strong>motion study</strong> to validate the kinematics of the horizontal beam linkage.",
-        "files": []
+        "files": [],
+        "tags": [
+          "SolidWorks",
+          "3D Assembly",
+          "Motion Study"
+        ]
       },
       {
         "id": 2,
@@ -305,7 +335,12 @@
         "name": "Four-Cylinder Engine Model",
         "sub": "3D Assembly · Kinematics",
         "desc": "Modeled a detailed <strong>4-cylinder engine assembly</strong> with crankshaft, pistons and connecting rods, and performed a <strong>motion study</strong> to analyze the reciprocating-to-rotary mechanism.",
-        "files": []
+        "files": [],
+        "tags": [
+          "SolidWorks",
+          "3D Assembly",
+          "Motion Study"
+        ]
       },
       {
         "id": 3,
@@ -313,7 +348,12 @@
         "name": "6-Cylinder Radial Engine",
         "sub": "Advanced 3D Assembly",
         "desc": "Created an advanced <strong>6-cylinder radial engine</strong> assembly in SolidWorks with synchronized piston motion and master-rod kinematics through a full motion study.",
-        "files": []
+        "files": [],
+        "tags": [
+          "SolidWorks",
+          "3D Assembly",
+          "Motion Study"
+        ]
       },
       {
         "id": 4,
@@ -321,7 +361,12 @@
         "name": "Hybrid Food Dehydrator 3D Model",
         "sub": "FYDP · Fabrication Model",
         "desc": "Produced the complete <strong>SolidWorks 3D model</strong> of the Final Year Design Project hybrid food dehydrator, used as the basis for fabrication and assembly.",
-        "files": []
+        "files": [],
+        "tags": [
+          "SolidWorks",
+          "3D Assembly",
+          "Motion Study"
+        ]
       },
       {
         "id": 5,
@@ -329,7 +374,12 @@
         "name": "FEA on Stirling Engine",
         "sub": "FEA · Stress Analysis",
         "desc": "Performed <strong>finite element analysis</strong> on Stirling engine components, evaluating <strong>Von Mises stress</strong> distribution and structural integrity under operating loads.",
-        "files": []
+        "files": [],
+        "tags": [
+          "SolidWorks",
+          "3D Assembly",
+          "Motion Study"
+        ]
       },
       {
         "id": 6,
@@ -337,7 +387,12 @@
         "name": "Shell & Tube Heat Exchanger",
         "sub": "Design + CFD Simulation",
         "desc": "Completed the <strong>full design of a shell & tube heat exchanger</strong> plus <strong>CFD simulation</strong> — generating temperature, velocity and pressure profiles to validate heat-transfer performance.",
-        "files": []
+        "files": [],
+        "tags": [
+          "SolidWorks",
+          "3D Assembly",
+          "Motion Study"
+        ]
       }
     ],
     "sim": [
@@ -347,7 +402,12 @@
         "name": "Static Structural Analysis on Beams",
         "sub": "ANSYS Mechanical",
         "desc": "Conducted <strong>static structural analysis</strong> on beams in ANSYS, evaluating stress distribution, deflection and factor of safety under applied loading.",
-        "files": []
+        "files": [],
+        "tags": [
+          "ANSYS",
+          "CFD",
+          "Simulation"
+        ]
       },
       {
         "id": 2,
@@ -355,7 +415,12 @@
         "name": "Steady-State Thermal on Plates",
         "sub": "ANSYS Thermal",
         "desc": "Performed <strong>steady-state thermal analysis</strong> on plates to study heat distribution and temperature gradients across the geometry.",
-        "files": []
+        "files": [],
+        "tags": [
+          "ANSYS",
+          "CFD",
+          "Simulation"
+        ]
       },
       {
         "id": 3,
@@ -363,7 +428,12 @@
         "name": "Fluid Flow in Pipes & Ducts",
         "sub": "ANSYS CFX · CFD",
         "desc": "Ran <strong>CFD flow analysis using ANSYS CFX</strong> for fluid flow through pipes and ducts, examining velocity fields, pressure drop and flow behavior.",
-        "files": []
+        "files": [],
+        "tags": [
+          "ANSYS",
+          "CFD",
+          "Simulation"
+        ]
       },
       {
         "id": 4,
@@ -371,7 +441,12 @@
         "name": "Bullet Impact Simulation",
         "sub": "Explicit Dynamics",
         "desc": "Simulated <strong>high-velocity bullet impact on a metal plate</strong> in Abaqus using <strong>explicit dynamics</strong> — studying stress waves, failure behavior and applying advanced meshing techniques.",
-        "files": []
+        "files": [],
+        "tags": [
+          "ANSYS",
+          "CFD",
+          "Simulation"
+        ]
       },
       {
         "id": 5,
@@ -379,7 +454,12 @@
         "name": "Microscale Droplet Formation",
         "sub": "Multiphase CFD",
         "desc": "Modeled <strong>1-second transient oil/water droplet formation</strong> in COMSOL Multiphysics, analyzing pressure, velocity and volume-fraction in a multiphase microscale flow.",
-        "files": []
+        "files": [],
+        "tags": [
+          "ANSYS",
+          "CFD",
+          "Simulation"
+        ]
       }
     ],
     "fyp": [
@@ -545,7 +625,7 @@
   },
   "education": {
     "eyebrow": "Academic Background",
-    "title": "Education & <em>Certifications</em>",
+    "title": "Education",
     "degrees": [
       {
         "id": 1,
@@ -667,5 +747,10 @@
         "link": ""
       }
     ]
+  },
+  "certifications": {
+    "eyebrow": "Professional Development",
+    "title": "Certifications & <em>Workshops</em>",
+    "desc": "Professional certifications, workshops and continuing learning."
   }
 }

@@ -1,45 +1,31 @@
-# Umair Ahmad Portfolio — Original UI Full-Stack Edition
+# Portfolio Engr Umair Ahmad
 
-This is a full-stack conversion of the supplied portfolio **without redesigning its appearance**.
+This is the maintained production version of Umair Ahmad's original-UI full-stack portfolio.
 
-## UI preservation promise
+Existing deployed integrations remain unchanged:
 
-`public/portfolio-ui.html` keeps the supplied page’s:
+- Vercel — application and API deployment
+- Neon PostgreSQL — editable portfolio content and contact messages
+- Cloudflare R2 — direct, scalable file storage
+- Resend — contact-form email delivery
 
-- original layout, sections, content, colors, typography, spacing, animations, responsive breakpoints, cards, dialogs, gallery, project tabs, and admin controls;
-- original editable data model and all displayed portfolio information;
-- original single-page interaction patterns.
+## This revision
 
-The intentional UI-level removal is the broken **Download Updated HTML** button. The upload helper message changes only inside the existing admin upload modal to accurately describe cloud uploads. No redesign was applied.
+See [UPDATES.md](./UPDATES.md) for the new role animation, tag controls, category-correct uploads, compact Projects Work cards, separated Education/Certifications sections, and public preview restrictions.
 
-## What changed behind the same UI
+## Important source files
 
-- The client-side password comparison was replaced with a server-side bcrypt comparison and signed HttpOnly session cookie.
-- Browser `localStorage`, embedded data URLs, compression caps, and the 2 MB per-file / ~5 MB browser quota were removed.
-- `Save Portfolio` now persists the same editable data structure to PostgreSQL.
-- File uploads go from the browser directly to Cloudflare R2 through short-lived signed URLs.
-- Files above 64 MB use multipart R2 upload; no file body is sent through Vercel.
-- The contact form now uses a validated, rate-limited backend endpoint, stores messages in PostgreSQL, and optionally delivers them through Resend.
-- The project includes a public single-file static version named `portfolio-static.html`.
+- `public/portfolio-ui.html` — preserved portfolio UI and its original admin interface
+- `app/api/` — authentication, portfolio saving, file-upload and contact APIs
+- `lib/` — database, auth, storage, validation and rate-limit modules
+- `prisma/` — production database schema/migration/seed
+- `.env.example` — required environment-variable template; never commit `.env.local`
 
-## Files
-
-- `public/portfolio-ui.html` — exact original visual UI, connected to full-stack APIs
-- `portfolio-static.html` — standalone public/view-only HTML version with the same UI
-- `app/api/` — authentication, portfolio persistence, uploads, contact endpoints
-- `prisma/` — PostgreSQL schema, migration, and seed
-- `DEPLOYMENT.md` — complete setup and deployment guide
-
-## Quick start
+## Verify before deploying
 
 ```bash
-cp .env.example .env.local
 npm install
-npm run password:hash -- "UmairBIM@2026"
-# Put the command output in ADMIN_PASSWORD_HASH in .env.local
-npm run db:deploy
-npm run db:seed
-npm run dev
+npm run build
 ```
 
-Open `http://localhost:3000`. See [DEPLOYMENT.md](./DEPLOYMENT.md) for Cloudflare R2, PostgreSQL, GitHub, Vercel and verification details.
+Use `npm run vercel-build` as the Vercel Build Command. The current Vercel, Neon, R2 and Resend environment values must stay configured exactly as they are in the existing live project.
