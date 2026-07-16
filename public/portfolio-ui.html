@@ -448,7 +448,6 @@ footer span{color:var(--sky);font-weight:600}
 .fs-content{max-width:95vw;max-height:85vh;display:flex;align-items:center;justify-content:center;margin-top:30px}
 .fs-content img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 12px 60px rgba(0,0,0,.6)}
 .fs-content iframe{width:90vw;height:85vh;border:none;border-radius:8px;background:#fff}
-.fs-content iframe.fs-public-preview{pointer-events:auto}
 .fs-content .fs-doc{background:#fff;border-radius:14px;padding:50px 40px;text-align:center;color:var(--text);max-width:500px}
 .fs-content .fs-doc-icon{font-size:80px;margin-bottom:20px}
 .fs-content .fs-doc h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:12px}
@@ -726,6 +725,7 @@ const uid=()=>Date.now()+Math.floor(Math.random()*1000);
 const getFileIcon=n=>{const e=(n||'').split('.').pop().toLowerCase();return{pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',ppt:'📑',pptx:'📑',jpg:'🖼️',jpeg:'🖼️',png:'🖼️',gif:'🖼️',webp:'🖼️',svg:'🖼️'}[e]||'📁'};
 const isImage=n=>{const e=(n||'').split('.').pop().toLowerCase();return['jpg','jpeg','png','gif','webp','svg','bmp'].includes(e)};
 const isPdf=n=>(n||'').toLowerCase().endsWith('.pdf');
+const isOfficeFile=n=>['doc','docx','xls','xlsx','ppt','pptx'].includes((n||'').split('.').pop().toLowerCase());
 const fmtSize=b=>b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB';
 
 function showToast(m,t='info'){const e=$('toast');e.textContent=m;e.className=`toast toast-${t} show`;clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),3800)}
@@ -899,28 +899,31 @@ return `<div class="file-preview ${compressed?'compressed':''}">
 
 function openFsPreview(file){
 const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload');
-const source=file.url||file.data,adminPreview=isAdmin;
+const source=file.url||file.data;
 title.textContent=file.name;
-dl.style.display=adminPreview?'inline-flex':'none';
-dl.onclick=adminPreview?()=>{const a=document.createElement('a');a.href=source;a.download=file.name;document.body.appendChild(a);a.click();a.remove()}:null;
-content.oncontextmenu=event=>{if(!isAdmin)event.preventDefault()};
+// Public visitors can preview and use the normal browser/Office viewer controls.
+// Administrators retain the same controls, with no separate restriction.
+dl.style.display='inline-flex';
+dl.onclick=()=>{const a=document.createElement('a');a.href=source;a.download=file.name;document.body.appendChild(a);a.click();a.remove()};
+content.oncontextmenu=null;
 if(isImage(file.name)){
-content.innerHTML=`<img src="${source}" alt="${esc(file.name)}" draggable="false">`;
+content.innerHTML=`<img src="${source}" alt="${esc(file.name)}">`;
 }else if(isPdf(file.name)){
-const separator=source.includes('#')?'&':'#';
-const previewSource=adminPreview?source:`${source}${separator}toolbar=0&navpanes=0&scrollbar=1`;
-content.innerHTML=adminPreview?`<iframe src="${previewSource}"></iframe>`:`<iframe class="fs-public-preview" sandbox="allow-scripts" src="${previewSource}" title="${esc(file.name)}"></iframe>`;
-}else if(adminPreview){
-const ext=file.name.split('.').pop().toUpperCase();
-content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This is a ${esc(ext)} file. Browsers cannot preview Office documents directly. Click Download to view.</p><button class="fs-btn" style="background:var(--sky);color:#fff" onclick="document.getElementById('fsDownload').click()">⬇ Download File</button></div>`;
+// Native PDF viewer gives all visitors preview, print and download controls as requested.
+content.innerHTML=`<iframe src="${source}" title="${esc(file.name)}"></iframe>`;
+}else if(isOfficeFile(file.name)&&/^https?:/i.test(source)){
+// Word, PowerPoint and Excel files are previewed with Microsoft's public Office web viewer.
+const officeViewer=`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(source)}`;
+content.innerHTML=`<iframe src="${officeViewer}" title="${esc(file.name)}"></iframe>`;
 }else{
-content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>Preview-only access is enabled. This file type can be downloaded by an administrator only.</p></div>`;
+const ext=file.name.split('.').pop().toUpperCase();
+content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This is a ${esc(ext)} file. Browser preview is not available for this format. Use Download to open it.</p><button class="fs-btn" style="background:var(--sky);color:#fff" onclick="document.getElementById('fsDownload').click()">⬇ Download File</button></div>`;
 }
 ov.classList.add('open');
 }
 function closeFsPreview(){$('fsOverlay').classList.remove('open');$('fsContent').innerHTML=''}
 $('fsOverlay').addEventListener('click',e=>{if(e.target===$('fsOverlay'))closeFsPreview()});
-document.addEventListener('keydown',e=>{const previewOpen=$('fsOverlay').classList.contains('open');if(e.key==='Escape'&&previewOpen)closeFsPreview();if(previewOpen&&!isAdmin&&(e.ctrlKey||e.metaKey)&&['s','p'].includes(e.key.toLowerCase()))e.preventDefault()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('fsOverlay').classList.contains('open'))closeFsPreview()});
 
 function renderFiles(files,owner,ownerType,projectCategory=null){
 if(!files||!files.length)return '';
