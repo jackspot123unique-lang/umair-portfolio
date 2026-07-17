@@ -478,6 +478,10 @@ footer span{color:var(--sky);font-weight:600}
 .fs-content .fs-doc h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:12px}
 .fs-content .fs-doc p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;word-break:break-all}
 
+/* Compact academic marks and date values must remain compact even in the wide four-column status grid. */
+.hstat-mini.hstat-academic .hstat-num{font-size:11px!important;line-height:1.15}
+.hstat-mini.hstat-date .hstat-num{font-size:8.5px!important;line-height:1.2}
+
 @media(max-width:960px){
 .hero-stats{grid-template-columns:1fr 1fr}
 .cap-stack{grid-template-columns:1fr;margin-left:0;margin-top:0}
@@ -1020,7 +1024,7 @@ const projectJump=(value,label,key,extra='')=>`<a class="hstat ${extra}" href="#
 const group=label=>`<div class="hstat-group-label">${esc(label)}</div>`;
 const categories=data.projectCategories||[];
 const experiences=data.experiences||[],interns=data.interns||[],projectWork=data.gallery||[];
-const projectWorkCategories=[...new Set([...(data.galleryCategories||[]),...projectWork.map(item=>item.cat).filter(Boolean)])];
+const projectWorkCategories=[...new Set(projectWork.map(item=>item.cat).filter(Boolean))];
 const totalProjects=categories.reduce((sum,cat)=>sum+(data.projects[cat.key]||[]).length,0);
 const researchItems=(data.research&&Array.isArray(data.research.items))?data.research.items:[];
 const degreeList=data.education?.degrees||[];

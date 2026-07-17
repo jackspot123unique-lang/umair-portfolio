@@ -75,3 +75,8 @@ The visual design, colors, animations, layout and existing working integrations 
 - Projects Work Breakdown now uses live category counts, matching Project Breakdown behavior.
 - Research & Publications Breakdown now uses automatic 1, 2, 3… item numbering.
 - Research & Publications cards now use the same wide 1320px two-column desktop layout as Certifications.
+
+## Status card size and Projects Work counting correction
+
+- Added final high-specificity compact styles so Academic Snapshot values are 11px and Experience/Internship dates are 8.5px even in the wide four-column dashboard.
+- Projects Work Breakdown now lists only categories that actually contain a Projects Work item. Default empty categories with zero counts are no longer shown.
