@@ -174,13 +174,14 @@ body.admin-mode .chip-x{display:inline-flex}
 .hstat{background:rgba(41,128,185,.07);border:1px solid rgba(41,128,185,.13);border-radius:12px;padding:12px 8px;text-align:center;transition:all var(--tr);cursor:pointer;text-decoration:none;display:block;min-width:0}
 .hstat:hover{background:rgba(41,128,185,.15);transform:scale(1.04);box-shadow:var(--shadow-sm)}
 .hstat-total{background:linear-gradient(135deg,rgba(41,128,185,.18),rgba(26,188,156,.18));border:1px solid rgba(41,128,185,.3)}
-.hstat-total .hstat-num{color:var(--sky);font-size:28px}
-.hstat-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--sky);line-height:1;font-weight:700}
-.hstat-label{font-size:8.4px;color:var(--muted);letter-spacing:.55px;text-transform:uppercase;margin-top:5px;line-height:1.28}
-.hstat-group-label{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);padding:8px 2px 1px;border-top:1px dashed rgba(41,128,185,.20);margin-top:3px}
-.hstat-mini{padding:9px 6px;border-radius:9px}.hstat-mini .hstat-num{font-size:18px}.hstat-mini .hstat-label{font-size:7.6px}
+.hstat-total .hstat-num{color:var(--navy);font-size:28px}
+.hstat-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);line-height:1;font-weight:700}
+.hstat-label{font-size:8.4px;color:var(--text);font-weight:700;letter-spacing:.55px;text-transform:uppercase;margin-top:5px;line-height:1.28}
+.hstat-group-label{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--navy);font-weight:700;padding:8px 2px 1px;border-top:1px dashed rgba(41,128,185,.20);margin-top:3px}
+.hstat-mini{padding:9px 6px;border-radius:9px}.hstat-mini .hstat-num{font-size:18px}.hstat-mini .hstat-label{font-size:7.6px;color:var(--navy)}
+.hstat-academic .hstat-num{font-size:14px}.hstat-academic .hstat-label{font-size:7.2px}
 .hstat-main{background:linear-gradient(135deg,rgba(41,128,185,.12),rgba(26,188,156,.09));border-color:rgba(41,128,185,.26)}
-.hstat-date .hstat-num{font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.25;white-space:normal}
+.hstat-date .hstat-num{font-family:'JetBrains Mono',monospace;font-size:8px;line-height:1.25;white-space:normal;color:var(--navy)}
 
 .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;animation:bd 2.2s ease-in-out infinite}
 .scroll-hint::after{content:'';display:block;width:1px;height:38px;background:linear-gradient(to bottom,rgba(41,128,185,.35),transparent)}
@@ -338,6 +339,9 @@ body.admin-mode .sp-x{display:inline-block}
 
 #education{background:var(--bg2)}
 #certifications{background:var(--white)}
+#about .container,#certifications .container{max-width:1320px}
+#about .about-grid{grid-template-columns:minmax(360px,.85fr) minmax(0,1.85fr);gap:52px}
+.edu-single-layout{max-width:860px}.cert-single-layout{max-width:100%}
 #research{background:var(--bg2)}
 .research-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
 .research-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:23px 24px;box-shadow:var(--shadow-sm);transition:all var(--tr)}
@@ -347,10 +351,10 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
-@media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:205px;height:205px;border-width:6px}.profile-pic .profile-initial{font-size:76px}.cap-stack{margin-left:18px;margin-top:-14px}}
+@media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:240px;height:240px;border-width:6px}.profile-pic .profile-initial{font-size:88px}.cap-stack{margin-left:28px;margin-top:-14px;gap:16px}}
 @media(min-width:1200px){.hero-inner{max-width:1460px;grid-template-columns:minmax(0,1fr) 720px}.hero-card{margin-left:18px;padding:30px 28px}.hero-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hstat{padding:13px 8px}.hstat-num{font-size:23px}.hstat-mini{padding:10px 6px}.hstat-mini .hstat-num{font-size:18px}}
 @media(max-width:960px){.research-grid{grid-template-columns:1fr}}
-.edu-single-layout,.cert-single-layout{max-width:760px}
+
 .cert-single-layout .cert-item{margin-bottom:12px}
 #certList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 #certList .cert-item{margin-bottom:0}
@@ -1033,14 +1037,14 @@ statsHtml+=jump(researchItems.length,'Research & Publications','research','hstat
 statsHtml+=jump((data.education?.certs||[]).length,'Certifications','certifications','hstat-main');
 // Education is represented only by this linked Academic Snapshot, as requested.
 statsHtml+=group('Academic Snapshot — Education');
-statsHtml+=jump(grade(bsc),'CGPA — B.Sc. Mechanical Engineering','education','hstat-mini');
-statsHtml+=jump(grade(fsc),'F.Sc Pre-Engineering','education','hstat-mini');
-statsHtml+=jump(grade(ssc),'SSC — Science','education','hstat-mini');
+statsHtml+=jump(grade(bsc),'CGPA — B.Sc. Mechanical Engineering','education','hstat-mini hstat-academic');
+statsHtml+=jump(grade(fsc),'F.Sc Pre-Engineering','education','hstat-mini hstat-academic');
+statsHtml+=jump(grade(ssc),'SSC — Science','education','hstat-mini hstat-academic');
 // Every newly added degree (M.S., M.Phil., Ph.D., diploma, etc.) automatically joins the Academic Snapshot.
 const featuredDegrees=new Set([bsc,fsc,ssc].filter(Boolean));
 degreeList.filter(degree=>!featuredDegrees.has(degree)).forEach(degree=>{
 const value=grade(degree)!=='—'?grade(degree):(degree.year||'—');
-statsHtml+=jump(value,degree.deg||'Education','education','hstat-mini');
+statsHtml+=jump(value,degree.deg||'Education','education','hstat-mini hstat-academic');
 });
 // Independent breakdowns for every requested main box except Certifications.
 statsHtml+=group('Professional Experience Breakdown');

@@ -59,3 +59,11 @@ The visual design, colors, animations, layout and existing working integrations 
 - Changed About to a three-column desktop composition: one About column plus two Capability columns.
 - Changed Certifications & Workshops to a two-column desktop grid.
 - Added justified text alignment to Professional Experience bullets, Internship descriptions, Project Portfolio descriptions, Projects Work descriptions, Research descriptions, About text and Capability descriptions.
+
+## Additional visual sizing and readability update
+
+- Increased the desktop hero profile circle to 240px.
+- Made Portfolio Status numbers, labels and group headings dark navy for stronger contrast.
+- Reduced Professional Experience and Internship date value font size to keep date ranges clean in their breakdown cards.
+- Reduced Academic Snapshot GPA/marks value size.
+- Expanded the About and Certifications containers to 1320px on desktop, widening the two Capability columns and both Certification columns.
