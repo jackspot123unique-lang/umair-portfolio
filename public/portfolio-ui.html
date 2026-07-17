@@ -170,13 +170,15 @@ body.admin-mode .hero-add-title{display:block}
 body.admin-mode .chip-x{display:inline-flex}
 .chip-x:hover{background:var(--red);color:#fff}
 
-.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
-.hstat{background:rgba(41,128,185,.07);border:1px solid rgba(41,128,185,.13);border-radius:12px;padding:14px 10px;text-align:center;transition:all var(--tr);cursor:pointer;text-decoration:none;display:block}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:20px}
+.hstat{background:rgba(41,128,185,.07);border:1px solid rgba(41,128,185,.13);border-radius:12px;padding:12px 8px;text-align:center;transition:all var(--tr);cursor:pointer;text-decoration:none;display:block;min-width:0}
 .hstat:hover{background:rgba(41,128,185,.15);transform:scale(1.04);box-shadow:var(--shadow-sm)}
-.hstat-total{background:linear-gradient(135deg,rgba(41,128,185,.18),rgba(26,188,156,.18));border:1px solid rgba(41,128,185,.3);grid-column:1/-1}
-.hstat-total .hstat-num{color:var(--sky);font-size:32px}
-.hstat-num{font-family:'Playfair Display',serif;font-size:26px;color:var(--sky);line-height:1;font-weight:700}
-.hstat-label{font-size:9.5px;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;margin-top:5px;line-height:1.3}
+.hstat-total{background:linear-gradient(135deg,rgba(41,128,185,.18),rgba(26,188,156,.18));border:1px solid rgba(41,128,185,.3)}
+.hstat-total .hstat-num{color:var(--sky);font-size:28px}
+.hstat-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--sky);line-height:1;font-weight:700}
+.hstat-label{font-size:8.4px;color:var(--muted);letter-spacing:.55px;text-transform:uppercase;margin-top:5px;line-height:1.28}
+.hstat-group-label{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);padding:8px 2px 1px;border-top:1px dashed rgba(41,128,185,.20);margin-top:3px}
+.hstat-mini{padding:9px 6px;border-radius:9px}.hstat-mini .hstat-num{font-size:18px}.hstat-mini .hstat-label{font-size:7.6px}
 
 .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;animation:bd 2.2s ease-in-out infinite}
 .scroll-hint::after{content:'';display:block;width:1px;height:38px;background:linear-gradient(to bottom,rgba(41,128,185,.35),transparent)}
@@ -341,7 +343,7 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
-@media(min-width:961px){.hero-inner{grid-template-columns:1fr 480px}.hero-card{margin-left:12px;margin-top:-14px}.cap-stack{margin-left:26px;margin-top:-14px}}
+@media(min-width:961px){.hero-inner{max-width:1280px;grid-template-columns:minmax(0,1fr) 600px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.cap-stack{margin-left:26px;margin-top:-14px}}
 @media(max-width:960px){.research-grid{grid-template-columns:1fr}}
 .edu-single-layout,.cert-single-layout{max-width:760px}
 .cert-single-layout .cert-item{margin-bottom:12px}
@@ -465,6 +467,7 @@ footer span{color:var(--sky);font-weight:600}
 .fs-content .fs-doc p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;word-break:break-all}
 
 @media(max-width:960px){
+.hero-stats{grid-template-columns:1fr 1fr}
 nav{padding:0 22px}.nav-links{display:none}.nav-burger{display:flex}
 section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-template-columns:1fr;gap:40px}
 .hero-card{display:none}.about-grid,.edu-layout,.intern-row{grid-template-columns:1fr}
@@ -581,7 +584,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="expEy">Work History</div><h2 class="sec-title" id="expTitle">Professional <em>Experience</em></h2><div class="sec-divider"></div><p class="sec-desc" id="expDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('exp')">✎ Edit Header</button></div></div>
 <div class="exp-timeline" id="expTimeline"></div>
-<div style="margin-top:30px"><h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:16px">Internships</h3>
+<div id="internships" style="margin-top:30px"><h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:16px">Internships</h3>
 <div class="intern-row" id="internRow"></div>
 <div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-add" onclick="addIntern()">＋ Add Internship</button></div></div>
 </div></section>
@@ -996,31 +999,37 @@ function renderLogo(){if(data.logoPic){$('logoImg').src=data.logoPic;$('logoImg'
 // ════════ HERO with EDITABLE TITLES ════════
 function renderHero(){
 $('heroTagName').textContent=data.hero.eyebrowName;$('heroLine1').textContent=data.hero.line1;$('heroLine2').textContent=data.hero.line2;$('heroLine3').textContent=data.hero.line3;$('heroDesc').innerHTML=data.hero.desc;$('navName').textContent=data.hero.eyebrowName;
-
-// Each title now has edit/remove buttons
 $('heroTitles').innerHTML=data.hero.titles.map(t=>`
 <div class="hero-title-item">
 <div class="hero-title-row"><span class="hticon hticon-${t.color}">${t.icon}</span><span>${esc(t.text)}</span></div>
-<div class="hero-title-actions">
-<button class="hta-btn hta-edit" onclick="editHeroTitle(${t.id})" title="Edit">✎</button>
-<button class="hta-btn hta-rm" onclick="removeHeroTitle(${t.id})" title="Remove">✕</button>
-</div>
-</div>
-`).join('');
-
+<div class="hero-title-actions"><button class="hta-btn hta-edit" onclick="editHeroTitle(${t.id})" title="Edit">✎</button><button class="hta-btn hta-rm" onclick="removeHeroTitle(${t.id})" title="Remove">✕</button></div>
+</div>`).join('');
 $('chipWrap').innerHTML=data.hero.keywords.map((k,i)=>`<span class="chip chip-${k.type}">${esc(k.text)}<button class="chip-x" onclick="removeKeyword(${i})">✕</button></span>`).join('');
-
-let total=0;
+const jump=(value,label,target,extra='')=>`<a class="hstat ${extra}" href="#${target}" onclick="event.preventDefault();document.getElementById('${target}')?.scrollIntoView({behavior:'smooth'})"><div class="hstat-num">${esc(String(value))}</div><div class="hstat-label">${esc(label)}</div></a>`;
+const projectJump=(value,label,key,extra='')=>`<a class="hstat ${extra}" href="#projects" onclick="event.preventDefault();scrollAndTab('${key}')"><div class="hstat-num">${esc(String(value))}</div><div class="hstat-label">${esc(label)}</div></a>`;
+const categories=data.projectCategories||[];
+const totalProjects=categories.reduce((sum,cat)=>sum+(data.projects[cat.key]||[]).length,0);
+const degreeList=data.education?.degrees||[];
+const findDegree=matcher=>degreeList.find(item=>matcher.test(`${item.deg||''} ${item.sch||''}`));
+const grade=degree=>degree&&degree.gpa?String(degree.gpa).replace(/^CGPA:\s*/i,''):'—';
+const bsc=findDegree(/b\.?\s*sc|mechanical engineering/i);
+const fsc=findDegree(/f\.?\s*sc|pre-engineering/i);
+const ssc=findDegree(/ssc|science/i);
+const researchCount=(data.research&&Array.isArray(data.research.items))?data.research.items.length:0;
 let statsHtml='';
-data.projectCategories.forEach(cat=>{
-const count=(data.projects[cat.key]||[]).length;
-total+=count;
-statsHtml+=`<a class="hstat" href="#projects" onclick="event.preventDefault();scrollAndTab('${cat.key}')"><div class="hstat-num">${count}</div><div class="hstat-label">${esc(cat.name)}</div></a>`;
-});
-statsHtml=`<a class="hstat hstat-total" href="#projects" onclick="event.preventDefault();document.querySelector('#projects').scrollIntoView({behavior:'smooth'})"><div class="hstat-num">${total}</div><div class="hstat-label">Total Projects</div></a>`+statsHtml;
-const certCount=data.education.certs.length;
-statsHtml+=`<a class="hstat" href="#education" onclick="event.preventDefault();document.querySelector('#education').scrollIntoView({behavior:'smooth'})"><div class="hstat-num">3.53</div><div class="hstat-label">CGPA — UET</div></a>`;
-statsHtml+=`<a class="hstat" href="#education" onclick="event.preventDefault();document.querySelector('#education').scrollIntoView({behavior:'smooth'})"><div class="hstat-num">${certCount}</div><div class="hstat-label">Certifications</div></a>`;
+statsHtml+=jump((data.experiences||[]).length,'Professional Experience','experience');
+statsHtml+=jump((data.interns||[]).length,'Internships','internships');
+statsHtml+=jump(totalProjects,'Total Projects','projects','hstat-total');
+statsHtml+=jump((data.gallery||[]).length,'Projects Work','projectwork');
+statsHtml+=jump(degreeList.length,'Education','education');
+statsHtml+=jump(researchCount,'Research & Publications','research');
+statsHtml+=jump((data.education?.certs||[]).length,'Certifications','certifications');
+statsHtml+='<div class="hstat-group-label">Project Breakdown</div>';
+categories.forEach(cat=>{statsHtml+=projectJump((data.projects[cat.key]||[]).length,cat.name,cat.key,'hstat-mini')});
+statsHtml+='<div class="hstat-group-label">Academic Snapshot</div>';
+statsHtml+=jump(grade(bsc),'CGPA — UET Mardan','education','hstat-mini');
+statsHtml+=jump(grade(fsc),'F.Sc Pre-Engineering','education','hstat-mini');
+statsHtml+=jump(grade(ssc),'SSC — Science','education','hstat-mini');
 $('heroStats').innerHTML=statsHtml;
 }
 

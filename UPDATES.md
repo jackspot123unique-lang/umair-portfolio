@@ -27,3 +27,11 @@ The visual design, colors, animations, layout and existing working integrations 
 - Research item types include Research Paper, Conference Paper, Technical Research, Thesis / Dissertation, Case Study and Other.
 - Core Expertise / Portfolio Status card is wider and slightly raised/right-aligned on desktop.
 - Capability cards are slightly shifted right and upward on desktop without affecting mobile layout.
+
+## Expanded Portfolio Status dashboard
+
+- Core Expertise / Portfolio Status desktop card is widened to 600px and the hero layout is expanded while retaining mobile responsiveness.
+- Portfolio Status now shows live linked counts for Professional Experience, Internships, Total Projects, Projects Work, Education, Research & Publications, and Certifications.
+- Added Project Breakdown cards for each current project category.
+- Added Academic Snapshot cards for CGPA — UET Mardan, F.Sc Pre-Engineering, and SSC — Science. Their values read automatically from the Education records.
+- Each status card scrolls to its related portfolio section. Project category cards open the matching Project Portfolio tab.
