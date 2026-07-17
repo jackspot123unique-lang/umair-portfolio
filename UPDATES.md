@@ -67,3 +67,11 @@ The visual design, colors, animations, layout and existing working integrations 
 - Reduced Professional Experience and Internship date value font size to keep date ranges clean in their breakdown cards.
 - Reduced Academic Snapshot GPA/marks value size.
 - Expanded the About and Certifications containers to 1320px on desktop, widening the two Capability columns and both Certification columns.
+
+## Status colors, compact values and research width update
+
+- Restored the original sky-blue and muted Portfolio Status text palette.
+- Reduced Academic Snapshot GPA/marks values to 12px and breakdown dates to 7.5px.
+- Projects Work Breakdown now uses live category counts, matching Project Breakdown behavior.
+- Research & Publications Breakdown now uses automatic 1, 2, 3… item numbering.
+- Research & Publications cards now use the same wide 1320px two-column desktop layout as Certifications.

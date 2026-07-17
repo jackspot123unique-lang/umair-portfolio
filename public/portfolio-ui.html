@@ -174,14 +174,14 @@ body.admin-mode .chip-x{display:inline-flex}
 .hstat{background:rgba(41,128,185,.07);border:1px solid rgba(41,128,185,.13);border-radius:12px;padding:12px 8px;text-align:center;transition:all var(--tr);cursor:pointer;text-decoration:none;display:block;min-width:0}
 .hstat:hover{background:rgba(41,128,185,.15);transform:scale(1.04);box-shadow:var(--shadow-sm)}
 .hstat-total{background:linear-gradient(135deg,rgba(41,128,185,.18),rgba(26,188,156,.18));border:1px solid rgba(41,128,185,.3)}
-.hstat-total .hstat-num{color:var(--navy);font-size:28px}
-.hstat-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);line-height:1;font-weight:700}
-.hstat-label{font-size:8.4px;color:var(--text);font-weight:700;letter-spacing:.55px;text-transform:uppercase;margin-top:5px;line-height:1.28}
-.hstat-group-label{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--navy);font-weight:700;padding:8px 2px 1px;border-top:1px dashed rgba(41,128,185,.20);margin-top:3px}
-.hstat-mini{padding:9px 6px;border-radius:9px}.hstat-mini .hstat-num{font-size:18px}.hstat-mini .hstat-label{font-size:7.6px;color:var(--navy)}
-.hstat-academic .hstat-num{font-size:14px}.hstat-academic .hstat-label{font-size:7.2px}
+.hstat-total .hstat-num{color:var(--sky);font-size:28px}
+.hstat-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--sky);line-height:1;font-weight:700}
+.hstat-label{font-size:8.4px;color:var(--muted);letter-spacing:.55px;text-transform:uppercase;margin-top:5px;line-height:1.28}
+.hstat-group-label{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);padding:8px 2px 1px;border-top:1px dashed rgba(41,128,185,.20);margin-top:3px}
+.hstat-mini{padding:9px 6px;border-radius:9px}.hstat-mini .hstat-num{font-size:18px}.hstat-mini .hstat-label{font-size:7.6px}
+.hstat-academic .hstat-num{font-size:12px}.hstat-academic .hstat-label{font-size:7.2px}
 .hstat-main{background:linear-gradient(135deg,rgba(41,128,185,.12),rgba(26,188,156,.09));border-color:rgba(41,128,185,.26)}
-.hstat-date .hstat-num{font-family:'JetBrains Mono',monospace;font-size:8px;line-height:1.25;white-space:normal;color:var(--navy)}
+.hstat-date .hstat-num{font-family:'JetBrains Mono',monospace;font-size:7.5px;line-height:1.25;white-space:normal;color:var(--sky)}
 
 .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;animation:bd 2.2s ease-in-out infinite}
 .scroll-hint::after{content:'';display:block;width:1px;height:38px;background:linear-gradient(to bottom,rgba(41,128,185,.35),transparent)}
@@ -343,7 +343,8 @@ body.admin-mode .sp-x{display:inline-block}
 #about .about-grid{grid-template-columns:minmax(360px,.85fr) minmax(0,1.85fr);gap:52px}
 .edu-single-layout{max-width:860px}.cert-single-layout{max-width:100%}
 #research{background:var(--bg2)}
-.research-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
+#research .container{max-width:1320px}
+.research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .research-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:23px 24px;box-shadow:var(--shadow-sm);transition:all var(--tr)}
 .research-card:hover{border-color:var(--sky);box-shadow:var(--shadow);transform:translateY(-3px)}
 .research-type{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--teal);letter-spacing:1.7px;text-transform:uppercase;margin-bottom:7px}
@@ -1019,6 +1020,7 @@ const projectJump=(value,label,key,extra='')=>`<a class="hstat ${extra}" href="#
 const group=label=>`<div class="hstat-group-label">${esc(label)}</div>`;
 const categories=data.projectCategories||[];
 const experiences=data.experiences||[],interns=data.interns||[],projectWork=data.gallery||[];
+const projectWorkCategories=[...new Set([...(data.galleryCategories||[]),...projectWork.map(item=>item.cat).filter(Boolean)])];
 const totalProjects=categories.reduce((sum,cat)=>sum+(data.projects[cat.key]||[]).length,0);
 const researchItems=(data.research&&Array.isArray(data.research.items))?data.research.items:[];
 const degreeList=data.education?.degrees||[];
@@ -1054,9 +1056,9 @@ statsHtml+=detail(interns,'Internship','internships',item=>item.title||'Internsh
 statsHtml+=group('Project Breakdown');
 statsHtml+=categories.length?categories.map(cat=>projectJump((data.projects[cat.key]||[]).length,cat.name,cat.key,'hstat-mini')).join(''):jump(0,'No Project Categories','projects','hstat-mini');
 statsHtml+=group('Projects Work Breakdown');
-statsHtml+=detail(projectWork,'Project Work','projectwork',item=>item.title||item.cat||'Project Work');
+statsHtml+=projectWorkCategories.length?projectWorkCategories.map(category=>jump(projectWork.filter(item=>item.cat===category).length,category,'projectwork','hstat-mini')).join(''):jump(0,'No Project Work Categories','projectwork','hstat-mini');
 statsHtml+=group('Research & Publications Breakdown');
-statsHtml+=detail(researchItems,'Research Item','research',item=>item.title||item.type||'Research Item');
+statsHtml+=detail(researchItems,'Research Item','research',item=>item.title||item.type||'Research Item',(item,index)=>index+1);
 $('heroStats').innerHTML=statsHtml;
 }
 
