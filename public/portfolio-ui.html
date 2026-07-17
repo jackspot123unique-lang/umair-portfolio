@@ -332,6 +332,17 @@ body.admin-mode .sp-x{display:inline-block}
 
 #education{background:var(--bg2)}
 #certifications{background:var(--white)}
+#research{background:var(--bg2)}
+.research-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
+.research-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:23px 24px;box-shadow:var(--shadow-sm);transition:all var(--tr)}
+.research-card:hover{border-color:var(--sky);box-shadow:var(--shadow);transform:translateY(-3px)}
+.research-type{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--teal);letter-spacing:1.7px;text-transform:uppercase;margin-bottom:7px}
+.research-card-title{font-family:'Playfair Display',serif;font-size:20px;line-height:1.25;color:var(--navy);margin-bottom:7px}
+.research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
+.research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
+.research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
+@media(min-width:961px){.hero-inner{grid-template-columns:1fr 480px}.hero-card{margin-left:12px;margin-top:-14px}.cap-stack{margin-left:26px;margin-top:-14px}}
+@media(max-width:960px){.research-grid{grid-template-columns:1fr}}
 .edu-single-layout,.cert-single-layout{max-width:760px}
 .cert-single-layout .cert-item{margin-bottom:12px}
 .edu-layout{display:grid;grid-template-columns:1fr 1fr;gap:44px}
@@ -501,7 +512,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <li><a href="#about">About</a></li><li><a href="#competence">Competence</a></li>
 <li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li>
 <li><a href="#projectwork">Gallery</a></li><li><a href="#skills">Skills</a></li>
-<li><a href="#education">Education</a></li><li><a href="#certifications">Certifications</a></li><li><a href="#contact">Contact</a></li>
+<li><a href="#education">Education</a></li><li><a href="#research">Research</a></li><li><a href="#certifications">Certifications</a></li><li><a href="#contact">Contact</a></li>
 </ul>
 <button class="nav-burger" id="burger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
 </nav>
@@ -509,7 +520,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <a href="#about" onclick="closeMobile()">About</a><a href="#competence" onclick="closeMobile()">Competence</a>
 <a href="#experience" onclick="closeMobile()">Experience</a><a href="#projects" onclick="closeMobile()">Projects</a>
 <a href="#projectwork" onclick="closeMobile()">Gallery</a><a href="#skills" onclick="closeMobile()">Skills</a>
-<a href="#education" onclick="closeMobile()">Education</a><a href="#certifications" onclick="closeMobile()">Certifications</a><a href="#contact" onclick="closeMobile()">Contact</a>
+<a href="#education" onclick="closeMobile()">Education</a><a href="#research" onclick="closeMobile()">Research</a><a href="#certifications" onclick="closeMobile()">Certifications</a><a href="#contact" onclick="closeMobile()">Contact</a>
 </nav>
 
 <section class="hero" id="home">
@@ -604,6 +615,12 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="edu-single-layout"><div class="reveal"><div class="edu-col-title"><span>Academic Degrees</span><button class="cc-btn cc-add" onclick="addDegree()" style="display:none;font-size:10px;padding:5px 10px" id="addDegBtn">＋ Add</button></div><div id="degList"></div></div></div>
 </div></section>
 
+<section id="research"><button class="sec-add-btn" onclick="addResearchItem()">＋ Add Research Item</button>
+<div class="container">
+<div class="sec-head reveal"><div class="sec-eyebrow" id="researchEy">Academic Contribution</div><h2 class="sec-title" id="researchTitle">Research & <em>Publications</em></h2><div class="sec-divider"></div><p class="sec-desc" id="researchDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('research')">✎ Edit Header</button></div></div>
+<div class="research-grid" id="researchGrid"></div>
+</div></section>
+
 <section id="certifications"><div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="certEy">Professional Development</div><h2 class="sec-title" id="certTitle">Certifications & <em>Workshops</em></h2><div class="sec-divider"></div><p class="sec-desc" id="certDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('cert')">✎ Edit Header</button></div></div>
 <div class="cert-single-layout reveal"><div class="edu-col-title"><span>Certifications & Workshops</span><button class="cc-btn cc-add" onclick="addCert()" style="display:none;font-size:10px;padding:5px 10px" id="addCertBtn">＋ Add</button></div><div id="certList"></div></div>
@@ -664,7 +681,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 const DIRECT_UPLOAD_THRESHOLD=64*1024*1024; // files above this use multipart R2 uploads
 const CLOUD_API='/api';
 
-let isAdmin=false,editContext=null,pendingFiles=[];
+let isAdmin=false,editContext=null,pendingFiles=[],activeProjectCategory=null;
 
 let data={
 profilePic:null,logoPic:null,
@@ -827,7 +844,18 @@ if(!del){e.textContent=phrase.slice(0,++ci);if(ci===phrase.length){del=true;setT
 else{e.textContent=phrase.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(typeLoop,300);return}setTimeout(typeLoop,30)}
 }
 
-function showTab(key,btn){document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));const pane=document.getElementById('tp-'+key);if(pane)pane.classList.add('on');if(btn)btn.classList.add('on')}
+const PROJECT_TAB_STORAGE='portfolio_active_project_category';
+function setActiveProjectCategory(key){
+activeProjectCategory=key;
+try{if(key)sessionStorage.setItem(PROJECT_TAB_STORAGE,key);else sessionStorage.removeItem(PROJECT_TAB_STORAGE)}catch{}
+}
+function showTab(key,btn){
+setActiveProjectCategory(key);
+document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+const pane=document.getElementById('tp-'+key);if(pane)pane.classList.add('on');
+if(btn)btn.classList.add('on');
+}
 
 function toggleAdmin(){if(isAdmin){lockAdmin();return}$('pwdOverlay').classList.add('open');setTimeout(()=>$('pwdInput').focus(),200)}
 function closePwdModal(){$('pwdOverlay').classList.remove('open');$('pwdInput').value='';$('pwdError').textContent='';$('pwdInput').classList.remove('wrong')}
@@ -942,6 +970,7 @@ if(o)f=o.files[idx];
 else if(type==='deg'){const o=data.education.degrees.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='cert'){const o=data.education.certs.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='gal'){const o=data.gallery.find(x=>x.id===id);if(o)f=o.files[idx]}
+else if(type==='research'){const o=(data.research&&data.research.items||[]).find(x=>x.id===id);if(o)f=o.files[idx]}
 if(f)openFsPreview(f);
 }
 
@@ -955,6 +984,7 @@ else if(type==='proj')target=projectCategory?(data.projects[projectCategory]||[]
 else if(type==='deg')target=data.education.degrees.find(x=>x.id===id);
 else if(type==='cert')target=data.education.certs.find(x=>x.id===id);
 else if(type==='gal')target=data.gallery.find(x=>x.id===id);
+else if(type==='research')target=(data.research&&data.research.items||[]).find(x=>x.id===id);
 if(target&&target.files){target.files.splice(idx,1);renderAll();savePortfolio(true);showToast('🗑️ File removed','info')}
 }
 
@@ -1077,13 +1107,19 @@ else if(type==='int')t=data.interns.find(x=>x.id===id);
 else if(type==='deg')t=data.education.degrees.find(x=>x.id===id);
 else if(type==='cert')t=data.education.certs.find(x=>x.id===id);
 else if(type==='proj')t=projectCategory?(data.projects[projectCategory]||[]).find(x=>x.id===id):Object.values(data.projects).flat().find(x=>x.id===id);
+else if(type==='research')t=(data.research&&data.research.items||[]).find(x=>x.id===id);
 if(t){if(!t.files)t.files=[];t.files=t.files.concat(v._files||[]);renderAll();showToast(`✅ ${(v._files||[]).length} file(s) uploaded!`,'success')}})}
 
 function renderProjectTabs(){
-const tabs=$('projTabs');const panes=$('projPanes');
-tabs.innerHTML=data.projectCategories.map((c,i)=>`<button class="ptab ${i===0?'on':''}" data-key="${c.key}" onclick="showTab('${c.key}',this)"><span class="ptab-dot" style="background:${c.color}"></span>${esc(c.name)}<span class="ptab-x" onclick="event.stopPropagation();removeProjectCategoryById('${c.key}')">✕</span></button>`).join('');
-panes.innerHTML=data.projectCategories.map((c,i)=>{const isFyp=c.key==='fyp';return `<div class="tab-pane ${i===0?'on':''}${isFyp?' full':''}" id="tp-${c.key}"></div>`}).join('');
+const tabs=$('projTabs'),panes=$('projPanes');
+// Keep the selected category through every render/save/upload instead of resetting to BIM/MEP.
+if(!activeProjectCategory){try{activeProjectCategory=sessionStorage.getItem(PROJECT_TAB_STORAGE)}catch{}}
+const valid=data.projectCategories.some(c=>c.key===activeProjectCategory);
+if(!valid)setActiveProjectCategory(data.projectCategories[0]?.key||null);
+tabs.innerHTML=data.projectCategories.map(c=>`<button class="ptab ${c.key===activeProjectCategory?'on':''}" data-key="${c.key}" onclick="showTab('${c.key}',this)"><span class="ptab-dot" style="background:${c.color}"></span>${esc(c.name)}<span class="ptab-x" onclick="event.stopPropagation();removeProjectCategoryById('${c.key}')">✕</span></button>`).join('');
+panes.innerHTML=data.projectCategories.map(c=>{const isFyp=c.key==='fyp';return `<div class="tab-pane ${c.key===activeProjectCategory?'on':''}${isFyp?' full':''}" id="tp-${c.key}"></div>`}).join('');
 }
+
 function renderProjects(){
 renderProjectTabs();
 data.projectCategories.forEach(cat=>{
@@ -1097,13 +1133,13 @@ return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p
 });
 }
 
-function addProjectCategory(){openEditModal('Add Project Category','',[{type:'text',key:'name',label:'Category Name',required:true},{type:'text',key:'icon',label:'Emoji',value:'📂'},{type:'text',key:'color',label:'Color (hex)',value:'#3498db'}],v=>{if(!v.name)return;const key=v.name.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key,name:v.name,color:v.color,icon:v.icon});data.projects[key]=[];renderAll()})}
+function addProjectCategory(){openEditModal('Add Project Category','',[{type:'text',key:'name',label:'Category Name',required:true},{type:'text',key:'icon',label:'Emoji',value:'📂'},{type:'text',key:'color',label:'Color (hex)',value:'#3498db'}],v=>{if(!v.name)return;const key=v.name.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key,name:v.name,color:v.color,icon:v.icon});data.projects[key]=[];setActiveProjectCategory(key);renderAll()})}
 
 function removeProjectCategoryModal(){if(!isAdmin)return;const opts=data.projectCategories.map(c=>({value:c.key,label:c.icon+' '+c.name}));openEditModal('Remove Project Category','⚠️ Will delete category AND all its projects',[{type:'select',key:'cat',label:'Select to Remove',value:opts[0]?.value,options:opts}],v=>{removeProjectCategoryById(v.cat)})}
 
-function removeProjectCategoryById(key){if(!isAdmin)return;if(!confirm('Remove this category and ALL its projects?'))return;data.projectCategories=data.projectCategories.filter(c=>c.key!==key);delete data.projects[key];renderAll();savePortfolio(true);showToast('🗑️ Category removed','info')}
+function removeProjectCategoryById(key){if(!isAdmin)return;if(!confirm('Remove this category and ALL its projects?'))return;data.projectCategories=data.projectCategories.filter(c=>c.key!==key);delete data.projects[key];if(activeProjectCategory===key)setActiveProjectCategory(null);renderAll();savePortfolio(true);showToast('🗑️ Category removed','info')}
 
-function addProject(){const catOpts=data.projectCategories.map(c=>({value:c.key,label:c.icon+' '+c.name}));openEditModal('Add Project','',[{type:'select',key:'cat',label:'Category',value:data.projectCategories[0]?.key||'bim',options:catOpts,allowCustom:true},{type:'text',key:'num',label:'Project Number / Tag',required:true},{type:'text',key:'name',label:'Project Name',required:true},{type:'text',key:'sub',label:'Subtitle (optional)'},{type:'textarea',key:'desc',label:'Description',required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Revit MEP, Navisworks, HVAC'},{type:'files',key:'files',label:'Upload Files'}],v=>{let catKey=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){const nm=custom.value.trim();catKey=nm.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key:catKey,name:nm,color:'#3498db',icon:'📂'});data.projects[catKey]=[]}const p={id:uid(),num:v.num,name:v.name,sub:v.sub,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]};if(!data.projects[catKey])data.projects[catKey]=[];data.projects[catKey].push(p);renderAll()},true)}
+function addProject(){const catOpts=data.projectCategories.map(c=>({value:c.key,label:c.icon+' '+c.name}));openEditModal('Add Project','',[{type:'select',key:'cat',label:'Category',value:activeProjectCategory||data.projectCategories[0]?.key||'bim',options:catOpts,allowCustom:true},{type:'text',key:'num',label:'Project Number / Tag',required:true},{type:'text',key:'name',label:'Project Name',required:true},{type:'text',key:'sub',label:'Subtitle (optional)'},{type:'textarea',key:'desc',label:'Description',required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Revit MEP, Navisworks, HVAC'},{type:'files',key:'files',label:'Upload Files'}],v=>{let catKey=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){const nm=custom.value.trim();catKey=nm.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key:catKey,name:nm,color:'#3498db',icon:'📂'});data.projects[catKey]=[]}const p={id:uid(),num:v.num,name:v.name,sub:v.sub,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]};if(!data.projects[catKey])data.projects[catKey]=[];data.projects[catKey].push(p);setActiveProjectCategory(catKey);renderAll()},true)}
 
 function editProject(cat,id){const p=(data.projects[cat]||[]).find(x=>x.id===id);if(!p)return;const f=[{type:'text',key:'num',label:'Project Number',value:p.num,required:true},{type:'text',key:'name',label:'Project Name',value:p.name,required:true},{type:'text',key:'sub',label:'Subtitle',value:p.sub||''},{type:'textarea',key:'desc',label:'Description',value:p.desc,required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',value:(p.tags||[]).join(', ')}];openEditModal('Edit Project','',f,v=>{p.num=v.num;p.name=v.name;p.sub=v.sub;p.desc=v.desc;p.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);renderAll()},true)}
 function removeProject(cat,id){if(!confirm('Remove?'))return;data.projects[cat]=data.projects[cat].filter(x=>x.id!==id);renderAll();savePortfolio(true)}
@@ -1133,6 +1169,29 @@ function removeSkill(cid,si){if(!isAdmin)return;const c=data.skills.categories.f
 function addSkillBar(){openEditModal('Add Skill Bar','',[{type:'text',key:'name',label:'Skill Name',required:true},{type:'text',key:'pct',label:'Percentage (0-100)',value:'80',required:true}],v=>{const p=parseInt(v.pct);if(isNaN(p))return;data.skills.bars.push({name:v.name,pct:Math.max(0,Math.min(100,p))});renderSkills()})}
 function editSkillBar(i){const b=data.skills.bars[i];if(!b)return;openEditModal('Edit Skill Bar','',[{type:'text',key:'name',label:'Name',value:b.name,required:true},{type:'text',key:'pct',label:'Percentage',value:String(b.pct),required:true}],v=>{b.name=v.name;b.pct=Math.max(0,Math.min(100,parseInt(v.pct)||0));renderSkills()})}
 function removeSkillBar(i){if(!confirm('Remove?'))return;data.skills.bars.splice(i,1);renderSkills();savePortfolio(true)}
+
+function ensureResearchContent(){
+if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[]};
+if(!Array.isArray(data.research.items))data.research.items=[];
+}
+
+function safeResearchUrl(value){try{const url=new URL((value||'').trim());return['http:','https:'].includes(url.protocol)?url.href:''}catch{return''}}
+function renderResearch(){
+ensureResearchContent();
+$('researchEy').textContent=data.research.eyebrow;$('researchTitle').innerHTML=data.research.title;$('researchDesc').textContent=data.research.desc||'';
+$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>`<article class="research-card reveal"><div class="research-type">${esc(item.type||'Research Work')}</div><h3 class="research-card-title">${esc(item.title)}</h3>${item.venue||item.date||item.authors?`<div class="research-meta">${[item.venue,item.date,item.authors].filter(Boolean).map(esc).join(' · ')}</div>`:''}${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
+}
+function researchFields(item={}){return[
+{type:'text',key:'title',label:'Research Title',value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
+{type:'select',key:'type',label:'Research Type',value:item.type||'Research Paper',options:[{value:'Research Paper',label:'Research Paper'},{value:'Conference Paper',label:'Conference Paper'},{value:'Technical Research',label:'Technical Research'},{value:'Thesis / Dissertation',label:'Thesis / Dissertation'},{value:'Case Study',label:'Case Study'},{value:'Other',label:'Other'}]},
+{type:'text',key:'venue',label:'Journal / Conference / Institution',value:item.venue||'',placeholder:'Publication venue or institution'},
+{type:'row',fields:[{type:'text',key:'date',label:'Publication Year / Date',value:item.date||'',placeholder:'e.g. 2026'},{type:'text',key:'authors',label:'Authors',value:item.authors||'',placeholder:'e.g. Umair Ahmad et al.'}]},
+{type:'textarea',key:'desc',label:'Abstract / Description',value:item.desc||'',rows:5,placeholder:'Brief research summary'},
+{type:'text',key:'url',label:'Research URL (optional)',value:item.url||'',placeholder:'https://doi.org/... or publication URL'}
+]}
+function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderResearch()},true)}
+function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderResearch()},true)}
+function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderResearch();savePortfolio(true)}
 
 function ensureSeparatedEducationContent(){
 if(!data.education)data.education={};
@@ -1171,7 +1230,7 @@ function addContactCard(){openEditModal('Add Contact Card','',[{type:'text',key:
 function editContactCard(id){const c=data.contact.cards.find(x=>x.id===id);if(!c)return;openEditModal('Edit Contact Card','',[{type:'text',key:'icon',label:'Emoji',value:c.icon},{type:'text',key:'label',label:'Label',value:c.label,required:true},{type:'text',key:'value',label:'Value',value:c.value,required:true},{type:'text',key:'link',label:'Link',value:c.link}],v=>{c.icon=v.icon;c.label=v.label;c.value=v.value;c.link=v.link;renderContact()})}
 function removeContactCard(id){if(!confirm('Remove?'))return;data.contact.cards=data.contact.cards.filter(x=>x.id!==id);renderContact();savePortfolio(true)}
 
-function editSectionHeader(key){const map={about:{o:data.about},cc:{o:data.cc},exp:{o:{eyebrow:$('expEy').textContent,title:$('expTitle').innerHTML,desc:$('expDesc').textContent}},proj:{o:{eyebrow:$('projEy').textContent,title:$('projTitle').innerHTML,desc:$('projDesc').textContent}},pw:{o:{eyebrow:$('pwEy').textContent,title:$('pwTitleEl').innerHTML,desc:$('pwDesc').textContent}},sk:{o:data.skills},edu:{o:data.education},cert:{o:data.certifications},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
+function editSectionHeader(key){const map={about:{o:data.about},cc:{o:data.cc},exp:{o:{eyebrow:$('expEy').textContent,title:$('expTitle').innerHTML,desc:$('expDesc').textContent}},proj:{o:{eyebrow:$('projEy').textContent,title:$('projTitle').innerHTML,desc:$('projDesc').textContent}},pw:{o:{eyebrow:$('pwEy').textContent,title:$('pwTitleEl').innerHTML,desc:$('pwDesc').textContent}},sk:{o:data.skills},edu:{o:data.education},research:{o:data.research},cert:{o:data.certifications},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
 
 // ════════ CONTACT FORM — secure server API ════════
 function sendMessage(){
@@ -1187,9 +1246,9 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 .finally(()=>{btn.disabled=false;btn.style.opacity='1'});
 }
 
-function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderGallery();renderSkills();renderEducation();renderContact();attachReveal()}
+function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderGallery();renderSkills();renderEducation();renderResearch();renderContact();attachReveal()}
 
-async function bootPortfolio(){await loadData();ensureSeparatedEducationContent();renderAll();setTimeout(typeLoop,800)}
+async function bootPortfolio(){await loadData();ensureSeparatedEducationContent();ensureResearchContent();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();
 </script>
 </body>

@@ -11,7 +11,7 @@ Existing deployed integrations remain unchanged:
 
 ## This revision
 
-See [UPDATES.md](./UPDATES.md) for the new role animation, tag controls, category-correct uploads, compact Projects Work cards, separated Education/Certifications sections, and public preview restrictions.
+See [UPDATES.md](./UPDATES.md) for the new role animation, tag controls, category-correct uploads, compact Projects Work cards, separated Education/Certifications sections, Research & Publications management, layout refinements, and public preview behavior.
 
 ## Important source files
 

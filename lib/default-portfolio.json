@@ -752,5 +752,11 @@
     "eyebrow": "Professional Development",
     "title": "Certifications & <em>Workshops</em>",
     "desc": "Professional certifications, workshops and continuing learning."
+  },
+  "research": {
+    "eyebrow": "Academic Contribution",
+    "title": "Research & <em>Publications</em>",
+    "desc": "Research papers, technical studies and academic publications.",
+    "items": []
   }
 }
