@@ -51,3 +51,11 @@ The visual design, colors, animations, layout and existing working integrations 
 ## CGPA label
 
 - Changed the Academic Snapshot label from **CGPA — UET Mardan** to **CGPA — B.Sc. Mechanical Engineering**.
+
+## Hero, layout and justified-text refinements
+
+- Shifted the desktop hero profile circle to align above the left Mechanical BIM Engineer content and enlarged it to 205px. The mobile profile layout remains centered and responsive.
+- Experience and Internship breakdown cards now show their real date/duration instead of numeric 1, 2, 3 values.
+- Changed About to a three-column desktop composition: one About column plus two Capability columns.
+- Changed Certifications & Workshops to a two-column desktop grid.
+- Added justified text alignment to Professional Experience bullets, Internship descriptions, Project Portfolio descriptions, Projects Work descriptions, Research descriptions, About text and Capability descriptions.

@@ -180,6 +180,7 @@ body.admin-mode .chip-x{display:inline-flex}
 .hstat-group-label{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);padding:8px 2px 1px;border-top:1px dashed rgba(41,128,185,.20);margin-top:3px}
 .hstat-mini{padding:9px 6px;border-radius:9px}.hstat-mini .hstat-num{font-size:18px}.hstat-mini .hstat-label{font-size:7.6px}
 .hstat-main{background:linear-gradient(135deg,rgba(41,128,185,.12),rgba(26,188,156,.09));border-color:rgba(41,128,185,.26)}
+.hstat-date .hstat-num{font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.25;white-space:normal}
 
 .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;animation:bd 2.2s ease-in-out infinite}
 .scroll-hint::after{content:'';display:block;width:1px;height:38px;background:linear-gradient(to bottom,rgba(41,128,185,.35),transparent)}
@@ -201,7 +202,7 @@ section{padding:96px 56px;position:relative}
 .reveal-right.visible{opacity:1;transform:translateX(0)}
 
 #about{background:var(--white)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.about-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.58fr);gap:48px;align-items:start}
 .about-block{margin-bottom:26px}
 .about-block-header{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .abt-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -212,7 +213,8 @@ section{padding:96px 56px;position:relative}
 .info-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:7px 14px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text)}
 .ip-x{display:none;background:none;border:none;cursor:pointer;color:var(--red);font-weight:700;padding:0;margin-left:4px}
 body.admin-mode .ip-x{display:inline-block}
-.cap-stack{display:flex;flex-direction:column;gap:12px}
+.cap-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.cap-stack>.card-ctrl{grid-column:1/-1}
 .cap-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:all var(--tr)}
 .cap-card:hover{border-color:var(--sky);box-shadow:var(--shadow);background:var(--white)}
 .cap-card-row{display:flex;gap:14px;align-items:flex-start}
@@ -243,6 +245,7 @@ body.admin-mode .ip-x{display:inline-block}
 .exp-list li{display:flex;gap:12px;font-size:13.5px;color:var(--muted);line-height:1.68}
 .exp-list li::before{content:'▸';color:var(--teal);flex-shrink:0;margin-top:1px}
 .exp-list li strong{color:var(--text)}
+.exp-list li span,.intern-desc,.pcard-desc,.pw-item-desc,.research-desc,.about-block p,.cap-desc{text-align:justify;text-justify:inter-word;hyphens:auto}
 .tag-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
 .tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;background:rgba(41,128,185,.08);border:1px solid rgba(41,128,185,.20);color:var(--sky)}
 
@@ -344,11 +347,13 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
-@media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.cap-stack{margin-left:26px;margin-top:-14px}}
+@media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:205px;height:205px;border-width:6px}.profile-pic .profile-initial{font-size:76px}.cap-stack{margin-left:18px;margin-top:-14px}}
 @media(min-width:1200px){.hero-inner{max-width:1460px;grid-template-columns:minmax(0,1fr) 720px}.hero-card{margin-left:18px;padding:30px 28px}.hero-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hstat{padding:13px 8px}.hstat-num{font-size:23px}.hstat-mini{padding:10px 6px}.hstat-mini .hstat-num{font-size:18px}}
 @media(max-width:960px){.research-grid{grid-template-columns:1fr}}
 .edu-single-layout,.cert-single-layout{max-width:760px}
 .cert-single-layout .cert-item{margin-bottom:12px}
+#certList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#certList .cert-item{margin-bottom:0}
 .edu-layout{display:grid;grid-template-columns:1fr 1fr;gap:44px}
 .edu-col-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
 .edu-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:12px;transition:all var(--tr)}
@@ -470,6 +475,8 @@ footer span{color:var(--sky);font-weight:600}
 
 @media(max-width:960px){
 .hero-stats{grid-template-columns:1fr 1fr}
+.cap-stack{grid-template-columns:1fr;margin-left:0;margin-top:0}
+#certList{grid-template-columns:1fr}
 nav{padding:0 22px}.nav-links{display:none}.nav-burger{display:flex}
 section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-template-columns:1fr;gap:40px}
 .hero-card{display:none}.about-grid,.edu-layout,.intern-row{grid-template-columns:1fr}
@@ -1014,7 +1021,8 @@ const degreeList=data.education?.degrees||[];
 const findDegree=matcher=>degreeList.find(item=>matcher.test(`${item.deg||''} ${item.sch||''}`));
 const grade=degree=>degree&&degree.gpa?String(degree.gpa).replace(/^CGPA:\s*/i,''):'—';
 const bsc=findDegree(/b\.?\s*sc|mechanical engineering/i),fsc=findDegree(/f\.?\s*sc|pre-engineering/i),ssc=findDegree(/ssc|science/i);
-const detail=(items,label,target,getLabel)=>items.length?items.map((item,index)=>jump(index+1,getLabel(item,index),target,'hstat-mini')).join(''):jump(0,`No ${label} Yet`,target,'hstat-mini');
+const detail=(items,label,target,getLabel,getValue=item=>'—',extraClass='')=>items.length?items.map((item,index)=>jump(getValue(item,index),getLabel(item,index),target,`hstat-mini ${extraClass}`)).join(''):jump(0,`No ${label} Yet`,target,'hstat-mini');
+const internshipDate=item=>item.date||String(item.co||'').split('·').slice(1).join(' · ').trim()||'—';
 let statsHtml='';
 // Main status cards: Education is intentionally omitted here, because the Academic Snapshot below is its dedicated live representation.
 statsHtml+=jump(experiences.length,'Professional Experience','experience','hstat-main');
@@ -1036,9 +1044,9 @@ statsHtml+=jump(value,degree.deg||'Education','education','hstat-mini');
 });
 // Independent breakdowns for every requested main box except Certifications.
 statsHtml+=group('Professional Experience Breakdown');
-statsHtml+=detail(experiences,'Experience','experience',item=>item.role||item.company||'Experience');
+statsHtml+=detail(experiences,'Experience','experience',item=>item.role||item.company||'Experience',item=>item.date||'—','hstat-date');
 statsHtml+=group('Internship Breakdown');
-statsHtml+=detail(interns,'Internship','internships',item=>item.title||'Internship');
+statsHtml+=detail(interns,'Internship','internships',item=>item.title||'Internship',internshipDate,'hstat-date');
 statsHtml+=group('Project Breakdown');
 statsHtml+=categories.length?categories.map(cat=>projectJump((data.projects[cat.key]||[]).length,cat.name,cat.key,'hstat-mini')).join(''):jump(0,'No Project Categories','projects','hstat-mini');
 statsHtml+=group('Projects Work Breakdown');
