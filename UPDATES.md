@@ -35,3 +35,19 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added Project Breakdown cards for each current project category.
 - Added Academic Snapshot cards for CGPA — UET Mardan, F.Sc Pre-Engineering, and SSC — Science. Their values read automatically from the Education records.
 - Each status card scrolls to its related portfolio section. Project category cards open the matching Project Portfolio tab.
+
+## Expanded first-page breakdown dashboard
+
+- The desktop Core Expertise / Portfolio Status card is expanded again to 720px at large desktop widths. The wider hero layout grows outwards, so the centered circular profile image remains centered while the left content gains space to the left.
+- Removed the main Education count card. Education is represented by the linked Academic Snapshot only.
+- Added live linked breakdown groups for Professional Experience, Internships, Total Projects, Projects Work, and Research & Publications.
+- Certifications remains a single main status card with no breakdown, as requested.
+
+## Automatic new Education snapshot cards
+
+- Every new Academic Degree added in Admin Mode (for example M.S., M.Phil., Ph.D., diploma or another qualification) now automatically appears in the first-page **Academic Snapshot — Education** area.
+- The snapshot uses the degree grade/CGPA/marks when available; otherwise it displays the degree year. Each card links back to Education.
+
+## CGPA label
+
+- Changed the Academic Snapshot label from **CGPA — UET Mardan** to **CGPA — B.Sc. Mechanical Engineering**.
