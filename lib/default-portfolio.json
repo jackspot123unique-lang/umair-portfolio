@@ -481,15 +481,6 @@
       }
     ]
   },
-  "galleryCategories": [
-    "BIM / MEP",
-    "HVAC Ducting",
-    "Piping Systems",
-    "SolidWorks",
-    "ANSYS / Simulation",
-    "Final Year Project"
-  ],
-  "gallery": [],
   "skills": {
     "eyebrow": "Technical Arsenal",
     "title": "Skills & <em>Software</em>",
@@ -758,5 +749,32 @@
     "title": "Research & <em>Publications</em>",
     "desc": "Research papers, technical studies and academic publications.",
     "items": []
+  },
+  "sectionHeaders": {
+    "exp": {
+      "eyebrow": "Work History",
+      "title": "Professional <em>Experience</em>",
+      "desc": "International MEP modelling and coordination experience across healthcare, commercial and institutional projects."
+    },
+    "proj": {
+      "eyebrow": "Technical Work",
+      "title": "Project <em>Portfolio</em>",
+      "desc": "Selected technical work across BIM, HVAC systems, mechanical design and simulation."
+    },
+    "internships": {
+      "title": "Internships"
+    },
+    "proficiency": {
+      "title": "Proficiency <em style=\"color:var(--sky)\">Levels</em>"
+    },
+    "coreExpertise": {
+      "title": "// Core Expertise"
+    },
+    "portfolioStatus": {
+      "title": "// Portfolio Status"
+    },
+    "sendMessage": {
+      "title": "Send a <em style=\"color:var(--sky)\">Message</em>"
+    }
   }
 }

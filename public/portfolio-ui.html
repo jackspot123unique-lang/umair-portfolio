@@ -532,7 +532,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <ul class="nav-links">
 <li><a href="#about">About</a></li><li><a href="#competence">Competence</a></li>
 <li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li>
-<li><a href="#projectwork">Gallery</a></li><li><a href="#skills">Skills</a></li>
+<li><a href="#skills">Skills</a></li>
 <li><a href="#education">Education</a></li><li><a href="#research">Research</a></li><li><a href="#certifications">Certifications</a></li><li><a href="#contact">Contact</a></li>
 </ul>
 <button class="nav-burger" id="burger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
@@ -540,7 +540,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <nav class="mobile-menu" id="mobileMenu">
 <a href="#about" onclick="closeMobile()">About</a><a href="#competence" onclick="closeMobile()">Competence</a>
 <a href="#experience" onclick="closeMobile()">Experience</a><a href="#projects" onclick="closeMobile()">Projects</a>
-<a href="#projectwork" onclick="closeMobile()">Gallery</a><a href="#skills" onclick="closeMobile()">Skills</a>
+<a href="#skills" onclick="closeMobile()">Skills</a>
 <a href="#education" onclick="closeMobile()">Education</a><a href="#research" onclick="closeMobile()">Research</a><a href="#certifications" onclick="closeMobile()">Certifications</a><a href="#contact" onclick="closeMobile()">Contact</a>
 </nav>
 
@@ -569,16 +569,16 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="hero-btns">
 <a href="#contact" class="btn btn-primary">⟶ Hire Me Now</a>
 <a href="#projects" class="btn btn-outline">View Projects</a>
-<a href="#projectwork" class="btn btn-outline">📸 Gallery</a>
+
 </div>
 <div class="card-ctrl" style="margin-top:20px"><button class="cc-btn cc-edit" onclick="editHero()">✎ Edit Hero</button></div>
 </div>
 <div class="hero-card reveal-right">
-<div class="hero-card-label">// Core Expertise</div>
+<div class="hero-card-label" id="coreExpertiseHeader">// Core Expertise</div>
 <div class="chip-wrap" id="chipWrap"></div>
-<div class="card-ctrl" style="margin-top:14px;padding-top:10px"><button class="cc-btn cc-add" onclick="addKeyword()">＋ Add Keyword</button></div>
-<div class="hero-card-label" style="margin-top:20px">// Portfolio Status</div>
-<div class="hero-stats" id="heroStats"></div>
+<div class="card-ctrl" style="margin-top:14px;padding-top:10px"><button class="cc-btn cc-add" onclick="addKeyword()">＋ Add Keyword</button><button class="cc-btn cc-edit" onclick="editDashboardHeader('coreExpertise','Core Expertise')">✎ Edit Header</button></div>
+<div class="hero-card-label" id="portfolioStatusHeader" style="margin-top:20px">// Portfolio Status</div>
+<div class="hero-stats" id="heroStats"></div><div class="card-ctrl" style="margin-top:14px;padding-top:10px"><button class="cc-btn cc-edit" onclick="editDashboardHeader('portfolioStatus','Portfolio Status')">✎ Edit Header</button></div>
 </div>
 </div>
 <div class="scroll-hint">Scroll</div>
@@ -602,7 +602,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="expEy">Work History</div><h2 class="sec-title" id="expTitle">Professional <em>Experience</em></h2><div class="sec-divider"></div><p class="sec-desc" id="expDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('exp')">✎ Edit Header</button></div></div>
 <div class="exp-timeline" id="expTimeline"></div>
-<div id="internships" style="margin-top:30px"><h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:16px">Internships</h3>
+<div id="internships" style="margin-top:30px"><h3 id="internshipsHeader" style="font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:16px">Internships</h3><div class="card-ctrl" style="margin-top:-8px;margin-bottom:10px"><button class="cc-btn cc-edit" onclick="editSimpleHeader('internships','Internships')">✎ Edit Header</button></div>
 <div class="intern-row" id="internRow"></div>
 <div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-add" onclick="addIntern()">＋ Add Internship</button></div></div>
 </div></section>
@@ -616,19 +616,11 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div id="projPanes"></div>
 </div></section>
 
-<section id="projectwork">
-<button class="sec-remove-cat-btn" onclick="removeGalleryCategoryModal()" style="right:56px">✕ Remove Gallery Cat</button>
-<div class="container">
-<div class="pw-header"><div class="reveal"><div class="sec-eyebrow" id="pwEy">Visual Gallery</div><h2 class="sec-title" id="pwTitleEl">Projects <em>Work</em></h2><div class="sec-divider"></div><p class="sec-desc" id="pwDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('pw')">✎ Edit Header</button></div></div>
-<button class="btn btn-teal reveal" onclick="addGalleryItem()">＋ Add Project Work</button></div>
-<div class="pw-grid" id="pwGrid"></div>
-</div></section>
-
 <section id="skills"><button class="sec-add-btn" onclick="addSkillCategory()">＋ Add Skill Category</button>
 <div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="skEy">Technical Arsenal</div><h2 class="sec-title" id="skTitle">Skills & <em>Software</em></h2><div class="sec-divider"></div><p class="sec-desc" id="skDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('sk')">✎ Edit Header</button></div></div>
 <div class="skills-grid" id="skillsGrid"></div>
-<div class="skill-bars reveal"><div class="skill-bars-title">Proficiency <em style="color:var(--sky)">Levels</em></div><div class="sbar-grid" id="sbarGrid"></div><div class="card-ctrl" style="margin-top:20px"><button class="cc-btn cc-add" onclick="addSkillBar()">＋ Add Skill Bar</button></div></div>
+<div class="skill-bars reveal"><div class="skill-bars-title" id="proficiencyTitle">Proficiency <em style="color:var(--sky)">Levels</em></div><div class="card-ctrl" style="margin-top:-14px;margin-bottom:18px"><button class="cc-btn cc-edit" onclick="editSimpleHeader('proficiency','Proficiency Levels')">✎ Edit Header</button></div><div class="sbar-grid" id="sbarGrid"></div><div class="card-ctrl" style="margin-top:20px"><button class="cc-btn cc-add" onclick="addSkillBar()">＋ Add Skill Bar</button></div></div>
 </div></section>
 
 <section id="education"><div class="container">
@@ -663,7 +655,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="contact-grid" id="contactGrid"></div>
 
 <div class="contact-form-wrap reveal">
-<div class="contact-form-title">Send a <em style="color:var(--sky)">Message</em></div>
+<div class="contact-form-title" id="sendMessageHeader">Send a <em style="color:var(--sky)">Message</em></div><div class="card-ctrl" style="margin-top:-14px;margin-bottom:18px;justify-content:center"><button class="cc-btn cc-edit" onclick="editSimpleHeader('sendMessage','Send a Message')">✎ Edit Header</button></div>
 <div class="contact-form">
 <div class="cf-row">
 <div class="form-group"><label class="form-label">Your Name</label><input type="text" id="cfName" class="form-input" placeholder="Full name" required></div>
@@ -702,7 +694,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 const DIRECT_UPLOAD_THRESHOLD=64*1024*1024; // files above this use multipart R2 uploads
 const CLOUD_API='/api';
 
-let isAdmin=false,editContext=null,pendingFiles=[],activeProjectCategory=null;
+let isAdmin=false,editContext=null,pendingFiles=[],activeProjectCategory=null,projectWorkRetired=false;
 
 let data={
 profilePic:null,logoPic:null,
@@ -741,8 +733,6 @@ sw:[{id:1,num:'SW-01',name:'Steam Engine with Horizontal Beam',sub:'3D Assembly 
 sim:[{id:1,num:'ANSYS-01',name:'Static Structural Analysis on Beams',sub:'ANSYS Mechanical',desc:'Conducted <strong>static structural analysis</strong> on beams in ANSYS, evaluating stress distribution, deflection and factor of safety under applied loading.',files:[]},{id:2,num:'ANSYS-02',name:'Steady-State Thermal on Plates',sub:'ANSYS Thermal',desc:'Performed <strong>steady-state thermal analysis</strong> on plates to study heat distribution and temperature gradients across the geometry.',files:[]},{id:3,num:'ANSYS-03',name:'Fluid Flow in Pipes & Ducts',sub:'ANSYS CFX · CFD',desc:'Ran <strong>CFD flow analysis using ANSYS CFX</strong> for fluid flow through pipes and ducts, examining velocity fields, pressure drop and flow behavior.',files:[]},{id:4,num:'ABAQUS-01',name:'Bullet Impact Simulation',sub:'Explicit Dynamics',desc:'Simulated <strong>high-velocity bullet impact on a metal plate</strong> in Abaqus using <strong>explicit dynamics</strong> — studying stress waves, failure behavior and applying advanced meshing techniques.',files:[]},{id:5,num:'COMSOL-01',name:'Microscale Droplet Formation',sub:'Multiphase CFD',desc:'Modeled <strong>1-second transient oil/water droplet formation</strong> in COMSOL Multiphysics, analyzing pressure, velocity and volume-fraction in a multiphase microscale flow.',files:[]}],
 fyp:[{id:1,num:'FYDP',name:'Design & Fabrication of Affordable Hybrid Food Dehydrator',sub:'Solar/DC/AC · IoT · Arduino & ESP8266 · SolidWorks',desc:'Designed and fabricated a low-cost <strong>hybrid food dehydrator</strong> powered by a combined <strong>Solar / DC / AC system</strong>. Integrated <strong>IoT monitoring via Arduino & ESP8266</strong> and a <strong>servo-controlled heat/shading mechanism</strong> for temperature regulation. Delivered a full <strong>SolidWorks design model</strong> followed by physical fabrication and testing.',tags:['Solar Energy','IoT','Arduino','ESP8266','Servo Control','SolidWorks'],files:[]}]
 },
-galleryCategories:['BIM / MEP','HVAC Ducting','Piping Systems','SolidWorks','ANSYS / Simulation','Final Year Project'],
-gallery:[],
 skills:{eyebrow:'Technical Arsenal',title:'Skills & <em>Software</em>',desc:'Full-spectrum mechanical engineering skill set.',
 categories:[{id:1,icon:'🏗️',bg:'rgba(41,128,185,.10)',name:'BIM & MEP Tools',skills:[{text:'Revit MEP',level:'adv'},{text:'Navisworks',level:'adv'},{text:'AutoCAD',level:'int'},{text:'BIM Coordination',level:'std'},{text:'Clash Detection',level:'std'}]},
 {id:2,icon:'🌬️',bg:'rgba(26,188,156,.10)',name:'HVAC & Piping',skills:[{text:'HVAC Ducting Design',level:'adv'},{text:'Piping Modeling',level:'adv'},{text:'Chilled Water Systems',level:'std'}]},
@@ -888,7 +878,7 @@ try{
 const response=await fetch(CLOUD_API+'/auth/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:i.value})});
 const result=await response.json().catch(()=>({}));
 if(!response.ok)throw new Error(result.error||'Incorrect password.');
-isAdmin=true;closePwdModal();document.body.classList.add('admin-mode');$('adminBar').classList.add('show');$('adminToggle').classList.add('active');$('adminToggle').textContent='🔓';$('addDegBtn').style.display='inline-flex';$('addCertBtn').style.display='inline-flex';renderAll();showToast('🔓 Admin mode activated!','success');
+isAdmin=true;closePwdModal();document.body.classList.add('admin-mode');$('adminBar').classList.add('show');$('adminToggle').classList.add('active');$('adminToggle').textContent='🔓';$('addDegBtn').style.display='inline-flex';$('addCertBtn').style.display='inline-flex';renderAll();if(projectWorkRetired){savePortfolio(true);projectWorkRetired=false}showToast('🔓 Admin mode activated!','success');
 }catch(error){i.classList.add('wrong');$('pwdError').textContent='❌ '+(error.message||'Incorrect password.');i.value='';setTimeout(()=>{i.classList.remove('wrong');i.focus()},500)}
 finally{if(button)button.disabled=false}
 }
@@ -990,7 +980,6 @@ if(o)f=o.files[idx];
 }
 else if(type==='deg'){const o=data.education.degrees.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='cert'){const o=data.education.certs.find(x=>x.id===id);if(o)f=o.files[idx]}
-else if(type==='gal'){const o=data.gallery.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='research'){const o=(data.research&&data.research.items||[]).find(x=>x.id===id);if(o)f=o.files[idx]}
 if(f)openFsPreview(f);
 }
@@ -1004,7 +993,6 @@ else if(type==='int')target=data.interns.find(x=>x.id===id);
 else if(type==='proj')target=projectCategory?(data.projects[projectCategory]||[]).find(x=>x.id===id):Object.values(data.projects).flat().find(x=>x.id===id);
 else if(type==='deg')target=data.education.degrees.find(x=>x.id===id);
 else if(type==='cert')target=data.education.certs.find(x=>x.id===id);
-else if(type==='gal')target=data.gallery.find(x=>x.id===id);
 else if(type==='research')target=(data.research&&data.research.items||[]).find(x=>x.id===id);
 if(target&&target.files){target.files.splice(idx,1);renderAll();savePortfolio(true);showToast('🗑️ File removed','info')}
 }
@@ -1016,15 +1004,14 @@ function renderLogo(){if(data.logoPic){$('logoImg').src=data.logoPic;$('logoImg'
 
 // ════════ HERO with EDITABLE TITLES ════════
 function renderHero(){
-$('heroTagName').textContent=data.hero.eyebrowName;$('heroLine1').textContent=data.hero.line1;$('heroLine2').textContent=data.hero.line2;$('heroLine3').textContent=data.hero.line3;$('heroDesc').innerHTML=data.hero.desc;$('navName').textContent=data.hero.eyebrowName;
+ensureEditableHeaders();$('heroTagName').textContent=data.hero.eyebrowName;$('heroLine1').textContent=data.hero.line1;$('heroLine2').textContent=data.hero.line2;$('heroLine3').textContent=data.hero.line3;$('heroDesc').innerHTML=data.hero.desc;$('navName').textContent=data.hero.eyebrowName;$('coreExpertiseHeader').innerHTML=data.sectionHeaders.coreExpertise.title;$('portfolioStatusHeader').innerHTML=data.sectionHeaders.portfolioStatus.title;
 $('heroTitles').innerHTML=data.hero.titles.map(t=>`<div class="hero-title-item"><div class="hero-title-row"><span class="hticon hticon-${t.color}">${t.icon}</span><span>${esc(t.text)}</span></div><div class="hero-title-actions"><button class="hta-btn hta-edit" onclick="editHeroTitle(${t.id})" title="Edit">✎</button><button class="hta-btn hta-rm" onclick="removeHeroTitle(${t.id})" title="Remove">✕</button></div></div>`).join('');
 $('chipWrap').innerHTML=data.hero.keywords.map((k,i)=>`<span class="chip chip-${k.type}">${esc(k.text)}<button class="chip-x" onclick="removeKeyword(${i})">✕</button></span>`).join('');
 const jump=(value,label,target,extra='')=>`<a class="hstat ${extra}" href="#${target}" onclick="event.preventDefault();document.getElementById('${target}')?.scrollIntoView({behavior:'smooth'})"><div class="hstat-num">${esc(String(value))}</div><div class="hstat-label">${esc(label)}</div></a>`;
 const projectJump=(value,label,key,extra='')=>`<a class="hstat ${extra}" href="#projects" onclick="event.preventDefault();scrollAndTab('${key}')"><div class="hstat-num">${esc(String(value))}</div><div class="hstat-label">${esc(label)}</div></a>`;
 const group=label=>`<div class="hstat-group-label">${esc(label)}</div>`;
 const categories=data.projectCategories||[];
-const experiences=data.experiences||[],interns=data.interns||[],projectWork=data.gallery||[];
-const projectWorkCategories=[...new Set(projectWork.map(item=>item.cat).filter(Boolean))];
+const experiences=data.experiences||[],interns=data.interns||[];
 const totalProjects=categories.reduce((sum,cat)=>sum+(data.projects[cat.key]||[]).length,0);
 const researchItems=(data.research&&Array.isArray(data.research.items))?data.research.items:[];
 const degreeList=data.education?.degrees||[];
@@ -1038,7 +1025,6 @@ let statsHtml='';
 statsHtml+=jump(experiences.length,'Professional Experience','experience','hstat-main');
 statsHtml+=jump(interns.length,'Internships','internships','hstat-main');
 statsHtml+=jump(totalProjects,'Total Projects','projects','hstat-main hstat-total');
-statsHtml+=jump(projectWork.length,'Projects Work','projectwork','hstat-main');
 statsHtml+=jump(researchItems.length,'Research & Publications','research','hstat-main');
 statsHtml+=jump((data.education?.certs||[]).length,'Certifications','certifications','hstat-main');
 // Education is represented only by this linked Academic Snapshot, as requested.
@@ -1059,8 +1045,6 @@ statsHtml+=group('Internship Breakdown');
 statsHtml+=detail(interns,'Internship','internships',item=>item.title||'Internship',internshipDate,'hstat-date');
 statsHtml+=group('Project Breakdown');
 statsHtml+=categories.length?categories.map(cat=>projectJump((data.projects[cat.key]||[]).length,cat.name,cat.key,'hstat-mini')).join(''):jump(0,'No Project Categories','projects','hstat-mini');
-statsHtml+=group('Projects Work Breakdown');
-statsHtml+=projectWorkCategories.length?projectWorkCategories.map(category=>jump(projectWork.filter(item=>item.cat===category).length,category,'projectwork','hstat-mini')).join(''):jump(0,'No Project Work Categories','projectwork','hstat-mini');
 statsHtml+=group('Research & Publications Breakdown');
 statsHtml+=detail(researchItems,'Research Item','research',item=>item.title||item.type||'Research Item',(item,index)=>index+1);
 $('heroStats').innerHTML=statsHtml;
@@ -1133,6 +1117,7 @@ function removeCC(id){if(!confirm('Remove?'))return;data.cc.items=data.cc.items.
 
 // EXP
 function renderExperience(){
+ensureEditableHeaders();$('expEy').textContent=data.sectionHeaders.exp.eyebrow;$('expTitle').innerHTML=data.sectionHeaders.exp.title;$('expDesc').textContent=data.sectionHeaders.exp.desc||'';$('internshipsHeader').innerHTML=data.sectionHeaders.internships.title;
 $('expTimeline').innerHTML=data.experiences.map(x=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${x.bullets.map(b=>`<li><span>${b}</span></li>`).join('')}</ul><div class="tag-row">${(x.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,'exp')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editExperience(${x.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('exp',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeExperience(${x.id})">✕ Remove</button></div></div></div>`).join('');
 $('internRow').innerHTML=data.interns.map(x=>`<div class="intern-card"><div class="intern-title">${esc(x.title)}</div><div class="intern-co">${esc(x.co)}</div><div class="intern-desc">${esc(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`).join('')}
 
@@ -1163,6 +1148,7 @@ panes.innerHTML=data.projectCategories.map(c=>{const isFyp=c.key==='fyp';return 
 }
 
 function renderProjects(){
+ensureEditableHeaders();$('projEy').textContent=data.sectionHeaders.proj.eyebrow;$('projTitle').innerHTML=data.sectionHeaders.proj.title;$('projDesc').textContent=data.sectionHeaders.proj.desc||'';
 renderProjectTabs();
 data.projectCategories.forEach(cat=>{
 const pane=document.getElementById('tp-'+cat.key);if(!pane)return;
@@ -1186,19 +1172,7 @@ function addProject(){const catOpts=data.projectCategories.map(c=>({value:c.key,
 function editProject(cat,id){const p=(data.projects[cat]||[]).find(x=>x.id===id);if(!p)return;const f=[{type:'text',key:'num',label:'Project Number',value:p.num,required:true},{type:'text',key:'name',label:'Project Name',value:p.name,required:true},{type:'text',key:'sub',label:'Subtitle',value:p.sub||''},{type:'textarea',key:'desc',label:'Description',value:p.desc,required:true,rows:5,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',value:(p.tags||[]).join(', ')}];openEditModal('Edit Project','',f,v=>{p.num=v.num;p.name=v.name;p.sub=v.sub;p.desc=v.desc;p.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);renderAll()},true)}
 function removeProject(cat,id){if(!confirm('Remove?'))return;data.projects[cat]=data.projects[cat].filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
-function renderGallery(){
-const g=$('pwGrid');
-if(!data.gallery.length){g.innerHTML='<div class="pw-empty"><div class="pw-empty-icon">🖼️</div><p>No project work yet.<br>Click <strong>"＋ Add Project Work"</strong> to add.</p></div>';return}
-g.innerHTML=data.gallery.map(item=>`<div class="pw-item pw-item-no-image"><div class="pw-item-body"><div class="pw-item-cat">${esc(item.cat)}</div><div class="pw-item-title">${esc(item.title)}</div>${item.desc?`<div class="pw-item-desc">${esc(item.desc)}</div>`:''}${(item.tags||[]).length?`<div class="pw-tags">${item.tags.map(t=>`<span class="pw-tag">${esc(t)}</span>`).join('')}</div>`:''}</div>${renderFiles(item.files,item.id,'gal')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editGalleryItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadToGallery(${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeGalleryItem(${item.id})">✕ Remove</button></div></div>`).join('')
-}
-
-function uploadToGallery(id){openEditModal('Upload Files to Gallery','',[{type:'files',key:'files',label:'Select Files'}],v=>{const t=data.gallery.find(x=>x.id===id);if(t){const newFiles=v._files||[];if(!t.files)t.files=[];t.files=t.files.concat(newFiles);const firstImg=newFiles.find(f=>f.type&&f.type.startsWith('image/'));if(firstImg)t.img=firstImg.url||firstImg.data||t.img;renderAll()}})}
-function addGalleryItem(){if(!isAdmin)return showToast('⚠️ Admin mode required.','error');const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Add Project to Gallery','',[{type:'text',key:'title',label:'Project Title',required:true},{type:'select',key:'cat',label:'Category',value:data.galleryCategories[0]||'Other',options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',rows:3},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Revit MEP, HVAC, Shop Drawings'},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{if(!v.title)return;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}const firstImg=(v._files||[]).find(f=>f.type&&f.type.startsWith('image/'));data.gallery.unshift({id:uid(),title:v.title,cat,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),img:firstImg?(firstImg.url||firstImg.data):null,files:v._files||[]});renderGallery()})}
-function removeGalleryCategoryModal(){if(!isAdmin)return;const opts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Remove Gallery Category','',[{type:'select',key:'cat',label:'Select Category',value:opts[0]?.value,options:opts}],v=>{const used=data.gallery.some(g=>g.cat===v.cat);if(used&&!confirm('Some items use this category. Remove anyway?'))return;data.galleryCategories=data.galleryCategories.filter(c=>c!==v.cat);showToast('🗑️ Category removed','info')})}
-function editGalleryItem(id){const x=data.gallery.find(g=>g.id===id);if(!x)return;const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Edit Gallery Item','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'select',key:'cat',label:'Category',value:x.cat,options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:3},{type:'text',key:'tags',label:'Tags (comma separated)',value:(x.tags||[]).join(', ')}],v=>{x.title=v.title;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}x.cat=cat;x.desc=v.desc;x.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);renderGallery()})}
-function removeGalleryItem(id){if(!isAdmin||!confirm('Remove?'))return;data.gallery=data.gallery.filter(x=>x.id!==id);renderGallery();savePortfolio(true)}
-
-function renderSkills(){$('skEy').textContent=data.skills.eyebrow;$('skTitle').innerHTML=data.skills.title;$('skDesc').textContent=data.skills.desc;
+function renderSkills(){ensureEditableHeaders();$('skEy').textContent=data.skills.eyebrow;$('skTitle').innerHTML=data.skills.title;$('skDesc').textContent=data.skills.desc;$('proficiencyTitle').innerHTML=data.sectionHeaders.proficiency.title;
 $('skillsGrid').innerHTML=data.skills.categories.map(c=>`<div class="scat-card"><div class="scat-head"><div class="scat-icon" style="background:${c.bg}">${c.icon}</div><div class="scat-name">${esc(c.name)}</div></div><div class="spills">${c.skills.map((s,si)=>`<span class="sp sp-${s.level}">${esc(s.text)}<button class="sp-x" onclick="removeSkill(${c.id},${si})">✕</button></span>`).join('')}</div><div class="card-ctrl"><button class="cc-btn cc-add" onclick="addSkill(${c.id})">＋ Skill</button><button class="cc-btn cc-edit" onclick="editSkillCat(${c.id})">✎</button><button class="cc-btn cc-remove" onclick="removeSkillCat(${c.id})">✕</button></div></div>`).join('');
 $('sbarGrid').innerHTML=`<div>${data.skills.bars.slice(0,Math.ceil(data.skills.bars.length/2)).map((b,i)=>sbarH(b,i)).join('')}</div><div>${data.skills.bars.slice(Math.ceil(data.skills.bars.length/2)).map((b,i)=>sbarH(b,i+Math.ceil(data.skills.bars.length/2))).join('')}</div>`;
 setTimeout(()=>document.querySelectorAll('.sbar-fill').forEach(f=>f.style.width=f.dataset.w+'%'),100)}
@@ -1212,6 +1186,32 @@ function addSkillBar(){openEditModal('Add Skill Bar','',[{type:'text',key:'name'
 function editSkillBar(i){const b=data.skills.bars[i];if(!b)return;openEditModal('Edit Skill Bar','',[{type:'text',key:'name',label:'Name',value:b.name,required:true},{type:'text',key:'pct',label:'Percentage',value:String(b.pct),required:true}],v=>{b.name=v.name;b.pct=Math.max(0,Math.min(100,parseInt(v.pct)||0));renderSkills()})}
 function removeSkillBar(i){if(!confirm('Remove?'))return;data.skills.bars.splice(i,1);renderSkills();savePortfolio(true)}
 
+function ensureEditableHeaders(){
+if(!data.sectionHeaders)data.sectionHeaders={};
+const defaults={
+exp:{eyebrow:'Work History',title:'Professional <em>Experience</em>',desc:'International MEP modelling and coordination experience across healthcare, commercial and institutional projects.'},
+proj:{eyebrow:'Technical Work',title:'Project <em>Portfolio</em>',desc:'Selected technical work across BIM, HVAC systems, mechanical design and simulation.'},
+internships:{title:'Internships'},
+proficiency:{title:'Proficiency <em style="color:var(--sky)">Levels</em>'},
+coreExpertise:{title:'// Core Expertise'},
+portfolioStatus:{title:'// Portfolio Status'},
+sendMessage:{title:'Send a <em style="color:var(--sky)">Message</em>'}
+};
+Object.entries(defaults).forEach(([key,value])=>{if(!data.sectionHeaders[key])data.sectionHeaders[key]={...value}});
+}
+function editSimpleHeader(key,label){
+ensureEditableHeaders();const header=data.sectionHeaders[key];
+openEditModal(`Edit ${label} Header`,'',[{type:'text',key:'title',label:'Heading (HTML allowed)',value:header.title,required:true}],v=>{header.title=v.title;renderAll()});
+}
+function editDashboardHeader(key,label){editSimpleHeader(key,label)}
+
+function retireProjectWorkData(){
+// Project Work / Gallery has been removed from this portfolio by owner request.
+if('gallery' in data||'galleryCategories' in data)projectWorkRetired=true;
+if('gallery' in data)delete data.gallery;
+if('galleryCategories' in data)delete data.galleryCategories;
+}
+
 function ensureResearchContent(){
 if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[]};
 if(!Array.isArray(data.research.items))data.research.items=[];
@@ -1221,7 +1221,7 @@ function safeResearchUrl(value){try{const url=new URL((value||'').trim());return
 function renderResearch(){
 ensureResearchContent();
 $('researchEy').textContent=data.research.eyebrow;$('researchTitle').innerHTML=data.research.title;$('researchDesc').textContent=data.research.desc||'';
-$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>`<article class="research-card reveal"><div class="research-type">${esc(item.type||'Research Work')}</div><h3 class="research-card-title">${esc(item.title)}</h3>${item.venue||item.date||item.authors?`<div class="research-meta">${[item.venue,item.date,item.authors].filter(Boolean).map(esc).join(' · ')}</div>`:''}${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
+$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>`<article class="research-card"><div class="research-type">${esc(item.type||'Research Work')}</div><h3 class="research-card-title">${esc(item.title)}</h3>${item.venue||item.date||item.authors?`<div class="research-meta">${[item.venue,item.date,item.authors].filter(Boolean).map(esc).join(' · ')}</div>`:''}${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
 }
 function researchFields(item={}){return[
 {type:'text',key:'title',label:'Research Title',value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
@@ -1231,9 +1231,9 @@ function researchFields(item={}){return[
 {type:'textarea',key:'desc',label:'Abstract / Description',value:item.desc||'',rows:5,placeholder:'Brief research summary'},
 {type:'text',key:'url',label:'Research URL (optional)',value:item.url||'',placeholder:'https://doi.org/... or publication URL'}
 ]}
-function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderResearch()},true)}
-function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderResearch()},true)}
-function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderResearch();savePortfolio(true)}
+function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
+function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
+function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 function ensureSeparatedEducationContent(){
 if(!data.education)data.education={};
@@ -1256,7 +1256,7 @@ function editCert(id){const c=data.education.certs.find(x=>x.id===id);if(!c)retu
 function removeCert(id){if(!confirm('Remove?'))return;data.education.certs=data.education.certs.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 // CONTACT - now with editable GCC banner
-function renderContact(){$('ctEy').textContent=data.contact.eyebrow;$('ctTitle').innerHTML=data.contact.title;$('ctDesc').textContent=data.contact.desc;$('ctGcc').textContent=data.contact.gcc;$('gccFlags').textContent=data.contact.gccFlags||'🇦🇪 🇸🇦 🇶🇦';
+function renderContact(){ensureEditableHeaders();$('ctEy').textContent=data.contact.eyebrow;$('ctTitle').innerHTML=data.contact.title;$('ctDesc').textContent=data.contact.desc;$('sendMessageHeader').innerHTML=data.sectionHeaders.sendMessage.title;$('ctGcc').textContent=data.contact.gcc;$('gccFlags').textContent=data.contact.gccFlags||'🇦🇪 🇸🇦 🇶🇦';
 $('contactGrid').innerHTML=data.contact.cards.map(c=>`<div class="ccard">${c.link?`<a href="${esc(c.link)}" target="${c.link.startsWith('http')?'_blank':'_self'}" style="display:block">`:''}<div class="ccard-icon">${c.icon}</div><div class="ccard-label">${esc(c.label)}</div><div class="ccard-val">${esc(c.value)}</div>${c.link?'</a>':''}<div class="card-ctrl" style="justify-content:center"><button class="cc-btn cc-edit" onclick="editContactCard(${c.id})">✎</button><button class="cc-btn cc-remove" onclick="removeContactCard(${c.id})">✕</button></div></div>`).join('')}
 
 // ════════ GCC Banner edit ════════
@@ -1272,7 +1272,7 @@ function addContactCard(){openEditModal('Add Contact Card','',[{type:'text',key:
 function editContactCard(id){const c=data.contact.cards.find(x=>x.id===id);if(!c)return;openEditModal('Edit Contact Card','',[{type:'text',key:'icon',label:'Emoji',value:c.icon},{type:'text',key:'label',label:'Label',value:c.label,required:true},{type:'text',key:'value',label:'Value',value:c.value,required:true},{type:'text',key:'link',label:'Link',value:c.link}],v=>{c.icon=v.icon;c.label=v.label;c.value=v.value;c.link=v.link;renderContact()})}
 function removeContactCard(id){if(!confirm('Remove?'))return;data.contact.cards=data.contact.cards.filter(x=>x.id!==id);renderContact();savePortfolio(true)}
 
-function editSectionHeader(key){const map={about:{o:data.about},cc:{o:data.cc},exp:{o:{eyebrow:$('expEy').textContent,title:$('expTitle').innerHTML,desc:$('expDesc').textContent}},proj:{o:{eyebrow:$('projEy').textContent,title:$('projTitle').innerHTML,desc:$('projDesc').textContent}},pw:{o:{eyebrow:$('pwEy').textContent,title:$('pwTitleEl').innerHTML,desc:$('pwDesc').textContent}},sk:{o:data.skills},edu:{o:data.education},research:{o:data.research},cert:{o:data.certifications},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
+function editSectionHeader(key){ensureEditableHeaders();const map={about:{o:data.about},cc:{o:data.cc},exp:{o:data.sectionHeaders.exp},proj:{o:data.sectionHeaders.proj},sk:{o:data.skills},edu:{o:data.education},research:{o:data.research},cert:{o:data.certifications},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
 
 // ════════ CONTACT FORM — secure server API ════════
 function sendMessage(){
@@ -1288,9 +1288,9 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 .finally(()=>{btn.disabled=false;btn.style.opacity='1'});
 }
 
-function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderGallery();renderSkills();renderEducation();renderResearch();renderContact();attachReveal()}
+function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderResearch();renderContact();attachReveal()}
 
-async function bootPortfolio(){await loadData();ensureSeparatedEducationContent();ensureResearchContent();renderAll();setTimeout(typeLoop,800)}
+async function bootPortfolio(){await loadData();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureEditableHeaders();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();
 </script>
 </body>

@@ -80,3 +80,21 @@ The visual design, colors, animations, layout and existing working integrations 
 
 - Added final high-specificity compact styles so Academic Snapshot values are 11px and Experience/Internship dates are 8.5px even in the wide four-column dashboard.
 - Projects Work Breakdown now lists only categories that actually contain a Projects Work item. Default empty categories with zero counts are no longer shown.
+
+## Project Work / Gallery retirement
+
+- Removed the complete Projects Work / Gallery navigation link, hero button, page section, add/edit/upload/remove UI, first-page main status card and first-page breakdown.
+- Removed Gallery defaults from both the full-stack and standalone portfolio data.
+- Existing saved Gallery JSON is automatically removed from the in-memory portfolio after deployment and permanently cleared from the saved portfolio record at the next successful admin login/save.
+- Existing raw storage files are intentionally not automatically deleted from Cloudflare R2, to avoid deleting files unexpectedly. They are no longer shown or linked by the website and may be removed manually from R2 storage if desired.
+
+## Immediate Research & Publications updates
+
+- Research cards no longer wait for the reveal observer, so a newly added card appears immediately without reloading.
+- Add, Edit and Remove Research actions now call the complete render pipeline. This updates the Research & Publications section and the first-page Research status count/breakdown immediately.
+
+## Reliable editable headers
+
+- Fixed Professional Experience and Project Portfolio header persistence. They now save to `sectionHeaders` data instead of temporary DOM-only objects.
+- Added editable headers for Core Expertise, Portfolio Status, Internships, Proficiency Levels and Send a Message.
+- All existing section header controls (About, Core Competence, Skills, Education, Research & Publications, Certifications and Contact) continue to save through the same persistent data path.
