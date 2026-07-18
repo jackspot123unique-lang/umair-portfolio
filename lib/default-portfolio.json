@@ -762,17 +762,20 @@
       "desc": "Selected technical work across BIM, HVAC systems, mechanical design and simulation."
     },
     "internships": {
-      "title": "Internships"
+      "prefix": "Internships",
+      "accent": ""
     },
     "proficiency": {
       "prefix": "Proficiency",
       "accent": "Levels"
     },
     "coreExpertise": {
-      "title": "// Core Expertise"
+      "prefix": "// Core",
+      "accent": "Expertise"
     },
     "portfolioStatus": {
-      "title": "// Portfolio Status"
+      "prefix": "// Portfolio",
+      "accent": "Status"
     },
     "sendMessage": {
       "prefix": "Send a",

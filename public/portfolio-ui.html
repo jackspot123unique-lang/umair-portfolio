@@ -1004,7 +1004,7 @@ function renderLogo(){if(data.logoPic){$('logoImg').src=data.logoPic;$('logoImg'
 
 // ════════ HERO with EDITABLE TITLES ════════
 function renderHero(){
-ensureEditableHeaders();$('heroTagName').textContent=data.hero.eyebrowName;$('heroLine1').textContent=data.hero.line1;$('heroLine2').textContent=data.hero.line2;$('heroLine3').textContent=data.hero.line3;$('heroDesc').innerHTML=data.hero.desc;$('navName').textContent=data.hero.eyebrowName;$('coreExpertiseHeader').innerHTML=data.sectionHeaders.coreExpertise.title;$('portfolioStatusHeader').innerHTML=data.sectionHeaders.portfolioStatus.title;
+ensureEditableHeaders();$('heroTagName').textContent=data.hero.eyebrowName;$('heroLine1').textContent=data.hero.line1;$('heroLine2').textContent=data.hero.line2;$('heroLine3').textContent=data.hero.line3;$('heroDesc').innerHTML=data.hero.desc;$('navName').textContent=data.hero.eyebrowName;$('coreExpertiseHeader').innerHTML=accentHeadingMarkup(data.sectionHeaders.coreExpertise);$('portfolioStatusHeader').innerHTML=accentHeadingMarkup(data.sectionHeaders.portfolioStatus);
 $('heroTitles').innerHTML=data.hero.titles.map(t=>`<div class="hero-title-item"><div class="hero-title-row"><span class="hticon hticon-${t.color}">${t.icon}</span><span>${esc(t.text)}</span></div><div class="hero-title-actions"><button class="hta-btn hta-edit" onclick="editHeroTitle(${t.id})" title="Edit">✎</button><button class="hta-btn hta-rm" onclick="removeHeroTitle(${t.id})" title="Remove">✕</button></div></div>`).join('');
 $('chipWrap').innerHTML=data.hero.keywords.map((k,i)=>`<span class="chip chip-${k.type}">${esc(k.text)}<button class="chip-x" onclick="removeKeyword(${i})">✕</button></span>`).join('');
 const jump=(value,label,target,extra='')=>`<a class="hstat ${extra}" href="#${target}" onclick="event.preventDefault();document.getElementById('${target}')?.scrollIntoView({behavior:'smooth'})"><div class="hstat-num">${esc(String(value))}</div><div class="hstat-label">${esc(label)}</div></a>`;
@@ -1117,7 +1117,7 @@ function removeCC(id){if(!confirm('Remove?'))return;data.cc.items=data.cc.items.
 
 // EXP
 function renderExperience(){
-ensureEditableHeaders();$('expEy').textContent=data.sectionHeaders.exp.eyebrow;$('expTitle').innerHTML=data.sectionHeaders.exp.title;$('expDesc').textContent=data.sectionHeaders.exp.desc||'';$('internshipsHeader').innerHTML=data.sectionHeaders.internships.title;
+ensureEditableHeaders();$('expEy').textContent=data.sectionHeaders.exp.eyebrow;$('expTitle').innerHTML=data.sectionHeaders.exp.title;$('expDesc').textContent=data.sectionHeaders.exp.desc||'';$('internshipsHeader').innerHTML=accentHeadingMarkup(data.sectionHeaders.internships);
 $('expTimeline').innerHTML=data.experiences.map(x=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${x.bullets.map(b=>`<li><span>${b}</span></li>`).join('')}</ul><div class="tag-row">${(x.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,'exp')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editExperience(${x.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('exp',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeExperience(${x.id})">✕ Remove</button></div></div></div>`).join('');
 $('internRow').innerHTML=data.interns.map(x=>`<div class="intern-card"><div class="intern-title">${esc(x.title)}</div><div class="intern-co">${esc(x.co)}</div><div class="intern-desc">${esc(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`).join('')}
 
@@ -1191,39 +1191,74 @@ if(!data.sectionHeaders)data.sectionHeaders={};
 const defaults={
 exp:{eyebrow:'Work History',title:'Professional <em>Experience</em>',desc:'International MEP modelling and coordination experience across healthcare, commercial and institutional projects.'},
 proj:{eyebrow:'Technical Work',title:'Project <em>Portfolio</em>',desc:'Selected technical work across BIM, HVAC systems, mechanical design and simulation.'},
-internships:{title:'Internships'},
+internships:{prefix:'Internships',accent:''},
 proficiency:{prefix:'Proficiency',accent:'Levels'},
-coreExpertise:{title:'// Core Expertise'},
-portfolioStatus:{title:'// Portfolio Status'},
+coreExpertise:{prefix:'// Core',accent:'Expertise'},
+portfolioStatus:{prefix:'// Portfolio',accent:'Status'},
 sendMessage:{prefix:'Send a',accent:'Message'}
 };
 Object.entries(defaults).forEach(([key,value])=>{if(!data.sectionHeaders[key])data.sectionHeaders[key]={...value}});
 // Convert older saved plain/HTML title values into two editable accent-aware fields.
 const hydrateAccent=(key,defaultPrefix,defaultAccent)=>{
 const header=data.sectionHeaders[key];
-if(!header.prefix||!header.accent){
+if(typeof header.prefix!=='string'){
 const plain=String(header.title||`${defaultPrefix} ${defaultAccent}`).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
 const words=plain.split(' ').filter(Boolean);
-header.prefix=words.slice(0,-1).join(' ')||defaultPrefix;
-header.accent=words[words.length-1]||defaultAccent;
+if(words.length>1){header.prefix=words.slice(0,-1).join(' ');header.accent=words[words.length-1]}
+else{header.prefix=words[0]||defaultPrefix;header.accent=defaultAccent}
 }
+if(typeof header.accent!=='string')header.accent=defaultAccent;
 };
 hydrateAccent('proficiency','Proficiency','Levels');
 hydrateAccent('sendMessage','Send a','Message');
+hydrateAccent('internships','Internships','');
+hydrateAccent('coreExpertise','// Core','Expertise');
+hydrateAccent('portfolioStatus','// Portfolio','Status');
 }
-function accentHeadingMarkup(header){return `${esc(header.prefix)} <em style="color:var(--sky)">${esc(header.accent)}</em>`}
+function stripHeaderHtml(value){return String(value||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim()}
+function splitHeaderForAccent(title){
+const source=String(title||'');
+const match=source.match(/<em[^>]*>([\s\S]*?)<\/em>/i);
+if(match){
+const prefix=stripHeaderHtml(source.slice(0,match.index));
+const accent=stripHeaderHtml(match[1]);
+return{prefix,accent};
+}
+const words=stripHeaderHtml(source).split(' ').filter(Boolean);
+return words.length>1?{prefix:words.slice(0,-1).join(' '),accent:words[words.length-1]}:{prefix:words.join(' '),accent:''};
+}
+function makeAccentTitle(prefix,accent){
+const first=(prefix||'').trim(),highlight=(accent||'').trim();
+return highlight?`${esc(first)} <em>${esc(highlight)}</em>`:esc(first);
+}
+function accentHeadingMarkup(header){
+const first=(header.prefix||'').trim(),highlight=(header.accent||'').trim();
+return highlight?`${esc(first)} <em style="color:var(--sky)">${esc(highlight)}</em>`:esc(first);
+}
 function editSimpleHeader(key,label){
-ensureEditableHeaders();const header=data.sectionHeaders[key];
-openEditModal(`Edit ${label} Header`,'',[{type:'text',key:'title',label:'Heading',value:header.title,required:true}],v=>{header.title=v.title.trim()||header.title;renderAll()});
+ensureEditableHeaders();
+editAccentHeader(key,label,'First word(s)','Highlighted word');
 }
 function editAccentHeader(key,label,prefixLabel,accentLabel){
 ensureEditableHeaders();const header=data.sectionHeaders[key];
-openEditModal(`Edit ${label} Header`,'Keep the highlighted word separate so its blue accent is preserved.',[
+openEditModal(`Edit ${label} Header`,'Use the highlighted word field to keep the original sky-blue accent.',[
 {type:'text',key:'prefix',label:prefixLabel,value:header.prefix,required:true},
-{type:'text',key:'accent',label:accentLabel,value:header.accent,required:true}
-],v=>{header.prefix=v.prefix.trim()||header.prefix;header.accent=v.accent.trim()||header.accent;renderAll()});
+{type:'text',key:'accent',label:accentLabel,value:header.accent,placeholder:'Optional for a one-word heading'}
+],v=>{header.prefix=v.prefix.trim()||header.prefix;header.accent=(v.accent||'').trim();renderAll()});
 }
 function editDashboardHeader(key,label){editSimpleHeader(key,label)}
+function editSectionHeader(key){
+ensureEditableHeaders();
+const map={about:{o:data.about},cc:{o:data.cc},exp:{o:data.sectionHeaders.exp},proj:{o:data.sectionHeaders.proj},sk:{o:data.skills},edu:{o:data.education},research:{o:data.research},cert:{o:data.certifications},ct:{o:data.contact}};
+const m=map[key];if(!m)return;
+const split=splitHeaderForAccent(m.o.title);
+openEditModal('Edit Section Header','Use the highlighted word field to preserve the blue second-word accent.',[
+{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow||''},
+{type:'text',key:'prefix',label:'First word(s)',value:split.prefix,required:true},
+{type:'text',key:'accent',label:'Highlighted word',value:split.accent,placeholder:'Optional for a one-word heading'},
+{type:'textarea',key:'desc',label:'Description',value:m.o.desc||'',rows:3}
+],v=>{m.o.eyebrow=v.eyebrow;m.o.title=makeAccentTitle(v.prefix,v.accent);m.o.desc=v.desc;renderAll()});
+}
 
 function retireProjectWorkData(){
 // Project Work / Gallery has been removed from this portfolio by owner request.
@@ -1291,8 +1326,6 @@ openEditModal('Edit GCC Banner','Update flags and message',[
 function addContactCard(){openEditModal('Add Contact Card','',[{type:'text',key:'icon',label:'Emoji',value:'📧',required:true},{type:'text',key:'label',label:'Label',required:true},{type:'text',key:'value',label:'Value',required:true},{type:'text',key:'link',label:'Link (optional)'}],v=>{data.contact.cards.push({id:uid(),icon:v.icon,label:v.label,value:v.value,link:v.link});renderContact()})}
 function editContactCard(id){const c=data.contact.cards.find(x=>x.id===id);if(!c)return;openEditModal('Edit Contact Card','',[{type:'text',key:'icon',label:'Emoji',value:c.icon},{type:'text',key:'label',label:'Label',value:c.label,required:true},{type:'text',key:'value',label:'Value',value:c.value,required:true},{type:'text',key:'link',label:'Link',value:c.link}],v=>{c.icon=v.icon;c.label=v.label;c.value=v.value;c.link=v.link;renderContact()})}
 function removeContactCard(id){if(!confirm('Remove?'))return;data.contact.cards=data.contact.cards.filter(x=>x.id!==id);renderContact();savePortfolio(true)}
-
-function editSectionHeader(key){ensureEditableHeaders();const map={about:{o:data.about},cc:{o:data.cc},exp:{o:data.sectionHeaders.exp},proj:{o:data.sectionHeaders.proj},sk:{o:data.skills},edu:{o:data.education},research:{o:data.research},cert:{o:data.certifications},ct:{o:data.contact}};const m=map[key];if(!m)return;openEditModal('Edit Section Header','',[{type:'text',key:'eyebrow',label:'Eyebrow',value:m.o.eyebrow},{type:'text',key:'title',label:'Title (HTML)',value:m.o.title,hint:'Use <em> for accent'},{type:'textarea',key:'desc',label:'Description',value:m.o.desc,rows:3}],v=>{m.o.eyebrow=v.eyebrow;m.o.title=v.title;m.o.desc=v.desc;renderAll()})}
 
 // ════════ CONTACT FORM — secure server API ════════
 function sendMessage(){

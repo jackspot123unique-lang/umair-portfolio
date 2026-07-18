@@ -105,3 +105,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - The highlighted word is always rendered with the original sky-blue accent after editing.
 - Older saved plain/HTML header values are automatically converted to the new two-part format.
 - Internship remains a direct persistent plain heading editor.
+
+## Universal two-part Edit Header format
+
+- Every section edit-header modal now uses First word(s) and Highlighted word fields, alongside the existing eyebrow/description fields where applicable.
+- About, Core Competence, Professional Experience, Project Portfolio, Skills, Education, Research, Certifications and Contact preserve their blue highlighted final/second phrase after editing.
+- Internships, Core Expertise and Portfolio Status now use the same two-part editor and accent renderer.
