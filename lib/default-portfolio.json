@@ -765,7 +765,8 @@
       "title": "Internships"
     },
     "proficiency": {
-      "title": "Proficiency <em style=\"color:var(--sky)\">Levels</em>"
+      "prefix": "Proficiency",
+      "accent": "Levels"
     },
     "coreExpertise": {
       "title": "// Core Expertise"
@@ -774,7 +775,8 @@
       "title": "// Portfolio Status"
     },
     "sendMessage": {
-      "title": "Send a <em style=\"color:var(--sky)\">Message</em>"
+      "prefix": "Send a",
+      "accent": "Message"
     }
   }
 }

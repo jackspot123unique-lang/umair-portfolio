@@ -98,3 +98,10 @@ The visual design, colors, animations, layout and existing working integrations 
 - Fixed Professional Experience and Project Portfolio header persistence. They now save to `sectionHeaders` data instead of temporary DOM-only objects.
 - Added editable headers for Core Expertise, Portfolio Status, Internships, Proficiency Levels and Send a Message.
 - All existing section header controls (About, Core Competence, Skills, Education, Research & Publications, Certifications and Contact) continue to save through the same persistent data path.
+
+## Accent-preserving minor header editor
+
+- Proficiency Levels and Send a Message now use two-field heading editors: first word(s) and highlighted word.
+- The highlighted word is always rendered with the original sky-blue accent after editing.
+- Older saved plain/HTML header values are automatically converted to the new two-part format.
+- Internship remains a direct persistent plain heading editor.
