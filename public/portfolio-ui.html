@@ -80,7 +80,7 @@ body.admin-mode .sec-add-btn,body.admin-mode .sec-remove-cat-btn{display:inline-
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:0 56px;height:72px;background:rgba(255,255,255,.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);box-shadow:0 2px 24px rgba(41,128,185,.06);transition:height var(--tr)}
 nav.scrolled{height:62px}
 .nav-logo{display:flex;align-items:center;gap:12px}
-.logo-circle{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--teal));display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;overflow:hidden;flex-shrink:0;border:2px solid var(--white);box-shadow:0 2px 10px rgba(41,128,185,.3);transition:all var(--tr)}
+.logo-circle{width:var(--logo-size,44px);height:var(--logo-size,44px);left:var(--logo-x,0px);top:var(--logo-y,0px);border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--teal));display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;overflow:hidden;flex-shrink:0;border:2px solid var(--white);box-shadow:0 2px 10px rgba(41,128,185,.3);transition:all var(--tr)}
 .logo-circle:hover{transform:scale(1.05)}
 .logo-circle img{width:100%;height:100%;object-fit:cover}
 .logo-circle .logo-text{color:#fff;font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
@@ -105,14 +105,15 @@ body.admin-mode .logo-circle:hover .logo-overlay{display:flex}
 .bg-float{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;padding:5px 13px;border-radius:5px;border:1px solid currentColor;letter-spacing:1.2px;animation:floatItem var(--dur,14s) ease-in-out var(--delay,0s) infinite;opacity:.10}
 @keyframes floatItem{0%,100%{transform:translateY(0);opacity:.10}33%{transform:translateY(-18px);opacity:.18}66%{transform:translateY(10px);opacity:.07}}
 .hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 440px;gap:50px;align-items:center;width:100%}
-.profile-pic-wrap{display:flex;justify-content:center;margin-bottom:30px;grid-column:1/-1}
-.profile-pic{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--teal));display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;overflow:hidden;border:5px solid var(--white);box-shadow:0 8px 32px rgba(41,128,185,.35);transition:all var(--tr)}
+.profile-pic-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:30px;grid-column:1/-1}
+.profile-pic{width:var(--profile-size,160px);height:var(--profile-size,160px);left:var(--profile-x,0px);top:var(--profile-y,0px);border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--teal));display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;overflow:hidden;border:5px solid var(--white);box-shadow:0 8px 32px rgba(41,128,185,.35);transition:all var(--tr)}
 .profile-pic:hover{transform:scale(1.04)}
 .profile-pic img{width:100%;height:100%;object-fit:cover}
 .profile-pic .profile-initial{color:#fff;font-family:'Playfair Display',serif;font-size:60px;font-weight:700}
 .profile-pic .profile-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.65);color:#fff;align-items:center;justify-content:center;flex-direction:column;gap:4px;font-size:11px;font-weight:600;border-radius:50%}
 body.admin-mode .profile-pic:hover .profile-overlay{display:flex}
 .profile-pic .profile-overlay .pp-icon{font-size:24px}
+.profile-custom-controls{border:none;padding:0;margin-top:12px;justify-content:center}
 
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--teal);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
 .hero-eyebrow::before{content:'';display:block;width:28px;height:1.5px;background:var(--teal)}
@@ -352,7 +353,7 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
-@media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:240px;height:240px;border-width:6px}.profile-pic .profile-initial{font-size:88px}.cap-stack{margin-left:28px;margin-top:-14px;gap:16px}}
+@media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;align-items:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:var(--profile-size,240px);height:var(--profile-size,240px);border-width:6px}.profile-pic .profile-initial{font-size:88px}.profile-custom-controls{justify-content:flex-start}.cap-stack{margin-left:28px;margin-top:-14px;gap:16px}}
 @media(min-width:1200px){.hero-inner{max-width:1460px;grid-template-columns:minmax(0,1fr) 720px}.hero-card{margin-left:18px;padding:30px 28px}.hero-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hstat{padding:13px 8px}.hstat-num{font-size:23px}.hstat-mini{padding:10px 6px}.hstat-mini .hstat-num{font-size:18px}}
 @media(max-width:960px){.research-grid{grid-template-columns:1fr}}
 
@@ -488,7 +489,7 @@ footer span{color:var(--sky);font-weight:600}
 #certList{grid-template-columns:1fr}
 nav{padding:0 22px}.nav-links{display:none}.nav-burger{display:flex}
 section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-template-columns:1fr;gap:40px}
-.hero-card{display:none}.about-grid,.edu-layout,.intern-row{grid-template-columns:1fr}
+.hero-card{display:none}.profile-pic{width:min(var(--profile-size,160px),160px);height:min(var(--profile-size,160px),160px)}.about-grid,.edu-layout,.intern-row{grid-template-columns:1fr}
 .sbar-grid,.cf-row,.form-row{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr 1fr}
 .tab-pane.on{grid-template-columns:1fr}.pw-grid{grid-template-columns:1fr}
 .sec-add-btn{right:22px;top:80px}.sec-remove-cat-btn{right:160px;top:80px}.core-comp-section{padding:60px 22px}
@@ -499,7 +500,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 @media(max-width:600px){
 .contact-grid{grid-template-columns:1fr}
 .hero-btns{flex-direction:column}.hero-btns .btn{width:100%;justify-content:center}
-.profile-pic{width:130px;height:130px}.profile-pic .profile-initial{font-size:48px}
+.profile-pic{width:min(var(--profile-size,130px),130px);height:min(var(--profile-size,130px),130px)}.profile-pic .profile-initial{font-size:48px}
 .modal-header,.modal-body,.modal-footer{padding-left:22px;padding-right:22px}
 .sec-remove-cat-btn{right:auto;left:22px}
 }
@@ -558,7 +559,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="profile-initial" id="profileInitial">UA</div>
 <img id="profileImg" style="display:none" alt="Profile">
 <div class="profile-overlay"><div class="pp-icon">📷</div><div>Upload Photo</div></div>
-</div></div>
+</div><div class="card-ctrl profile-custom-controls"><button class="cc-btn cc-edit" onclick="editMediaLayout('profile')">✎ Customize Picture</button><button class="cc-btn cc-edit" onclick="editMediaLayout('logo')">✎ Customize Logo</button></div></div>
 <div>
 <div class="hero-eyebrow">✦ Portfolio — <span id="heroTagName">Umair Ahmad</span></div>
 <h1 class="hero-name"><span id="heroLine1">Mechanical</span><br><span class="accent" id="heroLine2">BIM</span> <span id="heroLine3">Engineer</span></h1>
@@ -578,7 +579,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="chip-wrap" id="chipWrap"></div>
 <div class="card-ctrl" style="margin-top:14px;padding-top:10px"><button class="cc-btn cc-add" onclick="addKeyword()">＋ Add Keyword</button><button class="cc-btn cc-edit" onclick="editDashboardHeader('coreExpertise','Core Expertise')">✎ Edit Header</button></div>
 <div class="hero-card-label" id="portfolioStatusHeader" style="margin-top:20px">// Portfolio Status</div>
-<div class="hero-stats" id="heroStats"></div><div class="card-ctrl" style="margin-top:14px;padding-top:10px"><button class="cc-btn cc-edit" onclick="editDashboardHeader('portfolioStatus','Portfolio Status')">✎ Edit Header</button></div>
+<div class="hero-stats" id="heroStats"></div><div class="card-ctrl" style="margin-top:14px;padding-top:10px"><button class="cc-btn cc-edit" onclick="editDashboardHeader('portfolioStatus','Portfolio Status')">✎ Edit Header</button><button class="cc-btn cc-edit" onclick="editBreakdownHeaders()">✎ Edit Breakdown Headers</button></div>
 </div>
 </div>
 <div class="scroll-hint">Scroll</div>
@@ -999,8 +1000,8 @@ if(target&&target.files){target.files.splice(idx,1);renderAll();savePortfolio(tr
 
 function adminUploadProfile(){if(!isAdmin)return showToast('⚠️ Enter admin mode.','info');const i=$('hiddenFileInput');i.onchange=async function(){const f=this.files[0];if(!f)return;const uploaded=await processFile(f);if(uploaded){data.profilePic=uploaded.url;renderProfile();savePortfolio(true);showToast('✅ Profile updated!','success')}this.value=''};i.click()}
 function adminUploadLogo(){if(!isAdmin)return showToast('⚠️ Enter admin mode.','info');const i=$('hiddenFileInput');i.onchange=async function(){const f=this.files[0];if(!f)return;const uploaded=await processFile(f);if(uploaded){data.logoPic=uploaded.url;renderLogo();savePortfolio(true);showToast('✅ Logo updated!','success')}this.value=''};i.click()}
-function renderProfile(){if(data.profilePic){$('profileImg').src=data.profilePic;$('profileImg').style.display='block';$('profileInitial').style.display='none'}else{$('profileImg').style.display='none';$('profileInitial').style.display='block'}}
-function renderLogo(){if(data.logoPic){$('logoImg').src=data.logoPic;$('logoImg').style.display='block';$('logoText').style.display='none'}else{$('logoImg').style.display='none';$('logoText').style.display='block'}}
+function renderProfile(){renderMediaLayout();if(data.profilePic){$('profileImg').src=data.profilePic;$('profileImg').style.display='block';$('profileInitial').style.display='none'}else{$('profileImg').style.display='none';$('profileInitial').style.display='block'}}
+function renderLogo(){renderMediaLayout();if(data.logoPic){$('logoImg').src=data.logoPic;$('logoImg').style.display='block';$('logoText').style.display='none'}else{$('logoImg').style.display='none';$('logoText').style.display='block'}}
 
 // ════════ HERO with EDITABLE TITLES ════════
 function renderHero(){
@@ -1028,7 +1029,7 @@ statsHtml+=jump(totalProjects,'Total Projects','projects','hstat-main hstat-tota
 statsHtml+=jump(researchItems.length,'Research & Publications','research','hstat-main');
 statsHtml+=jump((data.education?.certs||[]).length,'Certifications','certifications','hstat-main');
 // Education is represented only by this linked Academic Snapshot, as requested.
-statsHtml+=group('Academic Snapshot — Education');
+statsHtml+=group(data.sectionHeaders.statusGroups.academic);
 statsHtml+=jump(grade(bsc),'CGPA — B.Sc. Mechanical Engineering','education','hstat-mini hstat-academic');
 statsHtml+=jump(grade(fsc),'F.Sc Pre-Engineering','education','hstat-mini hstat-academic');
 statsHtml+=jump(grade(ssc),'SSC — Science','education','hstat-mini hstat-academic');
@@ -1039,13 +1040,13 @@ const value=grade(degree)!=='—'?grade(degree):(degree.year||'—');
 statsHtml+=jump(value,degree.deg||'Education','education','hstat-mini hstat-academic');
 });
 // Independent breakdowns for every requested main box except Certifications.
-statsHtml+=group('Professional Experience Breakdown');
+statsHtml+=group(data.sectionHeaders.statusGroups.experience);
 statsHtml+=detail(experiences,'Experience','experience',item=>item.role||item.company||'Experience',item=>item.date||'—','hstat-date');
-statsHtml+=group('Internship Breakdown');
+statsHtml+=group(data.sectionHeaders.statusGroups.internship);
 statsHtml+=detail(interns,'Internship','internships',item=>item.title||'Internship',internshipDate,'hstat-date');
-statsHtml+=group('Project Breakdown');
+statsHtml+=group(data.sectionHeaders.statusGroups.project);
 statsHtml+=categories.length?categories.map(cat=>projectJump((data.projects[cat.key]||[]).length,cat.name,cat.key,'hstat-mini')).join(''):jump(0,'No Project Categories','projects','hstat-mini');
-statsHtml+=group('Research & Publications Breakdown');
+statsHtml+=group(data.sectionHeaders.statusGroups.research);
 statsHtml+=detail(researchItems,'Research Item','research',item=>item.title||item.type||'Research Item',(item,index)=>index+1);
 $('heroStats').innerHTML=statsHtml;
 }
@@ -1195,9 +1196,11 @@ internships:{prefix:'Internships',accent:''},
 proficiency:{prefix:'Proficiency',accent:'Levels'},
 coreExpertise:{prefix:'// Core',accent:'Expertise'},
 portfolioStatus:{prefix:'// Portfolio',accent:'Status'},
-sendMessage:{prefix:'Send a',accent:'Message'}
+sendMessage:{prefix:'Send a',accent:'Message'},
+statusGroups:{academic:'Academic Snapshot — Education',experience:'Professional Experience Breakdown',internship:'Internship Breakdown',project:'Project Breakdown',research:'Research & Publications Breakdown'}
 };
 Object.entries(defaults).forEach(([key,value])=>{if(!data.sectionHeaders[key])data.sectionHeaders[key]={...value}});
+data.sectionHeaders.statusGroups={...defaults.statusGroups,...data.sectionHeaders.statusGroups};
 // Convert older saved plain/HTML title values into two editable accent-aware fields.
 const hydrateAccent=(key,defaultPrefix,defaultAccent)=>{
 const header=data.sectionHeaders[key];
@@ -1258,6 +1261,39 @@ openEditModal('Edit Section Header','Use the highlighted word field to preserve 
 {type:'text',key:'accent',label:'Highlighted word',value:split.accent,placeholder:'Optional for a one-word heading'},
 {type:'textarea',key:'desc',label:'Description',value:m.o.desc||'',rows:3}
 ],v=>{m.o.eyebrow=v.eyebrow;m.o.title=makeAccentTitle(v.prefix,v.accent);m.o.desc=v.desc;renderAll()});
+}
+
+function ensureMediaLayout(){
+if(!data.mediaLayout)data.mediaLayout={};
+data.mediaLayout.profile={size:240,x:0,y:0,...(data.mediaLayout.profile||{})};
+data.mediaLayout.logo={size:44,x:0,y:0,...(data.mediaLayout.logo||{})};
+}
+function clampMediaNumber(value,fallback,min,max){
+const number=Number(value);return Number.isFinite(number)?Math.max(min,Math.min(max,number)):fallback;
+}
+function renderMediaLayout(){
+ensureMediaLayout();
+const profile=data.mediaLayout.profile,logo=data.mediaLayout.logo;
+const profileEl=$('profilePic'),logoEl=$('logoCircle');
+if(profileEl){profileEl.style.setProperty('--profile-size',`${profile.size}px`);profileEl.style.setProperty('--profile-x',`${profile.x}px`);profileEl.style.setProperty('--profile-y',`${profile.y}px`)}
+if(logoEl){logoEl.style.setProperty('--logo-size',`${logo.size}px`);logoEl.style.setProperty('--logo-x',`${logo.x}px`);logoEl.style.setProperty('--logo-y',`${logo.y}px`)}
+}
+function editMediaLayout(kind){
+ensureMediaLayout();const media=data.mediaLayout[kind],isProfile=kind==='profile';
+openEditModal(`Customize ${isProfile?'Picture':'Logo'}`,'Use negative values to move left/up and positive values to move right/down.',[
+{type:'text',key:'size',label:'Size (pixels)',value:String(media.size),required:true,placeholder:isProfile?'80–360':'24–120'},
+{type:'row',fields:[{type:'text',key:'x',label:'Horizontal position (left / right)',value:String(media.x),placeholder:'Negative = left'},{type:'text',key:'y',label:'Vertical position (up / down)',value:String(media.y),placeholder:'Negative = up'}]}
+],v=>{media.size=clampMediaNumber(v.size,media.size,isProfile?80:24,isProfile?360:120);media.x=clampMediaNumber(v.x,media.x,-300,300);media.y=clampMediaNumber(v.y,media.y,-300,300);renderMediaLayout()});
+}
+function editBreakdownHeaders(){
+ensureEditableHeaders();const headings=data.sectionHeaders.statusGroups;
+openEditModal('Edit Breakdown Headers','Change any first-page Portfolio Status breakdown heading.',[
+{type:'text',key:'academic',label:'Academic Snapshot Heading',value:headings.academic,required:true},
+{type:'text',key:'experience',label:'Professional Experience Breakdown',value:headings.experience,required:true},
+{type:'text',key:'internship',label:'Internship Breakdown',value:headings.internship,required:true},
+{type:'text',key:'project',label:'Project Breakdown',value:headings.project,required:true},
+{type:'text',key:'research',label:'Research & Publications Breakdown',value:headings.research,required:true}
+],v=>{headings.academic=v.academic;headings.experience=v.experience;headings.internship=v.internship;headings.project=v.project;headings.research=v.research;renderHero()});
 }
 
 function retireProjectWorkData(){
@@ -1343,7 +1379,7 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 
 function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderResearch();renderContact();attachReveal()}
 
-async function bootPortfolio(){await loadData();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureEditableHeaders();renderAll();setTimeout(typeLoop,800)}
+async function bootPortfolio(){await loadData();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();
 </script>
 </body>

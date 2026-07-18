@@ -111,3 +111,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - Every section edit-header modal now uses First word(s) and Highlighted word fields, alongside the existing eyebrow/description fields where applicable.
 - About, Core Competence, Professional Experience, Project Portfolio, Skills, Education, Research, Certifications and Contact preserve their blue highlighted final/second phrase after editing.
 - Internships, Core Expertise and Portfolio Status now use the same two-part editor and accent renderer.
+
+## Universal picture, logo and status-breakdown customization
+
+- Added Admin Mode Customize Picture and Customize Logo controls with size, horizontal position and vertical position fields.
+- Added persistent responsive `mediaLayout` data for profile picture and logo geometry.
+- Added an Edit Breakdown Headers control under Portfolio Status for Academic Snapshot, Professional Experience, Internship, Project and Research breakdown headings.

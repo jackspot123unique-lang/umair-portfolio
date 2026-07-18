@@ -780,6 +780,25 @@
     "sendMessage": {
       "prefix": "Send a",
       "accent": "Message"
+    },
+    "statusGroups": {
+      "academic": "Academic Snapshot — Education",
+      "experience": "Professional Experience Breakdown",
+      "internship": "Internship Breakdown",
+      "project": "Project Breakdown",
+      "research": "Research & Publications Breakdown"
+    }
+  },
+  "mediaLayout": {
+    "profile": {
+      "size": 240,
+      "x": 0,
+      "y": 0
+    },
+    "logo": {
+      "size": 44,
+      "x": 0,
+      "y": 0
     }
   }
 }
