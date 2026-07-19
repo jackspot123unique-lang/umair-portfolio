@@ -353,6 +353,13 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
+.custom-box{position:relative;box-sizing:border-box;width:var(--box-width,100%);min-height:var(--box-min-height,auto);left:var(--box-x,0px);top:var(--box-y,0px)}
+.box-customize{display:none;position:absolute;top:7px;right:7px;z-index:8;width:25px;height:25px;padding:0;border:1px solid rgba(41,128,185,.25);border-radius:6px;background:rgba(255,255,255,.92);color:var(--sky);font-size:13px;line-height:1;cursor:pointer;box-shadow:var(--shadow-sm)}
+.box-customize:hover{background:var(--sky);color:#fff}
+body.admin-mode .custom-box>.box-customize{display:inline-flex;align-items:center;justify-content:center}
+.custom-box.has-primary .about-block-header,.custom-box.has-primary .cap-title,.custom-box.has-primary .cc-card-title,.custom-box.has-primary .exp-role,.custom-box.has-primary .intern-title,.custom-box.has-primary .pcard-name,.custom-box.has-primary .scat-name,.custom-box.has-primary .edu-deg,.custom-box.has-primary .cert-name,.custom-box.has-primary .research-card-title,.custom-box.has-primary .ccard-val,.custom-box.has-primary .hero-title-row>span:last-child,.custom-box.has-primary .hstat-num{font-size:var(--box-primary-size)!important}
+.custom-box.has-secondary .about-block p,.custom-box.has-secondary .cap-desc,.custom-box.has-secondary .cc-card-desc,.custom-box.has-secondary .exp-company,.custom-box.has-secondary .exp-list li,.custom-box.has-secondary .intern-co,.custom-box.has-secondary .intern-desc,.custom-box.has-secondary .pcard-sub,.custom-box.has-secondary .pcard-desc,.custom-box.has-secondary .edu-sch,.custom-box.has-secondary .edu-meta,.custom-box.has-secondary .cert-yr,.custom-box.has-secondary .research-meta,.custom-box.has-secondary .research-desc,.custom-box.has-secondary .ccard-label,.custom-box.has-secondary .hstat-label{font-size:var(--box-secondary-size)!important}
+
 @media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;align-items:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:var(--profile-size,240px);height:var(--profile-size,240px);border-width:6px}.profile-pic .profile-initial{font-size:88px}.profile-custom-controls{justify-content:flex-start}.cap-stack{margin-left:28px;margin-top:-14px;gap:16px}}
 @media(min-width:1200px){.hero-inner{max-width:1460px;grid-template-columns:minmax(0,1fr) 720px}.hero-card{margin-left:18px;padding:30px 28px}.hero-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hstat{padding:13px 8px}.hstat-num{font-size:23px}.hstat-mini{padding:10px 6px}.hstat-mini .hstat-num{font-size:18px}}
 @media(max-width:960px){.research-grid{grid-template-columns:1fr}}
@@ -913,7 +920,7 @@ $('editModalBody').innerHTML=h;$('editOverlay').classList.add('open');
 function addCustomCatOption(key){const inp=$('ef-'+key+'-custom');const sel=$('ef-'+key);if(!inp||!sel)return;const v=inp.value.trim();if(!v){showToast('⚠️ Enter a category name.','error');return}const opt=document.createElement('option');opt.value=v;opt.textContent=v;opt.selected=true;sel.appendChild(opt);inp.value='';showToast('✅ Category added!','success')}
 
 function closeEditModal(){$('editOverlay').classList.remove('open');editContext=null;pendingFiles=[]}
-function saveEditModal(){if(!editContext)return;const v={};editContext.fields.forEach(f=>{if(f.type==='row'){f.fields.forEach(sub=>{const e=$('ef-'+sub.key);if(e)v[sub.key]=e.value})}else if(f.type!=='files'){const e=$('ef-'+f.key);if(e)v[f.key]=e.value}});v._files=pendingFiles.slice();editContext.onSave(v);closeEditModal();savePortfolio(true)}
+function saveEditModal(){if(!editContext)return;const v={};editContext.fields.forEach(f=>{if(f.type==='row'){f.fields.forEach(sub=>{const e=$('ef-'+sub.key);if(e)v[sub.key]=e.value})}else if(f.type!=='files'){const e=$('ef-'+f.key);if(e)v[f.key]=e.value}});v._files=pendingFiles.slice();editContext.onSave(v);applyAllBoxLayouts();closeEditModal();savePortfolio(true)}
 $('editOverlay').addEventListener('click',e=>{if(e.target===$('editOverlay'))closeEditModal()});
 
 $('hiddenMultiFileInput').addEventListener('change',async function(){
@@ -1263,6 +1270,60 @@ openEditModal('Edit Section Header','Use the highlighted word field to preserve 
 ],v=>{m.o.eyebrow=v.eyebrow;m.o.title=makeAccentTitle(v.prefix,v.accent);m.o.desc=v.desc;renderAll()});
 }
 
+function ensureBoxLayouts(){if(!data.boxLayouts)data.boxLayouts={}}
+function normalizeBoxNumber(value,fallback,min,max){const number=Number(value);return Number.isFinite(number)?Math.max(min,Math.min(max,number)):fallback}
+function getBoxLayout(key){
+ensureBoxLayouts();
+if(!data.boxLayouts[key])data.boxLayouts[key]={width:100,height:0,x:0,y:0,primary:0,secondary:0};
+return data.boxLayouts[key];
+}
+function editBoxLayout(key,label){
+const box=getBoxLayout(key);
+openEditModal(`Customize ${label} Box`,'Safe responsive limits are used so cards remain inside their section grid on desktop and mobile.',[
+{type:'text',key:'width',label:'Width (%)',value:String(box.width),required:true,placeholder:'60–100'},
+{type:'text',key:'height',label:'Minimum Height (px, 0 = automatic)',value:String(box.height),placeholder:'0–800'},
+{type:'row',fields:[{type:'text',key:'x',label:'Horizontal offset (left / right)',value:String(box.x),placeholder:'-24 to 24'},{type:'text',key:'y',label:'Vertical offset (up / down)',value:String(box.y),placeholder:'-24 to 24'}]},
+{type:'row',fields:[{type:'text',key:'primary',label:'Primary Text Size (px, 0 = default)',value:String(box.primary),placeholder:'0–72'},{type:'text',key:'secondary',label:'Secondary Text Size (px, 0 = default)',value:String(box.secondary),placeholder:'0–36'}]}
+],v=>{box.width=normalizeBoxNumber(v.width,box.width,60,100);box.height=normalizeBoxNumber(v.height,box.height,0,800);box.x=normalizeBoxNumber(v.x,box.x,-24,24);box.y=normalizeBoxNumber(v.y,box.y,-24,24);box.primary=normalizeBoxNumber(v.primary,box.primary,0,72);box.secondary=normalizeBoxNumber(v.secondary,box.secondary,0,36);renderAll()});
+}
+function applyBoxLayout(element,key,label){
+if(!element)return;
+const box=getBoxLayout(key);
+element.classList.add('custom-box');
+element.style.setProperty('--box-width',`${box.width}%`);
+element.style.setProperty('--box-min-height',box.height?`${box.height}px`:'auto');
+element.style.setProperty('--box-x',`${box.x}px`);
+element.style.setProperty('--box-y',`${box.y}px`);
+element.style.setProperty('--box-primary-size',box.primary?`${box.primary}px`:'');
+element.style.setProperty('--box-secondary-size',box.secondary?`${box.secondary}px`:'');
+element.classList.toggle('has-primary',!!box.primary);
+element.classList.toggle('has-secondary',!!box.secondary);
+const existing=element.querySelector(':scope > .box-customize');if(existing)existing.remove();
+const button=document.createElement('span');button.className='box-customize';button.title=`Customize ${label}`;button.setAttribute('role','button');button.setAttribute('tabindex','0');button.textContent='⚙';
+const openCustomizer=event=>{event.preventDefault();event.stopPropagation();editBoxLayout(key,label)};button.addEventListener('click',openCustomizer);button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){openCustomizer(event)}});
+element.appendChild(button);
+}
+function applyArrayBoxes(selector,items,prefix,label){
+const elements=document.querySelectorAll(selector);items.forEach((item,index)=>applyBoxLayout(elements[index],`${prefix}:${item.id}`,label));
+}
+function applyAllBoxLayouts(){
+ensureBoxLayouts();
+applyBoxLayout(document.querySelector('.hero-card'),'hero:status-card','Core Expertise and Portfolio Status');
+applyArrayBoxes('#heroTitles .hero-title-item',data.hero.titles,'hero-title','Hero Title / Role');
+document.querySelectorAll('#heroStats .hstat').forEach((element,index)=>applyBoxLayout(element,`status-tile:${index}`,`Portfolio Status Tile ${index+1}`));
+applyArrayBoxes('#aboutBlocks .about-block',data.about.blocks,'about-block','About Block');
+applyArrayBoxes('#capStack .cap-card',data.about.capabilities,'capability','Capability');
+applyArrayBoxes('#ccGrid .cc-card',data.cc.items,'competence','Core Competence');
+applyArrayBoxes('#expTimeline .exp-card',data.experiences,'experience','Professional Experience');
+applyArrayBoxes('#internRow .intern-card',data.interns,'internship','Internship');
+(data.projectCategories||[]).forEach(category=>{const pane=$('tp-'+category.key);if(!pane)return;(data.projects[category.key]||[]).forEach((project,index)=>applyBoxLayout(pane.querySelectorAll('.pcard')[index],`project:${category.key}:${project.id}`,'Project Portfolio'))});
+applyArrayBoxes('#skillsGrid .scat-card',data.skills.categories,'skill-category','Skill Category');
+applyArrayBoxes('#degList .edu-card',data.education.degrees,'degree','Education Degree');
+applyArrayBoxes('#certList .cert-item',data.education.certs,'certificate','Certification');
+ensureResearchContent();applyArrayBoxes('#researchGrid .research-card',data.research.items,'research','Research Publication');
+applyArrayBoxes('#contactGrid .ccard',data.contact.cards,'contact-card','Contact Card');
+} 
+
 function ensureMediaLayout(){
 if(!data.mediaLayout)data.mediaLayout={};
 data.mediaLayout.profile={size:240,x:0,y:0,...(data.mediaLayout.profile||{})};
@@ -1377,7 +1438,7 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 .finally(()=>{btn.disabled=false;btn.style.opacity='1'});
 }
 
-function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderResearch();renderContact();attachReveal()}
+function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderResearch();renderContact();applyAllBoxLayouts();attachReveal()}
 
 async function bootPortfolio(){await loadData();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();

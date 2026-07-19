@@ -117,3 +117,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added Admin Mode Customize Picture and Customize Logo controls with size, horizontal position and vertical position fields.
 - Added persistent responsive `mediaLayout` data for profile picture and logo geometry.
 - Added an Edit Breakdown Headers control under Portfolio Status for Academic Snapshot, Professional Experience, Internship, Project and Research breakdown headings.
+
+## Universal individual box customizer
+
+- Added safe individual box controls to major portfolio boxes and tiles: Hero role/status tiles, About blocks, Capabilities, Core Competence, Experience, Internships, Project cards, Skill categories, Degrees, Certifications, Research items and Contact cards.
+- Each box supports Width %, Minimum Height, Horizontal Offset, Vertical Offset, Primary Text Size and Secondary Text Size.
+- Values are bounded for responsive-grid safety and persist in `boxLayouts` after save.
