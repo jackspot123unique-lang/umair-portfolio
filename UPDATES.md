@@ -123,3 +123,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added safe individual box controls to major portfolio boxes and tiles: Hero role/status tiles, About blocks, Capabilities, Core Competence, Experience, Internships, Project cards, Skill categories, Degrees, Certifications, Research items and Contact cards.
 - Each box supports Width %, Minimum Height, Horizontal Offset, Vertical Offset, Primary Text Size and Secondary Text Size.
 - Values are bounded for responsive-grid safety and persist in `boxLayouts` after save.
+
+## Free-size and multi-text individual box customizer
+
+- Removed artificial maximum limits from universal box Width, Height, Horizontal Offset, Vertical Offset and font-size values. Width must remain greater than zero and height/font values must remain zero or greater for valid CSS.
+- Added box-specific font controls instead of only generic Primary/Secondary controls. Professional Experience has Job Title, Company, Date, Bullets and Tags controls; similar specific controls are available for Internships, Projects, Research, Education, Certifications, Contact, Status tiles and other major box types.
+- Large custom values are intentionally allowed at the owner’s request and may overlap cards or break mobile layout until adjusted.
