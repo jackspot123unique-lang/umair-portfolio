@@ -353,6 +353,13 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
+.custom-box{position:relative;box-sizing:border-box;width:var(--box-width,100%);min-height:var(--box-min-height,auto);left:var(--box-x,0px);top:var(--box-y,0px)}
+.box-customize{display:none;position:absolute;top:7px;right:7px;z-index:8;width:25px;height:25px;padding:0;border:1px solid rgba(41,128,185,.25);border-radius:6px;background:rgba(255,255,255,.92);color:var(--sky);font-size:13px;line-height:1;cursor:pointer;box-shadow:var(--shadow-sm)}
+.box-customize:hover{background:var(--sky);color:#fff}
+body.admin-mode .custom-box>.box-customize{display:inline-flex;align-items:center;justify-content:center}
+.custom-box.has-primary .about-block-header,.custom-box.has-primary .cap-title,.custom-box.has-primary .cc-card-title,.custom-box.has-primary .exp-role,.custom-box.has-primary .intern-title,.custom-box.has-primary .pcard-name,.custom-box.has-primary .scat-name,.custom-box.has-primary .edu-deg,.custom-box.has-primary .cert-name,.custom-box.has-primary .research-card-title,.custom-box.has-primary .ccard-val,.custom-box.has-primary .hero-title-row>span:last-child,.custom-box.has-primary .hstat-num{font-size:var(--box-primary-size)!important}
+.custom-box.has-secondary .about-block p,.custom-box.has-secondary .cap-desc,.custom-box.has-secondary .cc-card-desc,.custom-box.has-secondary .exp-company,.custom-box.has-secondary .exp-list li,.custom-box.has-secondary .intern-co,.custom-box.has-secondary .intern-desc,.custom-box.has-secondary .pcard-sub,.custom-box.has-secondary .pcard-desc,.custom-box.has-secondary .edu-sch,.custom-box.has-secondary .edu-meta,.custom-box.has-secondary .cert-yr,.custom-box.has-secondary .research-meta,.custom-box.has-secondary .research-desc,.custom-box.has-secondary .ccard-label,.custom-box.has-secondary .hstat-label{font-size:var(--box-secondary-size)!important}
+
 @media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;align-items:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:var(--profile-size,240px);height:var(--profile-size,240px);border-width:6px}.profile-pic .profile-initial{font-size:88px}.profile-custom-controls{justify-content:flex-start}.cap-stack{margin-left:28px;margin-top:-14px;gap:16px}}
 @media(min-width:1200px){.hero-inner{max-width:1460px;grid-template-columns:minmax(0,1fr) 720px}.hero-card{margin-left:18px;padding:30px 28px}.hero-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hstat{padding:13px 8px}.hstat-num{font-size:23px}.hstat-mini{padding:10px 6px}.hstat-mini .hstat-num{font-size:18px}}
 @media(max-width:960px){.research-grid{grid-template-columns:1fr}}
@@ -913,7 +920,7 @@ $('editModalBody').innerHTML=h;$('editOverlay').classList.add('open');
 function addCustomCatOption(key){const inp=$('ef-'+key+'-custom');const sel=$('ef-'+key);if(!inp||!sel)return;const v=inp.value.trim();if(!v){showToast('⚠️ Enter a category name.','error');return}const opt=document.createElement('option');opt.value=v;opt.textContent=v;opt.selected=true;sel.appendChild(opt);inp.value='';showToast('✅ Category added!','success')}
 
 function closeEditModal(){$('editOverlay').classList.remove('open');editContext=null;pendingFiles=[]}
-function saveEditModal(){if(!editContext)return;const v={};editContext.fields.forEach(f=>{if(f.type==='row'){f.fields.forEach(sub=>{const e=$('ef-'+sub.key);if(e)v[sub.key]=e.value})}else if(f.type!=='files'){const e=$('ef-'+f.key);if(e)v[f.key]=e.value}});v._files=pendingFiles.slice();editContext.onSave(v);closeEditModal();savePortfolio(true)}
+function saveEditModal(){if(!editContext)return;const v={};editContext.fields.forEach(f=>{if(f.type==='row'){f.fields.forEach(sub=>{const e=$('ef-'+sub.key);if(e)v[sub.key]=e.value})}else if(f.type!=='files'){const e=$('ef-'+f.key);if(e)v[f.key]=e.value}});v._files=pendingFiles.slice();editContext.onSave(v);applyAllBoxLayouts();closeEditModal();savePortfolio(true)}
 $('editOverlay').addEventListener('click',e=>{if(e.target===$('editOverlay'))closeEditModal()});
 
 $('hiddenMultiFileInput').addEventListener('change',async function(){
@@ -1263,6 +1270,93 @@ openEditModal('Edit Section Header','Use the highlighted word field to preserve 
 ],v=>{m.o.eyebrow=v.eyebrow;m.o.title=makeAccentTitle(v.prefix,v.accent);m.o.desc=v.desc;renderAll()});
 }
 
+function ensureBoxLayouts(){if(!data.boxLayouts)data.boxLayouts={}}
+function freeBoxNumber(value,fallback,min=null){
+if(value===undefined||value===null||String(value).trim()==='')return fallback;
+const number=Number(value);if(!Number.isFinite(number))return fallback;
+return min!==null&&number<min?fallback:number;
+}
+const BOX_FONT_PROFILES=[
+{match:key=>key==='hero:status-card',fields:[{key:'sectionLabel',label:'Section Label Font Size (px, 0 = default)',selector:'.hero-card-label'},{key:'expertise',label:'Expertise Chip Font Size (px, 0 = default)',selector:'.chip'}]},
+{match:key=>key.startsWith('hero-title:'),fields:[{key:'role',label:'Role Text Font Size (px, 0 = default)',selector:'.hero-title-row>span:last-child'}]},
+{match:key=>key.startsWith('status-tile:'),fields:[{key:'number',label:'Number Font Size (px, 0 = default)',selector:'.hstat-num'},{key:'label',label:'Label Font Size (px, 0 = default)',selector:'.hstat-label'}]},
+{match:key=>key.startsWith('about-block:'),fields:[{key:'heading',label:'Heading Font Size (px, 0 = default)',selector:'.about-block-header'},{key:'content',label:'Content Font Size (px, 0 = default)',selector:'p'}]},
+{match:key=>key.startsWith('capability:'),fields:[{key:'title',label:'Title Font Size (px, 0 = default)',selector:'.cap-title'},{key:'description',label:'Description Font Size (px, 0 = default)',selector:'.cap-desc'}]},
+{match:key=>key.startsWith('competence:'),fields:[{key:'title',label:'Title Font Size (px, 0 = default)',selector:'.cc-card-title'},{key:'description',label:'Description Font Size (px, 0 = default)',selector:'.cc-card-desc'}]},
+{match:key=>key.startsWith('experience:'),fields:[{key:'jobTitle',label:'Job Title Font Size (px, 0 = default)',selector:'.exp-role'},{key:'company',label:'Company Font Size (px, 0 = default)',selector:'.exp-company'},{key:'date',label:'Date Font Size (px, 0 = default)',selector:'.exp-badge'},{key:'bullets',label:'Bullets Font Size (px, 0 = default)',selector:'.exp-list li'},{key:'tags',label:'Tags Font Size (px, 0 = default)',selector:'.tag'}]},
+{match:key=>key.startsWith('internship:'),fields:[{key:'title',label:'Title Font Size (px, 0 = default)',selector:'.intern-title'},{key:'duration',label:'Location / Duration Font Size (px, 0 = default)',selector:'.intern-co'},{key:'description',label:'Description Font Size (px, 0 = default)',selector:'.intern-desc'},{key:'tags',label:'Tags Font Size (px, 0 = default)',selector:'.tag'}]},
+{match:key=>key.startsWith('project:'),fields:[{key:'number',label:'Project Number Font Size (px, 0 = default)',selector:'.pcard-num'},{key:'title',label:'Project Title Font Size (px, 0 = default)',selector:'.pcard-name'},{key:'subtitle',label:'Subtitle Font Size (px, 0 = default)',selector:'.pcard-sub'},{key:'description',label:'Description Font Size (px, 0 = default)',selector:'.pcard-desc'},{key:'tags',label:'Tags Font Size (px, 0 = default)',selector:'.pcard-tag,.fyp-tag'}]},
+{match:key=>key.startsWith('skill-category:'),fields:[{key:'heading',label:'Heading Font Size (px, 0 = default)',selector:'.scat-name'},{key:'skills',label:'Skill Label Font Size (px, 0 = default)',selector:'.sp'}]},
+{match:key=>key.startsWith('degree:'),fields:[{key:'degree',label:'Degree Font Size (px, 0 = default)',selector:'.edu-deg'},{key:'institution',label:'Institution Font Size (px, 0 = default)',selector:'.edu-sch'},{key:'year',label:'Year Font Size (px, 0 = default)',selector:'.edu-meta span:not(.edu-gpa)'},{key:'grade',label:'GPA / Marks Font Size (px, 0 = default)',selector:'.edu-gpa'}]},
+{match:key=>key.startsWith('certificate:'),fields:[{key:'name',label:'Certificate Name Font Size (px, 0 = default)',selector:'.cert-name'},{key:'year',label:'Year Font Size (px, 0 = default)',selector:'.cert-yr'}]},
+{match:key=>key.startsWith('research:'),fields:[{key:'type',label:'Research Type Font Size (px, 0 = default)',selector:'.research-type'},{key:'title',label:'Title Font Size (px, 0 = default)',selector:'.research-card-title'},{key:'meta',label:'Authors / Venue / Date Font Size (px, 0 = default)',selector:'.research-meta'},{key:'description',label:'Description Font Size (px, 0 = default)',selector:'.research-desc'},{key:'link',label:'Research Link Font Size (px, 0 = default)',selector:'.research-link'}]},
+{match:key=>key.startsWith('contact-card:'),fields:[{key:'value',label:'Contact Value Font Size (px, 0 = default)',selector:'.ccard-val'},{key:'label',label:'Contact Label Font Size (px, 0 = default)',selector:'.ccard-label'}]}
+];
+function getBoxFontProfile(key){return BOX_FONT_PROFILES.find(profile=>profile.match(key))?.fields||[{key:'primary',label:'Primary Text Font Size (px, 0 = default)',selector:'.box-primary'},{key:'secondary',label:'Secondary Text Font Size (px, 0 = default)',selector:'.box-secondary'}]}
+function getBoxLayout(key){
+ensureBoxLayouts();
+if(!data.boxLayouts[key])data.boxLayouts[key]={width:100,height:0,x:0,y:0,fonts:{}};
+const box=data.boxLayouts[key];if(!box.fonts)box.fonts={};
+const profile=getBoxFontProfile(key);
+if(box.primary&&!box.fonts[profile[0]?.key])box.fonts[profile[0].key]=box.primary;
+if(box.secondary&&!box.fonts[profile[1]?.key])box.fonts[profile[1].key]=box.secondary;
+return box;
+}
+function editBoxLayout(key,label){
+const box=getBoxLayout(key),fontFields=getBoxFontProfile(key);
+const fields=[
+{type:'text',key:'width',label:'Width (%)',value:String(box.width),required:true,placeholder:'Any positive value (100 = default)'},
+{type:'text',key:'height',label:'Minimum Height (px, 0 = automatic)',value:String(box.height),placeholder:'Any value 0 or higher'},
+{type:'row',fields:[{type:'text',key:'x',label:'Horizontal offset (left / right)',value:String(box.x),placeholder:'Negative = left'},{type:'text',key:'y',label:'Vertical offset (up / down)',value:String(box.y),placeholder:'Negative = up'}]},
+...fontFields.map(field=>({type:'text',key:`font_${field.key}`,label:field.label,value:String(box.fonts[field.key]||0),placeholder:'0 = original default'}))
+];
+openEditModal(`Customize ${label} Box`,'Free values are allowed. Very large widths, offsets, heights or font sizes can overlap cards or break the mobile layout.',fields,v=>{
+box.width=freeBoxNumber(v.width,box.width,0.01);box.height=freeBoxNumber(v.height,box.height,0);box.x=freeBoxNumber(v.x,box.x);box.y=freeBoxNumber(v.y,box.y);
+fontFields.forEach(field=>{box.fonts[field.key]=freeBoxNumber(v[`font_${field.key}`],box.fonts[field.key]||0,0)});
+renderAll();
+});
+}
+function applyBoxFontStyles(element,key,box){
+const profile=getBoxFontProfile(key);
+profile.forEach(field=>{
+const size=Number(box.fonts?.[field.key])||0;
+element.querySelectorAll(field.selector).forEach(node=>{if(size>0)node.style.setProperty('font-size',`${size}px`,'important');else node.style.removeProperty('font-size')});
+});
+}
+function applyBoxLayout(element,key,label){
+if(!element)return;
+const box=getBoxLayout(key);
+element.classList.add('custom-box');
+element.style.setProperty('--box-width',`${box.width}%`);
+element.style.setProperty('--box-min-height',box.height?`${box.height}px`:'auto');
+element.style.setProperty('--box-x',`${box.x}px`);
+element.style.setProperty('--box-y',`${box.y}px`);
+element.classList.remove('has-primary','has-secondary');
+applyBoxFontStyles(element,key,box);
+const existing=element.querySelector(':scope > .box-customize');if(existing)existing.remove();
+const button=document.createElement('span');button.className='box-customize';button.title=`Customize ${label}`;button.setAttribute('role','button');button.setAttribute('tabindex','0');button.textContent='⚙';
+const openCustomizer=event=>{event.preventDefault();event.stopPropagation();editBoxLayout(key,label)};button.addEventListener('click',openCustomizer);button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){openCustomizer(event)}});
+element.appendChild(button);
+}
+function applyArrayBoxes(selector,items,prefix,label){const elements=document.querySelectorAll(selector);items.forEach((item,index)=>applyBoxLayout(elements[index],`${prefix}:${item.id}`,label));}
+function applyAllBoxLayouts(){
+ensureBoxLayouts();
+applyBoxLayout(document.querySelector('.hero-card'),'hero:status-card','Core Expertise and Portfolio Status');
+applyArrayBoxes('#heroTitles .hero-title-item',data.hero.titles,'hero-title','Hero Title / Role');
+document.querySelectorAll('#heroStats .hstat').forEach((element,index)=>applyBoxLayout(element,`status-tile:${index}`,`Portfolio Status Tile ${index+1}`));
+applyArrayBoxes('#aboutBlocks .about-block',data.about.blocks,'about-block','About Block');
+applyArrayBoxes('#capStack .cap-card',data.about.capabilities,'capability','Capability');
+applyArrayBoxes('#ccGrid .cc-card',data.cc.items,'competence','Core Competence');
+applyArrayBoxes('#expTimeline .exp-card',data.experiences,'experience','Professional Experience');
+applyArrayBoxes('#internRow .intern-card',data.interns,'internship','Internship');
+(data.projectCategories||[]).forEach(category=>{const pane=$('tp-'+category.key);if(!pane)return;(data.projects[category.key]||[]).forEach((project,index)=>applyBoxLayout(pane.querySelectorAll('.pcard')[index],`project:${category.key}:${project.id}`,'Project Portfolio'))});
+applyArrayBoxes('#skillsGrid .scat-card',data.skills.categories,'skill-category','Skill Category');
+applyArrayBoxes('#degList .edu-card',data.education.degrees,'degree','Education Degree');
+applyArrayBoxes('#certList .cert-item',data.education.certs,'certificate','Certification');
+ensureResearchContent();applyArrayBoxes('#researchGrid .research-card',data.research.items,'research','Research Publication');
+applyArrayBoxes('#contactGrid .ccard',data.contact.cards,'contact-card','Contact Card');
+}
+
 function ensureMediaLayout(){
 if(!data.mediaLayout)data.mediaLayout={};
 data.mediaLayout.profile={size:240,x:0,y:0,...(data.mediaLayout.profile||{})};
@@ -1377,7 +1471,7 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 .finally(()=>{btn.disabled=false;btn.style.opacity='1'});
 }
 
-function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderResearch();renderContact();attachReveal()}
+function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderResearch();renderContact();applyAllBoxLayouts();attachReveal()}
 
 async function bootPortfolio(){await loadData();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();
