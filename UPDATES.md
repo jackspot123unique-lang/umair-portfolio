@@ -129,3 +129,10 @@ The visual design, colors, animations, layout and existing working integrations 
 - Removed artificial maximum limits from universal box Width, Height, Horizontal Offset, Vertical Offset and font-size values. Width must remain greater than zero and height/font values must remain zero or greater for valid CSS.
 - Added box-specific font controls instead of only generic Primary/Secondary controls. Professional Experience has Job Title, Company, Date, Bullets and Tags controls; similar specific controls are available for Internships, Projects, Research, Education, Certifications, Contact, Status tiles and other major box types.
 - Large custom values are intentionally allowed at the owner’s request and may overlap cards or break mobile layout until adjusted.
+
+## Relative values and automatic grid reflow correction
+
+- Replaced the unreliable absolute-value box customizer with relative delta values: 0 is default, positive increases, negative decreases.
+- Width uses grid-column adjustment so expanded cards make nearby cards reflow without overlapping. Height uses relative min-height so subsequent rows move down automatically.
+- Font adjustments are now relative to the original computed font size, so +20 means original size plus 20px and changing it later to +10 means original size plus 10px.
+- Horizontal/vertical values are safe alignment directions in reflow mode: negative aligns left/top, zero uses normal grid stretch, positive aligns right/bottom.

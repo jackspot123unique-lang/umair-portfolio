@@ -353,7 +353,7 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
-.custom-box{position:relative;box-sizing:border-box;width:var(--box-width,100%);min-height:var(--box-min-height,auto);left:var(--box-x,0px);top:var(--box-y,0px)}
+.custom-box{position:relative;box-sizing:border-box;width:var(--box-inline-width,100%);min-height:var(--box-min-height,auto);justify-self:var(--box-justify,stretch);align-self:var(--box-align,stretch)}
 .box-customize{display:none;position:absolute;top:7px;right:7px;z-index:8;width:25px;height:25px;padding:0;border:1px solid rgba(41,128,185,.25);border-radius:6px;background:rgba(255,255,255,.92);color:var(--sky);font-size:13px;line-height:1;cursor:pointer;box-shadow:var(--shadow-sm)}
 .box-customize:hover{background:var(--sky);color:#fff}
 body.admin-mode .custom-box>.box-customize{display:inline-flex;align-items:center;justify-content:center}
@@ -874,6 +874,7 @@ document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
 document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
 const pane=document.getElementById('tp-'+key);if(pane)pane.classList.add('on');
 if(btn)btn.classList.add('on');
+setTimeout(()=>applyAllBoxLayouts(),0);
 }
 
 function toggleAdmin(){if(isAdmin){lockAdmin();return}$('pwdOverlay').classList.add('open');setTimeout(()=>$('pwdInput').focus(),200)}
@@ -1271,10 +1272,9 @@ openEditModal('Edit Section Header','Use the highlighted word field to preserve 
 }
 
 function ensureBoxLayouts(){if(!data.boxLayouts)data.boxLayouts={}}
-function freeBoxNumber(value,fallback,min=null){
+function freeDeltaNumber(value,fallback){
 if(value===undefined||value===null||String(value).trim()==='')return fallback;
-const number=Number(value);if(!Number.isFinite(number))return fallback;
-return min!==null&&number<min?fallback:number;
+const number=Number(value);return Number.isFinite(number)?number:fallback;
 }
 const BOX_FONT_PROFILES=[
 {match:key=>key==='hero:status-card',fields:[{key:'sectionLabel',label:'Section Label Font Size (px, 0 = default)',selector:'.hero-card-label'},{key:'expertise',label:'Expertise Chip Font Size (px, 0 = default)',selector:'.chip'}]},
@@ -1295,42 +1295,56 @@ const BOX_FONT_PROFILES=[
 function getBoxFontProfile(key){return BOX_FONT_PROFILES.find(profile=>profile.match(key))?.fields||[{key:'primary',label:'Primary Text Font Size (px, 0 = default)',selector:'.box-primary'},{key:'secondary',label:'Secondary Text Font Size (px, 0 = default)',selector:'.box-secondary'}]}
 function getBoxLayout(key){
 ensureBoxLayouts();
-if(!data.boxLayouts[key])data.boxLayouts[key]={width:100,height:0,x:0,y:0,fonts:{}};
-const box=data.boxLayouts[key];if(!box.fonts)box.fonts={};
-const profile=getBoxFontProfile(key);
-if(box.primary&&!box.fonts[profile[0]?.key])box.fonts[profile[0].key]=box.primary;
-if(box.secondary&&!box.fonts[profile[1]?.key])box.fonts[profile[1].key]=box.secondary;
+if(!data.boxLayouts[key])data.boxLayouts[key]={widthDelta:0,heightDelta:0,x:0,y:0,fontDeltas:{}};
+const box=data.boxLayouts[key];
+// Migrate the previous absolute-value experimental format to the new delta format once.
+if(typeof box.widthDelta!=='number'){box.widthDelta=0;box.heightDelta=0;box.x=0;box.y=0;box.fontDeltas={};}
+if(!box.fontDeltas)box.fontDeltas={};
 return box;
 }
+function fontAdjustmentLabel(label){return label.replace('Font Size (px, 0 = default)','Text Size Adjustment (px, 0 = default; + increase / - decrease)')}
 function editBoxLayout(key,label){
 const box=getBoxLayout(key),fontFields=getBoxFontProfile(key);
 const fields=[
-{type:'text',key:'width',label:'Width (%)',value:String(box.width),required:true,placeholder:'Any positive value (100 = default)'},
-{type:'text',key:'height',label:'Minimum Height (px, 0 = automatic)',value:String(box.height),placeholder:'Any value 0 or higher'},
-{type:'row',fields:[{type:'text',key:'x',label:'Horizontal offset (left / right)',value:String(box.x),placeholder:'Negative = left'},{type:'text',key:'y',label:'Vertical offset (up / down)',value:String(box.y),placeholder:'Negative = up'}]},
-...fontFields.map(field=>({type:'text',key:`font_${field.key}`,label:field.label,value:String(box.fonts[field.key]||0),placeholder:'0 = original default'}))
+{type:'text',key:'widthDelta',label:'Width Adjustment (grid columns; 0 = default, + wider, - narrower)',value:String(box.widthDelta),required:true,placeholder:'Example: 1 = span one more grid column'},
+{type:'text',key:'heightDelta',label:'Height Adjustment (px; 0 = default, + taller, - shorter)',value:String(box.heightDelta),placeholder:'Example: 40 or -20'},
+{type:'row',fields:[{type:'text',key:'x',label:'Horizontal Alignment (- left, 0 default, + right)',value:String(box.x),placeholder:'Use any positive or negative value'},{type:'text',key:'y',label:'Vertical Alignment (- top, 0 default, + bottom)',value:String(box.y),placeholder:'Use any positive or negative value'}]},
+...fontFields.map(field=>({type:'text',key:`font_${field.key}`,label:fontAdjustmentLabel(field.label),value:String(box.fontDeltas[field.key]||0),placeholder:'Example: +10 or -2'}))
 ];
-openEditModal(`Customize ${label} Box`,'Free values are allowed. Very large widths, offsets, heights or font sizes can overlap cards or break the mobile layout.',fields,v=>{
-box.width=freeBoxNumber(v.width,box.width,0.01);box.height=freeBoxNumber(v.height,box.height,0);box.x=freeBoxNumber(v.x,box.x);box.y=freeBoxNumber(v.y,box.y);
-fontFields.forEach(field=>{box.fonts[field.key]=freeBoxNumber(v[`font_${field.key}`],box.fonts[field.key]||0,0)});
+openEditModal(`Customize ${label} Box`,'Values are relative to the original design. Grid reflow is enabled: wider/taller cards automatically move nearby cards instead of overlapping them.',fields,v=>{
+box.widthDelta=freeDeltaNumber(v.widthDelta,box.widthDelta);box.heightDelta=freeDeltaNumber(v.heightDelta,box.heightDelta);box.x=freeDeltaNumber(v.x,box.x);box.y=freeDeltaNumber(v.y,box.y);
+fontFields.forEach(field=>{box.fontDeltas[field.key]=freeDeltaNumber(v[`font_${field.key}`],box.fontDeltas[field.key]||0)});
 renderAll();
 });
+}
+function gridColumnCount(element){
+const parent=element.parentElement;if(!parent)return 1;
+const style=getComputedStyle(parent);if(!style.display.includes('grid'))return 1;
+const columns=style.gridTemplateColumns.split(' ').filter(Boolean).length;
+return Math.max(1,columns||1);
 }
 function applyBoxFontStyles(element,key,box){
 const profile=getBoxFontProfile(key);
 profile.forEach(field=>{
-const size=Number(box.fonts?.[field.key])||0;
-element.querySelectorAll(field.selector).forEach(node=>{if(size>0)node.style.setProperty('font-size',`${size}px`,'important');else node.style.removeProperty('font-size')});
+const delta=Number(box.fontDeltas?.[field.key])||0;
+element.querySelectorAll(field.selector).forEach(node=>{
+node.style.removeProperty('font-size');
+if(delta!==0){const base=parseFloat(getComputedStyle(node).fontSize)||16;node.style.setProperty('font-size',`${Math.max(1,base+delta)}px`,'important');}
+});
 });
 }
 function applyBoxLayout(element,key,label){
 if(!element)return;
-const box=getBoxLayout(key);
+const box=getBoxLayout(key),columns=gridColumnCount(element);
 element.classList.add('custom-box');
-element.style.setProperty('--box-width',`${box.width}%`);
-element.style.setProperty('--box-min-height',box.height?`${box.height}px`:'auto');
-element.style.setProperty('--box-x',`${box.x}px`);
-element.style.setProperty('--box-y',`${box.y}px`);
+element.style.removeProperty('grid-column');element.style.removeProperty('width');element.style.removeProperty('min-height');
+element.style.setProperty('--box-justify',box.x<0?'start':box.x>0?'end':'stretch');
+element.style.setProperty('--box-align',box.y<0?'start':box.y>0?'end':'stretch');
+// A positive width adjustment expands by grid columns; sibling tiles automatically reflow.
+if(columns>1){const span=Math.max(1,Math.min(columns,1+Math.round(box.widthDelta)));element.style.setProperty('grid-column',`span ${span}`);element.style.setProperty('--box-inline-width','100%');}
+else{const compact=Math.max(5,100+box.widthDelta*10);element.style.setProperty('--box-inline-width',`${Math.min(100,compact)}%`);}
+// Measure the unmodified card first, then apply a relative height delta. Following rows move naturally.
+element.style.setProperty('--box-min-height','auto');const baseHeight=element.offsetHeight;const targetHeight=Math.max(0,baseHeight+box.heightDelta);element.style.setProperty('--box-min-height',targetHeight?`${targetHeight}px`:'auto');
 element.classList.remove('has-primary','has-secondary');
 applyBoxFontStyles(element,key,box);
 const existing=element.querySelector(':scope > .box-customize');if(existing)existing.remove();
