@@ -163,3 +163,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added an Experience-style left vertical rail and marker to each full Project Portfolio category section.
 - Added a gradient finish line after every category grid.
 - Project cards retain the light original background during hover, touch, active and focus interactions.
+
+## Offset project rail, wide two-column cards and wave finish line
+
+- Offset the Project Portfolio category rail 40px to the left on desktop (20px on mobile to avoid clipping).
+- Expanded Project Portfolio to the same 1320px desktop container width as Certifications and restored a wide two-column project grid.
+- Replaced the simple category finish line with a repeating blue/teal wave line and small circular nodes.
