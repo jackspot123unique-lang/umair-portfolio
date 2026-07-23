@@ -807,5 +807,25 @@
       "x": 0,
       "y": 0
     }
+  },
+  "freelance": {
+    "header": "Freelance Experience",
+    "items": [
+      {
+        "id": 1,
+        "role": "Freelance BIM / MEP Services",
+        "company": "Independent Freelancer · Remote",
+        "date": "Present",
+        "bullets": [
+          "Available for freelance BIM modeling, MEP coordination, shop drawing and technical documentation projects."
+        ],
+        "tags": [
+          "Freelance",
+          "BIM",
+          "MEP"
+        ],
+        "files": []
+      }
+    ]
   }
 }

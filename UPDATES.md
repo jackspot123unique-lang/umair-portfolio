@@ -125,3 +125,10 @@ The visual design, colors, animations, layout and existing working integrations 
 - Add/Edit Certificate includes a mandatory category selector.
 - Certificates automatically sort from oldest to newest by the entered date within their own category.
 - Existing certificate records are automatically categorized when the portfolio loads and persist after the next admin save.
+
+## Freelance, chronological sorting and direct project categories
+
+- Added a fully editable Freelance Experience section between Professional Experience and Internships. It supports title, company/location, date, bullets, tags, files, add/edit/upload/remove and header editing.
+- Professional Experience, Freelance Experience, Internships and Research & Publications sort oldest to newest.
+- Academic Degrees sort newest to oldest.
+- Project Portfolio now displays all categories directly, each under its own heading with a two-column card grid. Project category counts on the first page scroll to the corresponding visible category heading.
