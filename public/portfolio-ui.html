@@ -280,13 +280,15 @@ body.admin-mode .afile-x{display:inline-flex}
 .project-category-grid .pcard-desc{max-width:100%;font-size:13.5px;line-height:1.72}
 .project-category-grid .pcard.fyp-card{background:var(--white);border:1px solid var(--border);padding:28px 32px}
 .project-category-grid .pcard.fyp-card .pcard-name{font-size:22px}
+/* Final Year Design Project cards intentionally span both project columns. */
+#project-category-fyp .pcard{grid-column:1 / -1}
 .project-category-jumps{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
 .project-category-jump{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--navy);font-size:11px;font-weight:700;cursor:pointer;transition:all var(--tr)}
 .project-category-jump:hover{border-color:var(--sky);background:rgba(41,128,185,.10);color:var(--sky);transform:translateY(-1px)}
 .project-category-jump-count{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal)}
 .project-category-section{position:relative;padding-left:34px}
 .project-category-rail{position:absolute;left:0;top:4px;bottom:28px;width:2px;background:linear-gradient(to bottom,var(--sky),var(--teal) 70%,rgba(26,188,156,.15))}
-.project-category-rail::after{content:'';position:absolute;top:14px;left:-6px;width:10px;height:10px;border-radius:50%;background:var(--sky);border:3px solid var(--white);box-shadow:0 0 0 4px rgba(41,128,185,.18)}
+.project-category-rail::after{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);box-sizing:border-box;width:16px;height:16px;border-radius:50%;background:var(--sky);border:3px solid var(--white);box-shadow:0 0 0 4px rgba(41,128,185,.18)}
 #projects .container{max-width:1320px}
 .project-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .project-category-rail{left:-40px}
@@ -294,6 +296,9 @@ body.admin-mode .afile-x{display:inline-flex}
 .project-category-finish::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 16px 50%,var(--sky) 0 3px,rgba(255,255,255,.96) 3.5px 5px,transparent 5.5px) 0 0/64px 34px repeat-x}
 .project-category-finish::after{content:'';position:absolute;left:0;right:0;top:16px;height:2px;background:linear-gradient(90deg,rgba(41,128,185,.08),rgba(26,188,156,.8),rgba(41,128,185,.08));z-index:-1}
 @media(max-width:960px){#projects .container{max-width:100%}.project-category-rail{left:-20px}.project-category-grid{grid-template-columns:1fr}}
+/* Restore the original clean stylish category divider. */
+.project-category-finish{height:3px!important;width:100%;margin-top:30px;overflow:visible;background:linear-gradient(90deg,var(--sky),var(--teal),rgba(26,188,156,.10))!important;border-radius:3px}
+.project-category-finish::before,.project-category-finish::after{display:none!important}
 .project-category-grid .pcard:hover,.project-category-grid .pcard:active,.project-category-grid .pcard:focus-within{background:var(--bg)!important}
 @media(max-width:960px){.project-category-section{padding-left:28px}.project-category-rail{bottom:24px}.project-category-jumps{margin-bottom:16px}.project-category-finish{margin-top:24px}}
 /* Remove redundant empty tab/toolbar space now that all project categories are shown directly. */

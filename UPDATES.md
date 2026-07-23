@@ -169,3 +169,14 @@ The visual design, colors, animations, layout and existing working integrations 
 - Offset the Project Portfolio category rail 40px to the left on desktop (20px on mobile to avoid clipping).
 - Expanded Project Portfolio to the same 1320px desktop container width as Certifications and restored a wide two-column project grid.
 - Replaced the simple category finish line with a repeating blue/teal wave line and small circular nodes.
+
+## Project rail marker and divider refinement
+
+- Restored the original clean blue-to-teal gradient divider after each project category.
+- Removed the repeating wave/circle finish pattern.
+- Precisely centered the project category marker circle on the vertical rail using 50% alignment and horizontal translation.
+
+## Full-width Final Year Design Project category
+
+- Only Final Year Design Project cards span both Project Portfolio columns on desktop.
+- Other project categories keep the normal two-column layout.
