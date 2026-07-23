@@ -117,3 +117,11 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added Admin Mode Customize Picture and Customize Logo controls with size, horizontal position and vertical position fields.
 - Added persistent responsive `mediaLayout` data for profile picture and logo geometry.
 - Added an Edit Breakdown Headers control under Portfolio Status for Academic Snapshot, Professional Experience, Internship, Project and Research breakdown headings.
+
+## Certification categories and automatic chronological sorting
+
+- Certifications & Workshops now has Workshops, General Certifications and Technical Certifications groups.
+- Each group retains a two-column card layout on desktop and one column on mobile.
+- Add/Edit Certificate includes a mandatory category selector.
+- Certificates automatically sort from oldest to newest by the entered date within their own category.
+- Existing certificate records are automatically categorized when the portfolio loads and persist after the next admin save.

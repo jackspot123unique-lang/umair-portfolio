@@ -648,43 +648,50 @@
         "id": 1,
         "name": "2-Day Workshop — SolidWorks",
         "year": "Aug 2022",
-        "files": []
+        "files": [],
+        "category": "Workshops"
       },
       {
         "id": 2,
         "name": "Mechanical Workshop Technology",
         "year": "Sep 2022",
-        "files": []
+        "files": [],
+        "category": "Workshops"
       },
       {
         "id": 3,
         "name": "4th Intl Workshop — Reverse Engineering",
         "year": "Dec 2022",
-        "files": []
+        "files": [],
+        "category": "Workshops"
       },
       {
         "id": 4,
         "name": "5th Intl Workshop — Reverse Engineering",
         "year": "Dec 2023",
-        "files": []
+        "files": [],
+        "category": "Workshops"
       },
       {
         "id": 5,
         "name": "6th Intl Workshop — Reverse Engineering",
         "year": "Dec 2024",
-        "files": []
+        "files": [],
+        "category": "Workshops"
       },
       {
         "id": 6,
         "name": "Student Volunteer — Orientation, UET Mardan",
         "year": "Sep 2024",
-        "files": []
+        "files": [],
+        "category": "General Certifications"
       },
       {
         "id": 7,
         "name": "Student Volunteer — Welcome Party, UET Mardan",
         "year": "Oct 2024",
-        "files": []
+        "files": [],
+        "category": "General Certifications"
       }
     ]
   },
