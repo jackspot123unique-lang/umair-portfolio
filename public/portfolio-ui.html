@@ -280,6 +280,16 @@ body.admin-mode .afile-x{display:inline-flex}
 .project-category-grid .pcard-desc{max-width:100%;font-size:13.5px;line-height:1.72}
 .project-category-grid .pcard.fyp-card{background:var(--white);border:1px solid var(--border);padding:28px 32px}
 .project-category-grid .pcard.fyp-card .pcard-name{font-size:22px}
+.project-category-jumps{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.project-category-jump{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--navy);font-size:11px;font-weight:700;cursor:pointer;transition:all var(--tr)}
+.project-category-jump:hover{border-color:var(--sky);background:rgba(41,128,185,.10);color:var(--sky);transform:translateY(-1px)}
+.project-category-jump-count{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal)}
+.project-category-section{position:relative;padding-left:34px}
+.project-category-rail{position:absolute;left:0;top:4px;bottom:28px;width:2px;background:linear-gradient(to bottom,var(--sky),var(--teal) 70%,rgba(26,188,156,.15))}
+.project-category-rail::after{content:'';position:absolute;top:14px;left:-6px;width:10px;height:10px;border-radius:50%;background:var(--sky);border:3px solid var(--white);box-shadow:0 0 0 4px rgba(41,128,185,.18)}
+.project-category-finish{height:3px;width:100%;margin-top:30px;border-radius:3px;background:linear-gradient(90deg,var(--sky),var(--teal),rgba(26,188,156,.10))}
+.project-category-grid .pcard:hover,.project-category-grid .pcard:active,.project-category-grid .pcard:focus-within{background:var(--bg)!important}
+@media(max-width:960px){.project-category-section{padding-left:28px}.project-category-rail{bottom:24px}.project-category-jumps{margin-bottom:16px}.project-category-finish{margin-top:24px}}
 /* Remove redundant empty tab/toolbar space now that all project categories are shown directly. */
 #projects .sec-head{margin-bottom:26px}
 #projects #projTabs{display:none!important;margin:0!important;padding:0!important}
@@ -666,6 +676,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="projEy">Technical Work</div><h2 class="sec-title" id="projTitle">Project <em>Portfolio</em></h2><div class="sec-divider"></div><p class="sec-desc" id="projDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('proj')">✎ Edit Header</button><button class="cc-btn cc-add" onclick="addProjectCategory()">＋ Add Category</button></div></div>
 <div class="proj-tabs reveal" id="projTabs"></div>
+<div class="project-category-jumps" id="projCategoryJumps"></div>
 <div id="projPanes"></div>
 </div></section>
 
@@ -1231,7 +1242,8 @@ panes.innerHTML=data.projectCategories.map(c=>{const isFyp=c.key==='fyp';return 
 function renderProjects(){
 ensureEditableHeaders();$('projEy').textContent=data.sectionHeaders.proj.eyebrow;$('projTitle').innerHTML=data.sectionHeaders.proj.title;$('projDesc').textContent=data.sectionHeaders.proj.desc||'';
 $('projTabs').innerHTML='';
-$('projPanes').innerHTML=data.projectCategories.map(cat=>{const items=data.projects[cat.key]||[];return `<section class="project-category-section" id="project-category-${cat.key}"><div class="project-category-heading"><span>${esc(cat.name)}</span><span class="category-count">${items.length} project${items.length===1?'':'s'}</span></div><div class="project-category-grid">${items.length?items.map(p=>{const isFyp=cat.key==='fyp',tags=p.tags||[];const tagMarkup=tags.length?`<div class="${isFyp?'fyp-tags':'pcard-tags'}">${tags.map(t=>`<span class="${isFyp?'fyp-tag':'pcard-tag'}">${esc(t)}</span>`).join('')}</div>`:'';return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p.num)}</div><div class="pcard-name">${esc(p.name)}</div>${p.sub?`<div class="pcard-sub">${esc(p.sub)}</div>`:''}<div class="pcard-desc">${p.desc}</div>${tagMarkup}${renderFiles(p.files,p.id,'proj',cat.key)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editProject('${cat.key}',${p.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('proj',${p.id},'${cat.key}')">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeProject('${cat.key}',${p.id})">✕ Remove</button></div></div>`}).join(''):'<div class="pw-empty">No projects in this category yet.</div>'}</div></section>`}).join('');
+$('projCategoryJumps').innerHTML=data.projectCategories.map(cat=>{const count=(data.projects[cat.key]||[]).length;return `<button class="project-category-jump" type="button" onclick="scrollAndTab('${cat.key}')"><span>${esc(cat.name)}</span><span class="project-category-jump-count">${count}</span></button>`}).join('');
+$('projPanes').innerHTML=data.projectCategories.map(cat=>{const items=data.projects[cat.key]||[];return `<section class="project-category-section" id="project-category-${cat.key}"><span class="project-category-rail" aria-hidden="true"></span><div class="project-category-heading"><span>${esc(cat.name)}</span><span class="category-count">${items.length} project${items.length===1?'':'s'}</span></div><div class="project-category-grid">${items.length?items.map(p=>{const isFyp=cat.key==='fyp',tags=p.tags||[];const tagMarkup=tags.length?`<div class="${isFyp?'fyp-tags':'pcard-tags'}">${tags.map(t=>`<span class="${isFyp?'fyp-tag':'pcard-tag'}">${esc(t)}</span>`).join('')}</div>`:'';return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p.num)}</div><div class="pcard-name">${esc(p.name)}</div>${p.sub?`<div class="pcard-sub">${esc(p.sub)}</div>`:''}<div class="pcard-desc">${p.desc}</div>${tagMarkup}${renderFiles(p.files,p.id,'proj',cat.key)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editProject('${cat.key}',${p.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('proj',${p.id},'${cat.key}')">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeProject('${cat.key}',${p.id})">✕ Remove</button></div></div>`}).join(''):'<div class="pw-empty">No projects in this category yet.</div>'}</div><div class="project-category-finish" aria-hidden="true"></div></section>`}).join('');
 }
 
 function addProjectCategory(){openEditModal('Add Project Category','',[{type:'text',key:'name',label:'Category Name',required:true},{type:'text',key:'icon',label:'Emoji',value:'📂'},{type:'text',key:'color',label:'Color (hex)',value:'#3498db'}],v=>{if(!v.name)return;const key=v.name.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key,name:v.name,color:v.color,icon:v.icon});data.projects[key]=[];setActiveProjectCategory(key);renderAll()})}

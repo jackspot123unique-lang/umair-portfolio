@@ -156,3 +156,10 @@ The visual design, colors, animations, layout and existing working integrations 
 
 - Added final high-specificity zero-height/zero-margin rules for the old hidden Project tabs and Certifications inner toolbar.
 - Project and Certification category lists now begin immediately after their main heading/description area, matching the compact Skills & Software spacing.
+
+## Project category navigation and timeline styling
+
+- Added clickable project category jump boxes with live counts; clicking one scrolls directly to its category.
+- Added an Experience-style left vertical rail and marker to each full Project Portfolio category section.
+- Added a gradient finish line after every category grid.
+- Project cards retain the light original background during hover, touch, active and focus interactions.
