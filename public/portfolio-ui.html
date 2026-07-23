@@ -289,10 +289,18 @@ body.admin-mode .afile-x{display:inline-flex}
 #certifications .sec-head{margin-bottom:28px}
 #certifications .cert-single-layout{margin-top:0}
 #certifications .cert-single-layout>.edu-col-title{display:none;margin:0!important;padding:0!important}
-body.admin-mode #certifications .cert-single-layout>.edu-col-title{display:flex;justify-content:flex-end;margin:0 0 12px!important}
-body.admin-mode #certifications .cert-single-layout>.edu-col-title>span{display:none}
 #certifications #certList{margin-top:0}
 #certifications .cert-category-section:first-child{margin-top:0}
+/* Compact category pages: categories begin directly after the main heading/description. */
+#projects .sec-head,#certifications .sec-head{margin-bottom:0!important}
+#projects #projPanes,#certifications #certList{padding-top:0!important;margin-top:0!important}
+#projects .project-category-section,#projects .project-category-section:first-child,#certifications .cert-category-section,#certifications .cert-category-section:first-child{margin-top:0!important}
+#projects .project-category-heading{padding-top:0!important;margin-top:0!important;margin-bottom:12px}
+#certifications .cert-single-layout>.edu-col-title{display:none!important}
+/* Restore the original light portfolio background to project and certification cards. */
+.project-category-grid .pcard,.project-category-grid .pcard.fyp-card{background:var(--bg)}
+.project-category-grid .pcard:hover{background:var(--white)}
+#certList .cert-item{background:var(--bg)}
 .ptab{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all var(--tr);position:relative}
 .ptab:hover{border-color:var(--sky);color:var(--sky)}
 .ptab.on{background:var(--sky);color:#fff;border-color:var(--sky)}
@@ -664,7 +672,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="research-grid" id="researchGrid"></div>
 </div></section>
 
-<section id="certifications"><div class="container">
+<section id="certifications"><button class="sec-add-btn" onclick="addCert()">＋ Add Certificate</button><div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="certEy">Professional Development</div><h2 class="sec-title" id="certTitle">Certifications & <em>Workshops</em></h2><div class="sec-divider"></div><p class="sec-desc" id="certDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('cert')">✎ Edit Header</button></div></div>
 <div class="cert-single-layout reveal"><div class="edu-col-title"><span>Certifications & Workshops</span><button class="cc-btn cc-add" onclick="addCert()" style="display:none;font-size:10px;padding:5px 10px" id="addCertBtn">＋ Add</button></div><div id="certList"></div></div>
 </div></section>

@@ -145,3 +145,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - Reduced the Project Portfolio heading-to-first-category spacing.
 - Removed the duplicate public Certifications & Workshops sub-toolbar before Workshops, while preserving the Add Certificate button in Admin Mode.
 - Reduced the Certifications header-to-first-category spacing.
+
+## Final compact spacing and card-color restoration
+
+- Forced zero extra margin between Project/Certification main headers and their first category heading.
+- Added a top-level Admin Mode Add Certificate button so the redundant inner certification toolbar can stay completely removed from public layout.
+- Restored the original light `var(--bg)` background for all Project Portfolio cards, including FYP, and all Certification cards. New projects/certificates inherit the same background automatically.
