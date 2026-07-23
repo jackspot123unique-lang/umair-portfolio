@@ -132,3 +132,16 @@ The visual design, colors, animations, layout and existing working integrations 
 - Professional Experience, Freelance Experience, Internships and Research & Publications sort oldest to newest.
 - Academic Degrees sort newest to oldest.
 - Project Portfolio now displays all categories directly, each under its own heading with a two-column card grid. Project category counts on the first page scroll to the corresponding visible category heading.
+
+## Full-width Project Portfolio cards
+
+- Project Portfolio categories remain directly visible, but each project now appears as one full-width card instead of a two-column tile.
+- Project cards use matching white background, border, padding, typography and shadow strength inspired by Professional Experience cards.
+- Every category heading still appears before its project cards, and each category retains its automatic project count.
+
+## Compact project and certification category spacing
+
+- Removed the hidden empty Project Portfolio tabs container from page flow.
+- Reduced the Project Portfolio heading-to-first-category spacing.
+- Removed the duplicate public Certifications & Workshops sub-toolbar before Workshops, while preserving the Add Certificate button in Admin Mode.
+- Reduced the Certifications header-to-first-category spacing.
