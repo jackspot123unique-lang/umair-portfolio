@@ -550,6 +550,12 @@ footer span{color:var(--sky);font-weight:600}
 .fs-content .fs-doc-icon{font-size:80px;margin-bottom:20px}
 .fs-content .fs-doc h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:12px}
 .fs-content .fs-doc p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;word-break:break-all}
+.mobile-pdf-viewer{width:min(92vw,920px);height:min(82vh,900px);display:flex;flex-direction:column;background:#fff;border-radius:8px;overflow:hidden}
+.mobile-pdf-controls{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px;background:var(--navy);color:#fff;font-size:12px}
+.mobile-pdf-controls button{border:0;border-radius:5px;padding:6px 9px;background:rgba(255,255,255,.16);color:#fff;cursor:pointer;font-size:11px}.mobile-pdf-controls button:disabled{opacity:.4;cursor:not-allowed}
+.mobile-pdf-canvas-wrap{flex:1;overflow:auto;padding:14px;background:#20252d;text-align:center}.mobile-pdf-canvas-wrap canvas{max-width:100%;height:auto;background:#fff;box-shadow:0 3px 18px rgba(0,0,0,.35)}
+.pdf-exporting .admin-bar,.pdf-exporting .admin-toggle,.pdf-exporting .save-portfolio-btn,.pdf-exporting .card-ctrl,.pdf-exporting .box-customize,.pdf-exporting .sec-add-btn,.pdf-exporting .sec-remove-cat-btn,.pdf-exporting .gcc-edit-btn{display:none!important}
+@media(max-width:600px){.mobile-pdf-viewer{width:94vw;height:80vh}.mobile-pdf-controls{gap:5px;padding:8px}.mobile-pdf-controls button{padding:5px 7px}.mobile-pdf-canvas-wrap{padding:8px}}
 
 /* Compact academic marks and date values must remain compact even in the wide four-column status grid. */
 .hstat-mini.hstat-academic .hstat-num{font-size:11px!important;line-height:1.15}
@@ -589,7 +595,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="ab-left"><div class="ab-dot"></div><span>ADMIN MODE ACTIVE</span></div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
 
-<button class="ab-btn ab-btn-red" onclick="lockAdmin()">🔒 Exit Admin</button>
+<button class="ab-btn ab-btn-blue" onclick="exportPortfolioPdf('sections')">📄 Page-by-Page PDF</button><button class="ab-btn ab-btn-green" onclick="exportPortfolioPdf('long')">↕ Full Website One Page</button><button class="ab-btn ab-btn-blue" onclick="exportPortfolioPdf('direct')">⬇ Direct Generated PDF</button><button class="ab-btn ab-btn-red" onclick="lockAdmin()">🔒 Exit Admin</button>
 </div>
 </div>
 
@@ -764,6 +770,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <input type="file" id="hiddenFileInput" style="display:none" accept="image/*">
 <input type="file" id="hiddenMultiFileInput" style="display:none" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" multiple>
 
+<script src="/portfolio-tools.js"></script>
 <script>
 'use strict';
 const DIRECT_UPLOAD_THRESHOLD=64*1024*1024; // files above this use multipart R2 uploads
@@ -830,6 +837,14 @@ const isImage=n=>{const e=(n||'').split('.').pop().toLowerCase();return['jpg','j
 const isPdf=n=>(n||'').toLowerCase().endsWith('.pdf');
 const isOfficeFile=n=>['doc','docx','xls','xlsx','ppt','pptx'].includes((n||'').split('.').pop().toLowerCase());
 const fmtSize=b=>b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB';
+
+async function exportPortfolioPdf(mode){
+if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');
+if(!window.PortfolioTools?.exportPortfolioPdf)return showToast('⚠️ PDF tools are still loading. Please try again in a moment.','error');
+const label=mode==='sections'?'page-by-page PDF':mode==='long'?'one-page full website PDF':'direct generated PDF';
+showToast(`⏳ Building ${label}…`,'info');
+try{await window.PortfolioTools.exportPortfolioPdf(mode);showToast(`✅ ${label} downloaded.`,'success')}catch(error){console.error(error);showToast('⚠️ PDF generation failed. Try the page-by-page PDF option.','error')}
+}
 
 function showToast(m,t='info'){const e=$('toast');e.textContent=m;e.className=`toast toast-${t} show`;clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),3800)}
 
@@ -1015,18 +1030,14 @@ function openFsPreview(file){
 const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload');
 const source=file.url||file.data;
 title.textContent=file.name;
-// Public visitors can preview and use the normal browser/Office viewer controls.
-// Administrators retain the same controls, with no separate restriction.
 dl.style.display='inline-flex';
 dl.onclick=()=>{const a=document.createElement('a');a.href=source;a.download=file.name;document.body.appendChild(a);a.click();a.remove()};
 content.oncontextmenu=null;
 if(isImage(file.name)){
 content.innerHTML=`<img src="${source}" alt="${esc(file.name)}">`;
 }else if(isPdf(file.name)){
-// Native PDF viewer gives all visitors preview, print and download controls as requested.
-content.innerHTML=`<iframe src="${source}" title="${esc(file.name)}"></iframe>`;
+content.innerHTML='<div class="mobile-pdf-viewer"><div class="mobile-pdf-controls">Loading mobile PDF preview…</div></div>';
 }else if(isOfficeFile(file.name)&&/^https?:/i.test(source)){
-// Word, PowerPoint and Excel files are previewed with Microsoft's public Office web viewer.
 const officeViewer=`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(source)}`;
 content.innerHTML=`<iframe src="${officeViewer}" title="${esc(file.name)}"></iframe>`;
 }else{
@@ -1034,6 +1045,10 @@ const ext=file.name.split('.').pop().toUpperCase();
 content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This is a ${esc(ext)} file. Browser preview is not available for this format. Use Download to open it.</p><button class="fs-btn" style="background:var(--sky);color:#fff" onclick="document.getElementById('fsDownload').click()">⬇ Download File</button></div>`;
 }
 ov.classList.add('open');
+if(isPdf(file.name)){
+if(window.PortfolioTools?.renderPdfPreview)window.PortfolioTools.renderPdfPreview(content,source).catch(()=>{content.innerHTML=`<iframe src="${source}" title="${esc(file.name)}"></iframe>`});
+else content.innerHTML=`<iframe src="${source}" title="${esc(file.name)}"></iframe>`;
+}
 }
 function closeFsPreview(){$('fsOverlay').classList.remove('open');$('fsContent').innerHTML=''}
 $('fsOverlay').addEventListener('click',e=>{if(e.target===$('fsOverlay'))closeFsPreview()});
