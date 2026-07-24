@@ -187,3 +187,10 @@ The visual design, colors, animations, layout and existing working integrations 
 - Existing images use direct preview; public Word, PowerPoint and Excel files use the Office web viewer; unsupported archives/files retain the normal download fallback.
 - Added Admin Mode PDF buttons: Page-by-Page PDF, Full Website One Page PDF, and Direct Generated PDF.
 - Added local build tooling (`pdfjs-dist`, `html2canvas`, `jspdf`, `esbuild`) and a generated PDF.js worker/portfolio tools bundle. Vercel build scripts generate these files automatically.
+
+## PDF export removal and reliable cross-device preview
+
+- Removed the three incomplete Admin PDF export buttons and all client-side portfolio export logic.
+- Kept the PDF.js viewer and added a same-origin `/api/file-preview` proxy for reliable PDF loading on desktop, laptop and mobile without browser R2 CORS issues.
+- Kept image previews and Office web preview; unsupported files remain normal download/open fallback.
+- Added only `pdfjs-dist`/`esbuild` build tooling; removed `html2canvas` and `jspdf` export dependencies.
