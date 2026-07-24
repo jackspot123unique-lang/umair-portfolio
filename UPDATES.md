@@ -194,3 +194,10 @@ The visual design, colors, animations, layout and existing working integrations 
 - Kept the PDF.js viewer and added a same-origin `/api/file-preview` proxy for reliable PDF loading on desktop, laptop and mobile without browser R2 CORS issues.
 - Kept image previews and Office web preview; unsupported files remain normal download/open fallback.
 - Added only `pdfjs-dist`/`esbuild` build tooling; removed `html2canvas` and `jspdf` export dependencies.
+
+## Full-screen scrollable PDF preview and export removal
+
+- PDF preview now enters a full-screen overlay mode with a scrollable canvas viewer.
+- Keyboard Left/Up and Right/Down arrows move to previous/next PDF pages while the preview is open.
+- Removed all three unsuccessful Admin PDF website export buttons and client PDF export code.
+- Retained the secure same-origin PDF preview proxy and PDF.js mobile/desktop viewer.

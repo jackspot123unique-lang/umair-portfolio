@@ -555,6 +555,11 @@ footer span{color:var(--sky);font-weight:600}
 .mobile-pdf-controls button{border:0;border-radius:5px;padding:6px 9px;background:rgba(255,255,255,.16);color:#fff;cursor:pointer;font-size:11px}.mobile-pdf-controls button:disabled{opacity:.4;cursor:not-allowed}
 .mobile-pdf-canvas-wrap{flex:1;overflow:auto;padding:14px;background:#20252d;text-align:center}.mobile-pdf-canvas-wrap canvas{max-width:100%;height:auto;background:#fff;box-shadow:0 3px 18px rgba(0,0,0,.35)}
 @media(max-width:600px){.mobile-pdf-viewer{width:94vw;height:80vh}.mobile-pdf-controls{gap:5px;padding:8px}.mobile-pdf-controls button{padding:5px 7px}.mobile-pdf-canvas-wrap{padding:8px}}
+/* PDF preview uses the whole screen while retaining the close/download toolbar. */
+.fs-overlay.pdf-preview-mode{padding:0}
+.fs-overlay.pdf-preview-mode .fs-content{width:100vw;max-width:100vw;height:100vh;max-height:100vh;margin:0;padding:76px 12px 12px}
+.fs-overlay.pdf-preview-mode .mobile-pdf-viewer{width:100%;height:100%;max-width:none;max-height:none;border-radius:0}
+.fs-overlay.pdf-preview-mode .fs-content>iframe{width:100%;height:100%;border-radius:0}
 
 /* Compact academic marks and date values must remain compact even in the wide four-column status grid. */
 .hstat-mini.hstat-academic .hstat-num{font-size:11px!important;line-height:1.15}
@@ -1020,6 +1025,8 @@ return `<div class="file-preview ${compressed?'compressed':''}">
 function openFsPreview(file){
 const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload');
 const source=file.url||file.data;
+const pdfPreview=isPdf(file.name);
+ov.classList.toggle('pdf-preview-mode',pdfPreview);
 const previewSource=isPdf(file.name)&&/^https?:/i.test(source)?`/api/file-preview?url=${encodeURIComponent(source)}`:source;
 title.textContent=file.name;
 dl.style.display='inline-flex';
@@ -1042,7 +1049,7 @@ if(window.PortfolioTools?.renderPdfPreview)window.PortfolioTools.renderPdfPrevie
 else content.innerHTML=`<iframe src="${previewSource}" title="${esc(file.name)}"></iframe>`;
 }
 }
-function closeFsPreview(){$('fsOverlay').classList.remove('open');$('fsContent').innerHTML=''}
+function closeFsPreview(){$('fsOverlay').classList.remove('open','pdf-preview-mode');window.PortfolioTools?.clearPdfPreview?.();$('fsContent').innerHTML=''}
 $('fsOverlay').addEventListener('click',e=>{if(e.target===$('fsOverlay'))closeFsPreview()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('fsOverlay').classList.contains('open'))closeFsPreview()});
 
