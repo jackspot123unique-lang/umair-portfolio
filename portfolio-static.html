@@ -491,7 +491,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <ul class="nav-links">
 <li><a href="#about">About</a></li><li><a href="#competence">Competence</a></li>
 <li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li>
-<li><a href="#skills">Skills</a></li>
+<li><a href="#projectwork">Gallery</a></li><li><a href="#skills">Skills</a></li>
 <li><a href="#education">Education</a></li><li><a href="#contact">Contact</a></li>
 </ul>
 <button class="nav-burger" id="burger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
@@ -499,7 +499,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <nav class="mobile-menu" id="mobileMenu">
 <a href="#about" onclick="closeMobile()">About</a><a href="#competence" onclick="closeMobile()">Competence</a>
 <a href="#experience" onclick="closeMobile()">Experience</a><a href="#projects" onclick="closeMobile()">Projects</a>
-<a href="#skills" onclick="closeMobile()">Skills</a>
+<a href="#projectwork" onclick="closeMobile()">Gallery</a><a href="#skills" onclick="closeMobile()">Skills</a>
 <a href="#education" onclick="closeMobile()">Education</a><a href="#contact" onclick="closeMobile()">Contact</a>
 </nav>
 
@@ -528,7 +528,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="hero-btns">
 <a href="#contact" class="btn btn-primary">⟶ Hire Me Now</a>
 <a href="#projects" class="btn btn-outline">View Projects</a>
-
+<a href="#projectwork" class="btn btn-outline">📸 Gallery</a>
 </div>
 <div class="card-ctrl" style="margin-top:20px"><button class="cc-btn cc-edit" onclick="editHero()">✎ Edit Hero</button></div>
 </div>
@@ -573,6 +573,14 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="sec-head reveal"><div class="sec-eyebrow" id="projEy">Technical Work</div><h2 class="sec-title" id="projTitle">Project <em>Portfolio</em></h2><div class="sec-divider"></div><p class="sec-desc" id="projDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('proj')">✎ Edit Header</button><button class="cc-btn cc-add" onclick="addProjectCategory()">＋ Add Category</button></div></div>
 <div class="proj-tabs reveal" id="projTabs"></div>
 <div id="projPanes"></div>
+</div></section>
+
+<section id="projectwork">
+<button class="sec-remove-cat-btn" onclick="removeGalleryCategoryModal()" style="right:56px">✕ Remove Gallery Cat</button>
+<div class="container">
+<div class="pw-header"><div class="reveal"><div class="sec-eyebrow" id="pwEy">Visual Gallery</div><h2 class="sec-title" id="pwTitleEl">Projects <em>Work</em></h2><div class="sec-divider"></div><p class="sec-desc" id="pwDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('pw')">✎ Edit Header</button></div></div>
+<button class="btn btn-teal reveal" onclick="addGalleryItem()">＋ Add Project Image</button></div>
+<div class="pw-grid" id="pwGrid"></div>
 </div></section>
 
 <section id="skills"><button class="sec-add-btn" onclick="addSkillCategory()">＋ Add Skill Category</button>
@@ -681,6 +689,8 @@ sw:[{id:1,num:'SW-01',name:'Steam Engine with Horizontal Beam',sub:'3D Assembly 
 sim:[{id:1,num:'ANSYS-01',name:'Static Structural Analysis on Beams',sub:'ANSYS Mechanical',desc:'Conducted <strong>static structural analysis</strong> on beams in ANSYS, evaluating stress distribution, deflection and factor of safety under applied loading.',files:[]},{id:2,num:'ANSYS-02',name:'Steady-State Thermal on Plates',sub:'ANSYS Thermal',desc:'Performed <strong>steady-state thermal analysis</strong> on plates to study heat distribution and temperature gradients across the geometry.',files:[]},{id:3,num:'ANSYS-03',name:'Fluid Flow in Pipes & Ducts',sub:'ANSYS CFX · CFD',desc:'Ran <strong>CFD flow analysis using ANSYS CFX</strong> for fluid flow through pipes and ducts, examining velocity fields, pressure drop and flow behavior.',files:[]},{id:4,num:'ABAQUS-01',name:'Bullet Impact Simulation',sub:'Explicit Dynamics',desc:'Simulated <strong>high-velocity bullet impact on a metal plate</strong> in Abaqus using <strong>explicit dynamics</strong> — studying stress waves, failure behavior and applying advanced meshing techniques.',files:[]},{id:5,num:'COMSOL-01',name:'Microscale Droplet Formation',sub:'Multiphase CFD',desc:'Modeled <strong>1-second transient oil/water droplet formation</strong> in COMSOL Multiphysics, analyzing pressure, velocity and volume-fraction in a multiphase microscale flow.',files:[]}],
 fyp:[{id:1,num:'FYDP',name:'Design & Fabrication of Affordable Hybrid Food Dehydrator',sub:'Solar/DC/AC · IoT · Arduino & ESP8266 · SolidWorks',desc:'Designed and fabricated a low-cost <strong>hybrid food dehydrator</strong> powered by a combined <strong>Solar / DC / AC system</strong>. Integrated <strong>IoT monitoring via Arduino & ESP8266</strong> and a <strong>servo-controlled heat/shading mechanism</strong> for temperature regulation. Delivered a full <strong>SolidWorks design model</strong> followed by physical fabrication and testing.',tags:['Solar Energy','IoT','Arduino','ESP8266','Servo Control','SolidWorks'],files:[]}]
 },
+galleryCategories:['BIM / MEP','HVAC Ducting','Piping Systems','SolidWorks','ANSYS / Simulation','Final Year Project'],
+gallery:[],
 skills:{eyebrow:'Technical Arsenal',title:'Skills & <em>Software</em>',desc:'Full-spectrum mechanical engineering skill set.',
 categories:[{id:1,icon:'🏗️',bg:'rgba(41,128,185,.10)',name:'BIM & MEP Tools',skills:[{text:'Revit MEP',level:'adv'},{text:'Navisworks',level:'adv'},{text:'AutoCAD',level:'int'},{text:'BIM Coordination',level:'std'},{text:'Clash Detection',level:'std'}]},
 {id:2,icon:'🌬️',bg:'rgba(26,188,156,.10)',name:'HVAC & Piping',skills:[{text:'HVAC Ducting Design',level:'adv'},{text:'Piping Modeling',level:'adv'},{text:'Chilled Water Systems',level:'std'}]},
@@ -967,6 +977,14 @@ function addProject(){const catOpts=data.projectCategories.map(c=>({value:c.key,
 function editProject(cat,id){const p=(data.projects[cat]||[]).find(x=>x.id===id);if(!p)return;const f=[{type:'text',key:'num',label:'Project Number',value:p.num,required:true},{type:'text',key:'name',label:'Project Name',value:p.name,required:true},{type:'text',key:'sub',label:'Subtitle',value:p.sub||''},{type:'textarea',key:'desc',label:'Description',value:p.desc,required:true,rows:5,hint:'HTML allowed'}];if(cat==='fyp'||p.tags)f.push({type:'text',key:'tags',label:'Tags',value:(p.tags||[]).join(', ')});openEditModal('Edit Project','',[...f],v=>{p.num=v.num;p.name=v.name;p.sub=v.sub;p.desc=v.desc;if(v.tags!==undefined)p.tags=v.tags.split(',').map(s=>s.trim()).filter(Boolean);renderAll()},true)}
 function removeProject(cat,id){if(!confirm('Remove?'))return;data.projects[cat]=data.projects[cat].filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
+function renderGallery(){const g=$('pwGrid');if(!data.gallery.length){g.innerHTML='<div class="pw-empty"><div class="pw-empty-icon">🖼️</div><p>No project images yet.<br>Click <strong>"＋ Add Project Image"</strong> to add.</p></div>';return}g.innerHTML=data.gallery.map(item=>`<div class="pw-item">${item.img?`<div class="pw-img-wrap" onclick="openFsPreview({name:'${esc(item.title)}.jpg',data:'${item.img}'})"><img class="pw-item-img" src="${item.img}" alt="${esc(item.title)}" loading="lazy"></div>`:'<div class="pw-placeholder">🖼️</div>'}<div class="pw-item-body"><div class="pw-item-cat">${esc(item.cat)}</div><div class="pw-item-title">${esc(item.title)}</div>${item.desc?`<div class="pw-item-desc">${esc(item.desc)}</div>`:''}</div>${renderFiles(item.files,item.id,'gal')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editGalleryItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadToGallery(${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeGalleryItem(${item.id})">✕ Remove</button></div></div>`).join('')}
+
+function uploadToGallery(id){openEditModal('Upload Files to Gallery','',[{type:'files',key:'files',label:'Select Files'}],v=>{const t=data.gallery.find(x=>x.id===id);if(t){if(!t.files)t.files=[];t.files=t.files.concat(v._files||[]);renderAll()}})}
+function addGalleryItem(){if(!isAdmin)return showToast('⚠️ Admin mode required.','error');const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Add Project to Gallery','',[{type:'text',key:'title',label:'Project Title',required:true},{type:'select',key:'cat',label:'Category',value:data.galleryCategories[0]||'Other',options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',rows:3},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{if(!v.title)return;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}const firstImg=(v._files||[]).find(f=>f.type&&f.type.startsWith('image/'));data.gallery.unshift({id:uid(),title:v.title,cat,desc:v.desc,img:firstImg?firstImg.data:null,files:v._files||[]});renderGallery()})}
+function removeGalleryCategoryModal(){if(!isAdmin)return;const opts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Remove Gallery Category','',[{type:'select',key:'cat',label:'Select Category',value:opts[0]?.value,options:opts}],v=>{const used=data.gallery.some(g=>g.cat===v.cat);if(used&&!confirm('Some items use this category. Remove anyway?'))return;data.galleryCategories=data.galleryCategories.filter(c=>c!==v.cat);showToast('🗑️ Category removed','info')})}
+function editGalleryItem(id){const x=data.gallery.find(g=>g.id===id);if(!x)return;const catOpts=data.galleryCategories.map(c=>({value:c,label:c}));openEditModal('Edit Gallery Item','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'select',key:'cat',label:'Category',value:x.cat,options:catOpts,allowCustom:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:3}],v=>{x.title=v.title;let cat=v.cat;const custom=$('ef-cat-custom');if(custom&&custom.value.trim()){cat=custom.value.trim();if(!data.galleryCategories.includes(cat))data.galleryCategories.push(cat)}x.cat=cat;x.desc=v.desc;renderGallery()})}
+function removeGalleryItem(id){if(!isAdmin||!confirm('Remove?'))return;data.gallery=data.gallery.filter(x=>x.id!==id);renderGallery();savePortfolio(true)}
+
 function renderSkills(){$('skEy').textContent=data.skills.eyebrow;$('skTitle').innerHTML=data.skills.title;$('skDesc').textContent=data.skills.desc;
 $('skillsGrid').innerHTML=data.skills.categories.map(c=>`<div class="scat-card"><div class="scat-head"><div class="scat-icon" style="background:${c.bg}">${c.icon}</div><div class="scat-name">${esc(c.name)}</div></div><div class="spills">${c.skills.map((s,si)=>`<span class="sp sp-${s.level}">${esc(s.text)}<button class="sp-x" onclick="removeSkill(${c.id},${si})">✕</button></span>`).join('')}</div><div class="card-ctrl"><button class="cc-btn cc-add" onclick="addSkill(${c.id})">＋ Skill</button><button class="cc-btn cc-edit" onclick="editSkillCat(${c.id})">✎</button><button class="cc-btn cc-remove" onclick="removeSkillCat(${c.id})">✕</button></div></div>`).join('');
 $('sbarGrid').innerHTML=`<div>${data.skills.bars.slice(0,Math.ceil(data.skills.bars.length/2)).map((b,i)=>sbarH(b,i)).join('')}</div><div>${data.skills.bars.slice(Math.ceil(data.skills.bars.length/2)).map((b,i)=>sbarH(b,i+Math.ceil(data.skills.bars.length/2))).join('')}</div>`;
@@ -1019,7 +1037,7 @@ st.className='cf-status loading';st.textContent='⏳ Opening your email app...';
 setTimeout(()=>{window.location.href='mailto:engr.umair.ahmad111@gmail.com?subject='+encodeURIComponent(sub||'Portfolio Contact')+'&body='+encodeURIComponent('Name: '+n+'\nEmail: '+em+'\n\n'+msg);st.className='cf-status success';st.textContent='✅ Your email app has been opened.'},300)
 }
 
-function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderContact();attachReveal()}
+function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderGallery();renderSkills();renderEducation();renderContact();attachReveal()}
 
 loadData();renderAll();setTimeout(typeLoop,800);
 </script>
