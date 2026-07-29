@@ -408,18 +408,6 @@ body.admin-mode .sp-x{display:inline-block}
 .honor-title{font-family:'Playfair Display',serif;font-size:20px;line-height:1.25;color:var(--navy);margin-bottom:7px}
 .honor-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .honor-desc{font-size:12.5px;color:var(--muted);line-height:1.7;text-align:justify}
-.honor-detail-list,.intern-detail-list{display:flex;flex-direction:column;gap:7px;margin:12px 0}
-.honor-detail-line,.intern-detail-line{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;background:rgba(41,128,185,.05);border-left:3px solid rgba(41,128,185,.35);border-radius:4px}
-.honor-detail-label,.intern-detail-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--sky);min-width:150px;line-height:1.5}
-.honor-detail-value,.intern-detail-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.5}
-#html-guide{display:none;background:var(--bg2)}
-body.admin-mode #html-guide{display:block}
-.html-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.html-guide-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
-.html-guide-card h3{font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:10px}
-.html-code{display:block;padding:9px 10px;margin:8px 0;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--sky);font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all}
-.html-color-row{display:flex;align-items:center;gap:9px;margin:8px 0;font-size:12px}.html-swatch{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--border)}
-@media(max-width:600px){.honor-detail-line,.intern-detail-line{flex-direction:column;gap:2px}.honor-detail-label,.intern-detail-label{min-width:0}.html-guide-grid{grid-template-columns:1fr}}
 @media(max-width:960px){.honors-grid{grid-template-columns:1fr}}
 #research .container{max-width:1320px}
 .research-grid{display:grid;grid-template-columns:1fr;gap:20px}
@@ -431,10 +419,6 @@ body.admin-mode #html-guide{display:block}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
 .research-detail-list{display:flex;flex-direction:column;gap:7px;margin:12px 0}
-.research-title-line .research-detail-value{font-family:'Playfair Display',serif;font-size:20px;line-height:1.3;color:var(--navy)}
-.research-top-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-.research-top-details .research-detail-line{margin:0}
-@media(max-width:600px){.research-top-details{grid-template-columns:1fr}}
 .research-detail-line{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;background:rgba(41,128,185,.05);border-left:3px solid rgba(41,128,185,.35);border-radius:4px}
 .research-detail-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--sky);min-width:180px;line-height:1.5}
 .research-detail-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.5}
@@ -743,7 +727,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 
 <section id="research"><button class="sec-add-btn" onclick="addResearchItem()">＋ Add Research Item</button>
 <div class="container">
-<div class="sec-head reveal"><div class="sec-eyebrow" id="researchEy">Academic Contribution</div><h2 class="sec-title" id="researchTitle">Research & <em>Publications</em></h2><div class="sec-divider"></div><p class="sec-desc" id="researchDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('research')">✎ Edit Header</button><button class="cc-btn cc-edit" onclick="manageResearchHeadings()">✎ Manage Research Headings</button></div></div>
+<div class="sec-head reveal"><div class="sec-eyebrow" id="researchEy">Academic Contribution</div><h2 class="sec-title" id="researchTitle">Research & <em>Publications</em></h2><div class="sec-divider"></div><p class="sec-desc" id="researchDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('research')">✎ Edit Header</button></div></div>
 <div class="research-grid" id="researchGrid"></div>
 </div></section>
 
@@ -781,8 +765,6 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 </div>
 </div>
 </div></section>
-
-<section id="html-guide"><div class="container"><div class="sec-head"><div class="sec-eyebrow">Admin Reference</div><h2 class="sec-title">HTML Text <em>Formatting Guide</em></h2><div class="sec-divider"></div><p class="sec-desc">This reference is visible only in Admin Mode. Use these codes in description, bullet and content fields.</p></div><div class="html-guide-grid"><article class="html-guide-card"><h3>Text Style</h3><span class="html-code">&lt;strong&gt;Bold Text&lt;/strong&gt;</span><strong>Bold Text</strong><span class="html-code">&lt;em&gt;Italic Text&lt;/em&gt;</span><em>Italic Text</em><span class="html-code">&lt;u&gt;Underlined Text&lt;/u&gt;</span><u>Underlined Text</u><span class="html-code">&lt;br&gt;</span><span>Creates a new line.</span></article><article class="html-guide-card"><h3>Portfolio Colors</h3><div class="html-color-row"><span class="html-swatch" style="background:#2980b9"></span><code>#2980b9 — Sky Blue</code></div><div class="html-color-row"><span class="html-swatch" style="background:#16a085"></span><code>#16a085 — Teal</code></div><div class="html-color-row"><span class="html-swatch" style="background:#e67e22"></span><code>#e67e22 — Gold</code></div><div class="html-color-row"><span class="html-swatch" style="background:#8e44ad"></span><code>#8e44ad — Lavender</code></div><div class="html-color-row"><span class="html-swatch" style="background:#c0392b"></span><code>#c0392b — Red</code></div><span class="html-code">&lt;span style=&quot;color:#2980b9&quot;&gt;Blue Text&lt;/span&gt;</span><span style="color:#2980b9">Blue Text</span></article></div></div></section>
 
 <footer><p>© 2026 <span>Umair Ahmad</span> · BIM Engineer · MEP Revit Modeler & Detailer</p></footer>
 
@@ -864,23 +846,6 @@ cards:[{id:1,icon:'✉️',label:'Email',value:'engr.umair.ahmad111@gmail.com',l
 
 const $=id=>document.getElementById(id);
 const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
-const safeRichHtml=value=>{
-const root=document.createElement('div');root.innerHTML=String(value||'');
-const allowed=new Set(['STRONG','B','EM','I','U','BR','SPAN']);
-const walk=node=>{
-Array.from(node.childNodes).forEach(child=>{
-if(child.nodeType!==1)return;
-const el=child;
-walk(el);
-if(!allowed.has(el.tagName)){el.replaceWith(...Array.from(el.childNodes));return}
-Array.from(el.attributes).forEach(attr=>{
-if(el.tagName==='SPAN'&&attr.name==='style'){const color=el.style.color;el.removeAttribute('style');if(color)el.style.color=color}
-else el.removeAttribute(attr.name);
-});
-});
-};
-walk(root);return root.innerHTML;
-};
 const uid=()=>Date.now()+Math.floor(Math.random()*1000);
 const getFileIcon=n=>{const e=(n||'').split('.').pop().toLowerCase();return{pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',ppt:'📑',pptx:'📑',jpg:'🖼️',jpeg:'🖼️',png:'🖼️',gif:'🖼️',webp:'🖼️',svg:'🖼️'}[e]||'📁'};
 const isImage=n=>{const e=(n||'').split('.').pop().toLowerCase();return['jpg','jpeg','png','gif','webp','svg','bmp'].includes(e)};
@@ -1046,17 +1011,6 @@ function addCustomCatOption(key){const inp=$('ef-'+key+'-custom');const sel=$('e
 function closeEditModal(){$('editOverlay').classList.remove('open');editContext=null;pendingFiles=[]}
 function saveEditModal(){if(!editContext)return;const v={};editContext.fields.forEach(f=>{if(f.type==='row'){f.fields.forEach(sub=>{const e=$('ef-'+sub.key);if(e)v[sub.key]=e.value})}else if(f.type!=='files'){const e=$('ef-'+f.key);if(e)v[f.key]=e.value}});v._files=pendingFiles.slice();editContext.onSave(v);closeEditModal();savePortfolio(true)}
 $('editOverlay').addEventListener('click',e=>{if(e.target===$('editOverlay'))closeEditModal()});
-// Ctrl/Cmd+B wraps the selected modal textarea content in a safe <strong> tag.
-document.addEventListener('keydown',event=>{
-const target=event.target;
-if(!(event.ctrlKey||event.metaKey)||event.key.toLowerCase()!=='b'||!(target instanceof HTMLTextAreaElement)||!target.classList.contains('form-textarea'))return;
-event.preventDefault();
-const start=target.selectionStart,end=target.selectionEnd,selected=target.value.slice(start,end);
-const before=target.value.slice(0,start),after=target.value.slice(end);
-const wrapped=`<strong>${selected||'Bold text'}</strong>`;
-target.value=before+wrapped+after;
-const cursor=start+wrapped.length;target.setSelectionRange(cursor,cursor);target.dispatchEvent(new Event('input',{bubbles:true}));
-});
 
 $('hiddenMultiFileInput').addEventListener('change',async function(){
 const files=Array.from(this.files);
@@ -1245,8 +1199,8 @@ function removeKeyword(i){if(!isAdmin)return;data.hero.keywords.splice(i,1);rend
 
 // ABOUT
 function renderAbout(){$('aboutEy').textContent=data.about.eyebrow;$('aboutTitle').innerHTML=data.about.title;$('aboutDesc').textContent=data.about.desc;
-$('aboutBlocks').innerHTML=data.about.blocks.map(b=>`<div class="about-block"><div class="about-block-header"><div class="abt-dot abt-dot-${b.color}"></div>${esc(b.title)}</div><p>${safeRichHtml(b.text)}</p><div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editAboutBlock(${b.id})">✎ Edit</button><button class="cc-btn cc-remove" onclick="removeAboutBlock(${b.id})">✕ Remove</button></div></div>`).join('');
-$('capStack').innerHTML=data.about.capabilities.map(c=>`<div class="cap-card"><div class="cap-card-row"><div class="cap-icon" style="background:${c.bg}">${c.icon}</div><div style="flex:1"><div class="cap-title">${esc(c.title)}</div><div class="cap-desc">${safeRichHtml(c.desc)}</div></div></div><div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editCapability(${c.id})">✎</button><button class="cc-btn cc-remove" onclick="removeCapability(${c.id})">✕</button></div></div>`).join('')+`<div class="card-ctrl" style="border:none;padding:0"><button class="cc-btn cc-add" onclick="addCapability()" style="width:100%;padding:12px;justify-content:center">＋ Add Capability</button></div>`;
+$('aboutBlocks').innerHTML=data.about.blocks.map(b=>`<div class="about-block"><div class="about-block-header"><div class="abt-dot abt-dot-${b.color}"></div>${esc(b.title)}</div><p>${b.text}</p><div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editAboutBlock(${b.id})">✎ Edit</button><button class="cc-btn cc-remove" onclick="removeAboutBlock(${b.id})">✕ Remove</button></div></div>`).join('');
+$('capStack').innerHTML=data.about.capabilities.map(c=>`<div class="cap-card"><div class="cap-card-row"><div class="cap-icon" style="background:${c.bg}">${c.icon}</div><div style="flex:1"><div class="cap-title">${esc(c.title)}</div><div class="cap-desc">${esc(c.desc)}</div></div></div><div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editCapability(${c.id})">✎</button><button class="cc-btn cc-remove" onclick="removeCapability(${c.id})">✕</button></div></div>`).join('')+`<div class="card-ctrl" style="border:none;padding:0"><button class="cc-btn cc-add" onclick="addCapability()" style="width:100%;padding:12px;justify-content:center">＋ Add Capability</button></div>`;
 $('infoPills').innerHTML=data.about.infoPills.map((p,i)=>`<span class="info-pill">${esc(p)}<button class="ip-x" onclick="removeInfoPill(${i})">✕</button></span>`).join('')}
 function addAboutBlock(){openEditModal('Add About Block','',[{type:'text',key:'title',label:'Title',required:true},{type:'select',key:'color',label:'Color',value:'blue',options:[{value:'blue',label:'🔵'},{value:'teal',label:'🟢'},{value:'gold',label:'🟠'},{value:'lav',label:'🟣'}]},{type:'textarea',key:'text',label:'Content',required:true,rows:6,hint:'HTML allowed'}],v=>{if(v.title&&v.text){data.about.blocks.push({id:uid(),title:v.title,color:v.color,text:v.text});renderAbout()}})}
 function editAboutBlock(id){const b=data.about.blocks.find(x=>x.id===id);if(!b)return;openEditModal('Edit About Block','',[{type:'text',key:'title',label:'Title',value:b.title,required:true},{type:'select',key:'color',label:'Color',value:b.color,options:[{value:'blue',label:'🔵'},{value:'teal',label:'🟢'},{value:'gold',label:'🟠'},{value:'lav',label:'🟣'}]},{type:'textarea',key:'text',label:'Content',value:b.text,required:true,rows:6,hint:'HTML allowed'}],v=>{b.title=v.title;b.color=v.color;b.text=v.text;renderAbout()})}
@@ -1289,10 +1243,17 @@ $('expEy').textContent=data.sectionHeaders.exp.eyebrow;$('expTitle').innerHTML=d
 const expCard=(x,type)=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${(x.bullets||[]).map(b=>`<li><span>${b}</span></li>`).join('')}</ul><div class="tag-row">${(x.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,type)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="${type==='exp'?`editExperience(${x.id})`:`editFreelanceItem(${x.id})`}">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('${type}',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="${type==='exp'?`removeExperience(${x.id})`:`removeFreelanceItem(${x.id})`}">✕ Remove</button></div></div></div>`;
 $('expTimeline').innerHTML=data.experiences.map(x=>expCard(x,'exp')).join('');
 $('freelanceTimeline').innerHTML=data.freelance.items.map(x=>expCard(x,'freelance')).join('');
-$('internRow').innerHTML=data.interns.map(x=>{const details=internshipDetails(x);return `<div class="intern-card"><div class="intern-detail-list"><div class="intern-detail-line"><span class="intern-detail-label">Internship Title</span><span class="intern-detail-value intern-title">${esc(x.title)}</span></div>${details.location?`<div class="intern-detail-line"><span class="intern-detail-label">Location</span><span class="intern-detail-value">${esc(details.location)}</span></div>`:''}${details.duration?`<div class="intern-detail-line"><span class="intern-detail-label">Date / Duration</span><span class="intern-detail-value">${esc(details.duration)}</span></div>`:''}</div><div class="intern-desc">${safeRichHtml(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`}).join('')}
-function internshipDetails(item){if(item.location||item.duration)return{location:item.location||'',duration:item.duration||''};const parts=String(item.co||'').split('·').map(x=>x.trim()).filter(Boolean);return{location:parts.shift()||'',duration:parts.join(' · ')}}
-function addIntern(){openEditModal('Add Internship','',[{type:'text',key:'title',label:'Internship Title',required:true},{type:'row',fields:[{type:'text',key:'location',label:'Location',required:true},{type:'text',key:'duration',label:'Date / Duration',required:true,placeholder:'e.g. Aug 2024 · 2 Weeks'}]},{type:'textarea',key:'desc',label:'Description (HTML allowed)',required:true,rows:4},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Manufacturing, HVAC, Quality Control'},{type:'files',key:'files',label:'Upload Files'}],v=>{data.interns.push({id:uid(),title:v.title,location:v.location,duration:v.duration,co:`${v.location} · ${v.duration}`,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.interns,internshipSortValue);renderExperience()})}
-function editIntern(id){const x=data.interns.find(i=>i.id===id);if(!x)return;const details=internshipDetails(x);openEditModal('Edit Internship','',[{type:'text',key:'title',label:'Internship Title',value:x.title,required:true},{type:'row',fields:[{type:'text',key:'location',label:'Location',value:details.location,required:true},{type:'text',key:'duration',label:'Date / Duration',value:details.duration,required:true}]},{type:'textarea',key:'desc',label:'Description (HTML allowed)',value:x.desc,rows:4},{type:'text',key:'tags',label:'Tags (comma separated)',value:(x.tags||[]).join(', ')}],v=>{x.title=v.title;x.location=v.location;x.duration=v.duration;x.co=`${v.location} · ${v.duration}`;x.desc=v.desc;x.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);sortOldToNew(data.interns,internshipSortValue);renderExperience()})}
+$('internRow').innerHTML=data.interns.map(x=>`<div class="intern-card"><div class="intern-title">${esc(x.title)}</div><div class="intern-co">${esc(x.co)}</div><div class="intern-desc">${esc(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`).join('')}
+function freelanceFields(item={}){return[{type:'text',key:'role',label:'Service / Job Title',value:item.role||'',required:true},{type:'text',key:'company',label:'Company / Location',value:item.company||'Independent Freelancer · Remote',required:true},{type:'text',key:'date',label:'Date Range',value:item.date||'',required:true},{type:'textarea',key:'bullets',label:'Bullets (one per line)',value:(item.bullets||[]).join('\n'),required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',value:(item.tags||[]).join(', ')},{type:'files',key:'files',label:item.id?'Upload More Files':'Upload Files'}]}
+function editFreelanceHeader(){ensureFreelanceContent();openEditModal('Edit Freelance Header','',[{type:'text',key:'title',label:'Heading',value:data.freelance.header,required:true}],v=>{data.freelance.header=v.title;renderExperience()})}
+function addFreelanceItem(){ensureFreelanceContent();openEditModal('Add Freelance Experience','',[...freelanceFields()],v=>{data.freelance.items.push({id:uid(),role:v.role,company:v.company,date:v.date,bullets:v.bullets.split('\n').filter(Boolean),tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.freelance.items,item=>sortTimestamp(item.date));renderAll()},true)}
+function editFreelanceItem(id){ensureFreelanceContent();const item=data.freelance.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Freelance Experience','',[...freelanceFields(item)],v=>{item.role=v.role;item.company=v.company;item.date=v.date;item.bullets=v.bullets.split('\n').filter(Boolean);item.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}sortOldToNew(data.freelance.items,item=>sortTimestamp(item.date));renderAll()},true)}
+function removeFreelanceItem(id){ensureFreelanceContent();if(!confirm('Remove this freelance experience?'))return;data.freelance.items=data.freelance.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
+function addExperience(){openEditModal('Add Experience','Add a new job',[{type:'text',key:'role',label:'Job Title',required:true},{type:'text',key:'company',label:'Company & Location',required:true},{type:'text',key:'date',label:'Date Range',required:true},{type:'textarea',key:'bullets',label:'Bullets (one per line)',required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)'},{type:'files',key:'files',label:'Upload Files'}],v=>{data.experiences.push({id:uid(),role:v.role,company:v.company,date:v.date,bullets:v.bullets.split('\n').filter(Boolean),tags:v.tags.split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.experiences,item=>sortTimestamp(item.date));renderAll()},true)}
+function editExperience(id){const x=data.experiences.find(e=>e.id===id);if(!x)return;openEditModal('Edit Experience','',[{type:'text',key:'role',label:'Job Title',value:x.role,required:true},{type:'text',key:'company',label:'Company',value:x.company,required:true},{type:'text',key:'date',label:'Date',value:x.date,required:true},{type:'textarea',key:'bullets',label:'Bullets',value:x.bullets.join('\n'),required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags',value:x.tags.join(', ')}],v=>{x.role=v.role;x.company=v.company;x.date=v.date;x.bullets=v.bullets.split('\n').filter(Boolean);x.tags=v.tags.split(',').map(s=>s.trim()).filter(Boolean);sortOldToNew(data.experiences,item=>sortTimestamp(item.date));renderAll()},true)}
+function removeExperience(id){if(!confirm('Remove?'))return;data.experiences=data.experiences.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
+function addIntern(){openEditModal('Add Internship','',[{type:'text',key:'title',label:'Title',required:true},{type:'text',key:'co',label:'Location & Duration',required:true},{type:'textarea',key:'desc',label:'Description',required:true,rows:4},{type:'text',key:'tags',label:'Tags (comma separated)',placeholder:'e.g. Manufacturing, HVAC, Quality Control'},{type:'files',key:'files',label:'Upload Files'}],v=>{data.interns.push({id:uid(),title:v.title,co:v.co,desc:v.desc,tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.interns,internshipSortValue);renderExperience()})}
+function editIntern(id){const x=data.interns.find(i=>i.id===id);if(!x)return;openEditModal('Edit Internship','',[{type:'text',key:'title',label:'Title',value:x.title,required:true},{type:'text',key:'co',label:'Location & Duration',value:x.co,required:true},{type:'textarea',key:'desc',label:'Description',value:x.desc,rows:4},{type:'text',key:'tags',label:'Tags (comma separated)',value:(x.tags||[]).join(', ')}],v=>{x.title=v.title;x.co=v.co;x.desc=v.desc;x.tags=(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean);sortOldToNew(data.interns,internshipSortValue);renderExperience()})}
 function removeIntern(id){if(!confirm('Remove?'))return;data.interns=data.interns.filter(x=>x.id!==id);renderExperience();savePortfolio(true)}
 
 function uploadTo(type,id,projectCategory=null){openEditModal('Upload Files','Attach images, PDFs, docs',[{type:'files',key:'files',label:'Select Files'}],v=>{
@@ -1343,7 +1304,7 @@ function renderProjects(){
 ensureEditableHeaders();$('projEy').textContent=data.sectionHeaders.proj.eyebrow;$('projTitle').innerHTML=data.sectionHeaders.proj.title;$('projDesc').textContent=data.sectionHeaders.proj.desc||'';
 $('projTabs').innerHTML='';
 ensureProjectDomainOrder();data.projectCategories.forEach(cat=>sortProjectsInCategory(cat.key));const visibleCategories=data.projectCategories.filter(cat=>isAdmin||(data.projects[cat.key]||[]).length);setPublicVisibility('projects',visibleCategories.length>0);$('projCategoryJumps').innerHTML=visibleCategories.map(cat=>{const count=(data.projects[cat.key]||[]).length;return `<button class="project-category-jump" type="button" onclick="scrollAndTab('${cat.key}')"><span>${esc(cat.name)}</span><span class="project-category-jump-count">${count}</span></button>`}).join('');
-$('projPanes').innerHTML=visibleCategories.map(cat=>{const items=data.projects[cat.key]||[];return `<section class="project-category-section" id="project-category-${cat.key}"><span class="project-category-rail" aria-hidden="true"></span><div class="project-category-heading"><span>${esc(cat.name)}</span><span class="category-count">${items.length} project${items.length===1?'':'s'}</span>${isAdmin?`<span class="category-order-controls"><button type="button" onclick="moveProjectCategory('${cat.key}',-1)">↑</button><button type="button" onclick="moveProjectCategory('${cat.key}',1)">↓</button></span>`:''}</div><div class="project-category-grid">${items.length?items.map(p=>{const isFyp=cat.key==='fyp',tags=p.tags||[];const tagMarkup=tags.length?`<div class="${isFyp?'fyp-tags':'pcard-tags'}">${tags.map(t=>`<span class="${isFyp?'fyp-tag':'pcard-tag'}">${esc(t)}</span>`).join('')}</div>`:'';return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p.num)}</div><div class="pcard-name">${esc(p.name)}</div>${p.sub?`<div class="pcard-sub">${esc(p.sub)}</div>`:''}<div class="pcard-desc">${safeRichHtml(p.desc)}</div>${tagMarkup}${renderFiles(p.files,p.id,'proj',cat.key)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editProject('${cat.key}',${p.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('proj',${p.id},'${cat.key}')">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeProject('${cat.key}',${p.id})">✕ Remove</button></div></div>`}).join(''):'<div class="pw-empty">No projects in this category yet.</div>'}</div><div class="project-category-finish" aria-hidden="true"></div></section>`}).join('');
+$('projPanes').innerHTML=visibleCategories.map(cat=>{const items=data.projects[cat.key]||[];return `<section class="project-category-section" id="project-category-${cat.key}"><span class="project-category-rail" aria-hidden="true"></span><div class="project-category-heading"><span>${esc(cat.name)}</span><span class="category-count">${items.length} project${items.length===1?'':'s'}</span>${isAdmin?`<span class="category-order-controls"><button type="button" onclick="moveProjectCategory('${cat.key}',-1)">↑</button><button type="button" onclick="moveProjectCategory('${cat.key}',1)">↓</button></span>`:''}</div><div class="project-category-grid">${items.length?items.map(p=>{const isFyp=cat.key==='fyp',tags=p.tags||[];const tagMarkup=tags.length?`<div class="${isFyp?'fyp-tags':'pcard-tags'}">${tags.map(t=>`<span class="${isFyp?'fyp-tag':'pcard-tag'}">${esc(t)}</span>`).join('')}</div>`:'';return `<div class="pcard ${isFyp?'fyp-card':''}"><div class="pcard-num">${esc(p.num)}</div><div class="pcard-name">${esc(p.name)}</div>${p.sub?`<div class="pcard-sub">${esc(p.sub)}</div>`:''}<div class="pcard-desc">${p.desc}</div>${tagMarkup}${renderFiles(p.files,p.id,'proj',cat.key)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editProject('${cat.key}',${p.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('proj',${p.id},'${cat.key}')">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeProject('${cat.key}',${p.id})">✕ Remove</button></div></div>`}).join(''):'<div class="pw-empty">No projects in this category yet.</div>'}</div><div class="project-category-finish" aria-hidden="true"></div></section>`}).join('');
 }
 
 function addProjectCategory(){openEditModal('Add Project Category','',[{type:'text',key:'name',label:'Category Name',required:true},{type:'text',key:'icon',label:'Emoji',value:'📂'},{type:'text',key:'color',label:'Color (hex)',value:'#3498db'}],v=>{if(!v.name)return;const key=v.name.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();data.projectCategories.push({key,name:v.name,color:v.color,icon:v.icon});data.projects[key]=[];setActiveProjectCategory(key);renderAll()})}
@@ -1520,53 +1481,29 @@ function editHonor(id){ensureHonorsContent();const item=data.honors.items.find(x
 function removeHonor(id){ensureHonorsContent();if(!confirm('Remove this honor / achievement?'))return;data.honors.items=data.honors.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 function ensureResearchContent(){
-if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[],types:[],fieldLabels:{title:'Research Title',type:'Research Type',venue:'Journal / Conference / Institution',date:'Publication Year / Date',authors:'Authors'},customFields:[]};
+if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[],types:[]};
 if(!Array.isArray(data.research.items))data.research.items=[];if(!Array.isArray(data.research.types))data.research.types=[];
-if(!data.research.fieldLabels)data.research.fieldLabels={};
-data.research.fieldLabels={title:'Research Title',type:'Research Type',venue:'Journal / Conference / Institution',date:'Publication Year / Date',authors:'Authors',...data.research.fieldLabels};
-if(!Array.isArray(data.research.customFields))data.research.customFields=[];
 }
-function manageResearchHeadings(){
-ensureResearchContent();const labels=data.research.fieldLabels,custom=data.research.customFields;
-const fields=[
-{type:'text',key:'title',label:'Research Title Heading',value:labels.title,required:true},
-{type:'text',key:'type',label:'Research Type Heading',value:labels.type,required:true},
-{type:'text',key:'venue',label:'Journal / Conference / Institution Heading',value:labels.venue,required:true},
-{type:'text',key:'date',label:'Publication Year / Date Heading',value:labels.date,required:true},
-{type:'text',key:'authors',label:'Authors Heading',value:labels.authors,required:true},
-...custom.map(field=>({type:'text',key:`label_${field.id}`,label:`Custom Heading: ${field.label} (leave empty to remove)`,value:field.label})),
-{type:'text',key:'newHeading',label:'Add New Custom Heading',placeholder:'e.g. Research Supervisor'}
-];
-openEditModal('Manage Research Headings','Edit existing headings. Leave a custom heading blank to remove it.',fields,v=>{
-Object.keys(labels).forEach(key=>{labels[key]=v[key]||labels[key]});
-data.research.customFields=data.research.customFields.map(field=>({...field,label:(v[`label_${field.id}`]||'').trim()})).filter(field=>field.label);
-const heading=(v.newHeading||'').trim();if(heading)data.research.customFields.push({id:`custom_${uid()}`,label:heading});
-renderAll();
-});
-}
+
+function safeResearchUrl(value){try{const url=new URL((value||'').trim());return['http:','https:'].includes(url.protocol)?url.href:''}catch{return''}}
 function renderResearch(){
 ensureResearchContent();sortOldToNew(data.research.items,item=>sortTimestamp(item.date));
-const labels=data.research.fieldLabels,customFields=data.research.customFields;
 $('researchEy').textContent=data.research.eyebrow;$('researchTitle').innerHTML=data.research.title;$('researchDesc').textContent=data.research.desc||'';
 setPublicVisibility('research',data.research.items.length>0);
-const line=(label,value,extra='')=>value?`<div class="research-detail-line ${extra}"><span class="research-detail-label">${esc(label)}</span><span class="research-detail-value">${safeRichHtml(value)}</span></div>`:'';
-$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>{const customLines=customFields.map(field=>line(field.label,item.customValues?.[field.id])).join('');return `<article class="research-card"><div class="research-detail-list">${line(labels.title,item.title,'research-title-line')}<div class="research-top-details">${line(labels.type,item.type||'Research Work')}${line(labels.date,item.date)}</div>${line(labels.venue,item.venue)}${line(labels.authors,item.authors)}${customLines}</div>${item.desc?`<p class="research-desc">${safeRichHtml(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`}).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
+$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>{
+const line=(label,value)=>value?`<div class="research-detail-line"><span class="research-detail-label">${esc(label)}</span><span class="research-detail-value">${esc(value)}</span></div>`:'';
+return `<article class="research-card"><h3 class="research-card-title">${esc(item.title)}</h3><div class="research-detail-list">${line('Research Type',item.type||'Research Work')}${line('Journal / Conference / Institution',item.venue)}${line('Publication Year / Date',item.date)}${line('Authors',item.authors)}</div>${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`}).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
 }
-function researchFields(item={}){
-ensureResearchContent();const labels=data.research.fieldLabels,custom=data.research.customFields;
-return[
-{type:'text',key:'title',label:labels.title,value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
-{type:'select',key:'type',label:labels.type,value:item.type||'Research Paper',options:ensureCustomTypes('research',DEFAULT_RESEARCH_TYPES),allowCustom:true},
-{type:'text',key:'venue',label:labels.venue,value:item.venue||'',placeholder:'Publication venue or institution'},
-{type:'text',key:'date',label:labels.date,value:item.date||'',placeholder:'e.g. 2026'},
-{type:'text',key:'authors',label:labels.authors,value:item.authors||'',placeholder:'e.g. Umair Ahmad et al.'},
-...custom.map(field=>({type:'text',key:field.id,label:field.label,value:item.customValues?.[field.id]||''})),
-{type:'textarea',key:'desc',label:'Abstract / Description (HTML allowed)',value:item.desc||'',rows:5,placeholder:'Brief research summary'},
+function researchFields(item={}){return[
+{type:'text',key:'title',label:'Research Title',value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
+{type:'select',key:'type',label:'Research Type',value:item.type||'Research Paper',options:ensureCustomTypes('research',DEFAULT_RESEARCH_TYPES),allowCustom:true},
+{type:'text',key:'venue',label:'Journal / Conference / Institution',value:item.venue||'',placeholder:'Publication venue or institution'},
+{type:'row',fields:[{type:'text',key:'date',label:'Publication Year / Date',value:item.date||'',placeholder:'e.g. 2026'},{type:'text',key:'authors',label:'Authors',value:item.authors||'',placeholder:'e.g. Umair Ahmad et al.'}]},
+{type:'textarea',key:'desc',label:'Abstract / Description',value:item.desc||'',rows:5,placeholder:'Brief research summary'},
 {type:'text',key:'url',label:'Research URL (optional)',value:item.url||'',placeholder:'https://doi.org/... or publication URL'}
 ]}
-function researchCustomValues(values){ensureResearchContent();return Object.fromEntries(data.research.customFields.map(field=>[field.id,values[field.id]||'']))}
-function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,customValues:researchCustomValues(v),desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
-function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.customValues=researchCustomValues(v);item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
+function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
+function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
 function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 function ensureSeparatedEducationContent(){
