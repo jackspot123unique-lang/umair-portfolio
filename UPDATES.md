@@ -189,3 +189,8 @@ The visual design, colors, animations, layout and existing working integrations 
 - Project domain order is preserved by first domain appearance and projects sort by domain then project number (for example ANSYS-01, ANSYS-02 before ABAQUS/COMSOL according to the saved domain order).
 - Added Admin Mode up/down category order controls so project category placement can be changed and saved.
 - Academic Degrees sort newest to oldest; Experience, Internships, Freelance and Research sort oldest to newest.
+
+## Custom Research and Honors types
+
+- Research Type and Honor/Achievement Type selectors now support custom type entry through the existing custom select option workflow.
+- Newly used custom types are remembered in portfolio data and appear in future Add/Edit forms.

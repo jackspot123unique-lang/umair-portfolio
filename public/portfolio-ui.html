@@ -1441,9 +1441,19 @@ if('gallery' in data)delete data.gallery;
 if('galleryCategories' in data)delete data.galleryCategories;
 }
 
+const DEFAULT_RESEARCH_TYPES=['Research Paper','Conference Paper','Technical Research','Thesis / Dissertation','Case Study','Other'];
+const DEFAULT_HONOR_TYPES=['Academic Honor','Award','Appreciation Certificate','Recognition','Achievement','Scholarship / Grant','Other'];
+function ensureCustomTypes(area,defaults){
+if(!data[area])data[area]={};if(!Array.isArray(data[area].types))data[area].types=[];
+return [...new Set([...defaults,...data[area].types])].map(type=>({value:type,label:type}));
+}
+function rememberCustomType(area,type,defaults){
+if(!type||defaults.includes(type))return;if(!data[area].types)data[area].types=[];if(!data[area].types.includes(type))data[area].types.push(type);
+}
+
 function ensureHonorsContent(){
-if(!data.honors)data.honors={eyebrow:'Academic Recognition',title:'Honors & <em>Achievements</em>',desc:'Academic honors, awards, recognition and appreciation received throughout my career.',items:[]};
-if(!Array.isArray(data.honors.items))data.honors.items=[];
+if(!data.honors)data.honors={eyebrow:'Academic Recognition',title:'Honors & <em>Achievements</em>',desc:'Academic honors, awards, recognition and appreciation received throughout my career.',items:[],types:[]};
+if(!Array.isArray(data.honors.items))data.honors.items=[];if(!Array.isArray(data.honors.types))data.honors.types=[];
 }
 function renderHonors(){
 ensureHonorsContent();sortOldToNew(data.honors.items,item=>sortTimestamp(item.date));
@@ -1453,19 +1463,19 @@ setPublicVisibility('honors',data.honors.items.length>0);
 }
 function honorFields(item={}){return[
 {type:'text',key:'title',label:'Honor / Achievement Title',value:item.title||'',required:true,placeholder:'e.g. Academic Excellence Award'},
-{type:'select',key:'type',label:'Type',value:item.type||'Academic Honor',options:[{value:'Academic Honor',label:'Academic Honor'},{value:'Award',label:'Award'},{value:'Appreciation Certificate',label:'Appreciation Certificate'},{value:'Recognition',label:'Recognition'},{value:'Achievement',label:'Achievement'},{value:'Scholarship / Grant',label:'Scholarship / Grant'},{value:'Other',label:'Other'}]},
+{type:'select',key:'type',label:'Type',value:item.type||'Academic Honor',options:ensureCustomTypes('honors',DEFAULT_HONOR_TYPES),allowCustom:true},
 {type:'text',key:'issuer',label:'Issuer / Institution',value:item.issuer||'',placeholder:'University, department or organization'},
 {type:'text',key:'date',label:'Date / Year',value:item.date||'',required:true,placeholder:'e.g. Dec 2025'},
 {type:'textarea',key:'desc',label:'Description',value:item.desc||'',rows:4,placeholder:'Brief achievement description'},
 {type:'text',key:'tags',label:'Tags (comma separated)',value:(item.tags||[]).join(', ')},
 {type:'files',key:'files',label:item.id?'Upload More Files':'Upload Award Files'}]}
-function addHonor(){ensureHonorsContent();openEditModal('Add Honor / Achievement','',[...honorFields()],v=>{data.honors.items.push({id:uid(),title:v.title,type:v.type,issuer:v.issuer,date:v.date,desc:v.desc,tags:(v.tags||'').split(',').map(x=>x.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.honors.items,item=>sortTimestamp(item.date));renderAll()},true)}
-function editHonor(id){ensureHonorsContent();const item=data.honors.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Honor / Achievement','',[...honorFields(item)],v=>{item.title=v.title;item.type=v.type;item.issuer=v.issuer;item.date=v.date;item.desc=v.desc;item.tags=(v.tags||'').split(',').map(x=>x.trim()).filter(Boolean);if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}sortOldToNew(data.honors.items,item=>sortTimestamp(item.date));renderAll()},true)}
+function addHonor(){ensureHonorsContent();openEditModal('Add Honor / Achievement','',[...honorFields()],v=>{rememberCustomType('honors',v.type,DEFAULT_HONOR_TYPES);data.honors.items.push({id:uid(),title:v.title,type:v.type,issuer:v.issuer,date:v.date,desc:v.desc,tags:(v.tags||'').split(',').map(x=>x.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.honors.items,item=>sortTimestamp(item.date));renderAll()},true)}
+function editHonor(id){ensureHonorsContent();const item=data.honors.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Honor / Achievement','',[...honorFields(item)],v=>{item.title=v.title;item.type=v.type;rememberCustomType('honors',v.type,DEFAULT_HONOR_TYPES);item.issuer=v.issuer;item.date=v.date;item.desc=v.desc;item.tags=(v.tags||'').split(',').map(x=>x.trim()).filter(Boolean);if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}sortOldToNew(data.honors.items,item=>sortTimestamp(item.date));renderAll()},true)}
 function removeHonor(id){ensureHonorsContent();if(!confirm('Remove this honor / achievement?'))return;data.honors.items=data.honors.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 function ensureResearchContent(){
-if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[]};
-if(!Array.isArray(data.research.items))data.research.items=[];
+if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[],types:[]};
+if(!Array.isArray(data.research.items))data.research.items=[];if(!Array.isArray(data.research.types))data.research.types=[];
 }
 
 function safeResearchUrl(value){try{const url=new URL((value||'').trim());return['http:','https:'].includes(url.protocol)?url.href:''}catch{return''}}
@@ -1476,14 +1486,14 @@ setPublicVisibility('research',data.research.items.length>0);$('researchGrid').i
 }
 function researchFields(item={}){return[
 {type:'text',key:'title',label:'Research Title',value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
-{type:'select',key:'type',label:'Research Type',value:item.type||'Research Paper',options:[{value:'Research Paper',label:'Research Paper'},{value:'Conference Paper',label:'Conference Paper'},{value:'Technical Research',label:'Technical Research'},{value:'Thesis / Dissertation',label:'Thesis / Dissertation'},{value:'Case Study',label:'Case Study'},{value:'Other',label:'Other'}]},
+{type:'select',key:'type',label:'Research Type',value:item.type||'Research Paper',options:ensureCustomTypes('research',DEFAULT_RESEARCH_TYPES),allowCustom:true},
 {type:'text',key:'venue',label:'Journal / Conference / Institution',value:item.venue||'',placeholder:'Publication venue or institution'},
 {type:'row',fields:[{type:'text',key:'date',label:'Publication Year / Date',value:item.date||'',placeholder:'e.g. 2026'},{type:'text',key:'authors',label:'Authors',value:item.authors||'',placeholder:'e.g. Umair Ahmad et al.'}]},
 {type:'textarea',key:'desc',label:'Abstract / Description',value:item.desc||'',rows:5,placeholder:'Brief research summary'},
 {type:'text',key:'url',label:'Research URL (optional)',value:item.url||'',placeholder:'https://doi.org/... or publication URL'}
 ]}
-function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
-function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
+function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
+function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
 function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 function ensureSeparatedEducationContent(){

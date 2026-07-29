@@ -755,7 +755,8 @@
     "eyebrow": "Academic Contribution",
     "title": "Research & <em>Publications</em>",
     "desc": "Research papers, technical studies and academic publications.",
-    "items": []
+    "items": [],
+    "types": []
   },
   "sectionHeaders": {
     "exp": {
@@ -832,7 +833,8 @@
     "eyebrow": "Academic Recognition",
     "title": "Honors & <em>Achievements</em>",
     "desc": "Academic honors, awards, recognition and appreciation received throughout my career.",
-    "items": []
+    "items": [],
+    "types": []
   },
   "projectDomainOrder": {}
 }
