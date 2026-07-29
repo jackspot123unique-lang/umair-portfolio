@@ -200,3 +200,9 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added an Honors & Achievements number-only main card to the first-page Portfolio Status dashboard, with no breakdown section.
 - Research & Publications now uses one full-width card column in the same 1320px container width as the Final Year Design Project card.
 - Research cards show title, type, venue/institution, publication date, authors, description, link, tags and files as separate structured lines/areas.
+
+## Safe five requested changes only
+
+- Based on the exact Honors Status and Research Detail Complete project.
+- Added only Research Heading Management, structured Research lines, structured Honors lines and structured Internship lines.
+- No HTML guide page, Ctrl+B feature, mobile PDF preview changes, PDF export changes or unrelated new systems were added.
