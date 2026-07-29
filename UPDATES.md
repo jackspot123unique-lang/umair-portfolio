@@ -180,3 +180,12 @@ The visual design, colors, animations, layout and existing working integrations 
 
 - Only Final Year Design Project cards span both Project Portfolio columns on desktop.
 - Other project categories keep the normal two-column layout.
+
+## Honors, empty-content visibility and project ordering
+
+- Added a fully editable Honors & Achievements section for academic awards, appreciation certificates, recognition, scholarships and achievements.
+- Honors supports title, type, issuer, date, description, tags, files, add/edit/upload/remove and chronological sorting.
+- Empty Honors, Research, Certifications and Projects sections are hidden from public visitors and visible in Admin Mode; empty public category groups are hidden too.
+- Project domain order is preserved by first domain appearance and projects sort by domain then project number (for example ANSYS-01, ANSYS-02 before ABAQUS/COMSOL according to the saved domain order).
+- Added Admin Mode up/down category order controls so project category placement can be changed and saved.
+- Academic Degrees sort newest to oldest; Experience, Internships, Freelance and Research sort oldest to newest.

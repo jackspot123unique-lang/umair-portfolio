@@ -827,5 +827,12 @@
         "files": []
       }
     ]
-  }
+  },
+  "honors": {
+    "eyebrow": "Academic Recognition",
+    "title": "Honors & <em>Achievements</em>",
+    "desc": "Academic honors, awards, recognition and appreciation received throughout my career.",
+    "items": []
+  },
+  "projectDomainOrder": {}
 }
