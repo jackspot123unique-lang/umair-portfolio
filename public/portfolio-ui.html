@@ -410,7 +410,7 @@ body.admin-mode .sp-x{display:inline-block}
 .honor-desc{font-size:12.5px;color:var(--muted);line-height:1.7;text-align:justify}
 @media(max-width:960px){.honors-grid{grid-template-columns:1fr}}
 #research .container{max-width:1320px}
-.research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.research-grid{display:grid;grid-template-columns:1fr;gap:20px}
 .research-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:23px 24px;box-shadow:var(--shadow-sm);transition:all var(--tr)}
 .research-card:hover{border-color:var(--sky);box-shadow:var(--shadow);transform:translateY(-3px)}
 .research-type{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--teal);letter-spacing:1.7px;text-transform:uppercase;margin-bottom:7px}
@@ -418,6 +418,11 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
+.research-detail-list{display:flex;flex-direction:column;gap:7px;margin:12px 0}
+.research-detail-line{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;background:rgba(41,128,185,.05);border-left:3px solid rgba(41,128,185,.35);border-radius:4px}
+.research-detail-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--sky);min-width:180px;line-height:1.5}
+.research-detail-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.5}
+@media(max-width:600px){.research-detail-line{flex-direction:column;gap:2px}.research-detail-label{min-width:0}}
 @media(min-width:961px){.hero-inner{max-width:1160px;grid-template-columns:minmax(0,1fr) 520px}.hero-card{margin-left:14px;margin-top:-14px;padding:28px 26px}.profile-pic-wrap{justify-content:flex-start;align-items:flex-start;padding-left:4px;margin-bottom:26px}.profile-pic{width:var(--profile-size,240px);height:var(--profile-size,240px);border-width:6px}.profile-pic .profile-initial{font-size:88px}.profile-custom-controls{justify-content:flex-start}.cap-stack{margin-left:28px;margin-top:-14px;gap:16px}}
 @media(min-width:1200px){.hero-inner{max-width:1460px;grid-template-columns:minmax(0,1fr) 720px}.hero-card{margin-left:18px;padding:30px 28px}.hero-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hstat{padding:13px 8px}.hstat-num{font-size:23px}.hstat-mini{padding:10px 6px}.hstat-mini .hstat-num{font-size:18px}}
 /* Final compact flow: no invisible tab, toolbar, grid or section spacing before the first category. */
@@ -1110,6 +1115,7 @@ const categories=data.projectCategories||[];
 const experiences=data.experiences||[],interns=data.interns||[];
 const totalProjects=categories.reduce((sum,cat)=>sum+(data.projects[cat.key]||[]).length,0);
 const researchItems=(data.research&&Array.isArray(data.research.items))?data.research.items:[];
+const honorsItems=(data.honors&&Array.isArray(data.honors.items))?data.honors.items:[];
 const degreeList=data.education?.degrees||[];
 const findDegree=matcher=>degreeList.find(item=>matcher.test(`${item.deg||''} ${item.sch||''}`));
 const grade=degree=>degree&&degree.gpa?String(degree.gpa).replace(/^CGPA:\s*/i,''):'—';
@@ -1122,6 +1128,7 @@ statsHtml+=jump(experiences.length,'Professional Experience','experience','hstat
 statsHtml+=jump(interns.length,'Internships','internships','hstat-main');
 statsHtml+=jump(totalProjects,'Total Projects','projects','hstat-main hstat-total');
 statsHtml+=jump(researchItems.length,'Research & Publications','research','hstat-main');
+statsHtml+=jump(honorsItems.length,'Honors & Achievements','honors','hstat-main');
 statsHtml+=jump((data.education?.certs||[]).length,'Certifications','certifications','hstat-main');
 // Education is represented only by this linked Academic Snapshot, as requested.
 statsHtml+=group(data.sectionHeaders.statusGroups.academic);
@@ -1482,7 +1489,10 @@ function safeResearchUrl(value){try{const url=new URL((value||'').trim());return
 function renderResearch(){
 ensureResearchContent();sortOldToNew(data.research.items,item=>sortTimestamp(item.date));
 $('researchEy').textContent=data.research.eyebrow;$('researchTitle').innerHTML=data.research.title;$('researchDesc').textContent=data.research.desc||'';
-setPublicVisibility('research',data.research.items.length>0);$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>`<article class="research-card"><div class="research-type">${esc(item.type||'Research Work')}</div><h3 class="research-card-title">${esc(item.title)}</h3>${item.venue||item.date||item.authors?`<div class="research-meta">${[item.venue,item.date,item.authors].filter(Boolean).map(esc).join(' · ')}</div>`:''}${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
+setPublicVisibility('research',data.research.items.length>0);
+$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>{
+const line=(label,value)=>value?`<div class="research-detail-line"><span class="research-detail-label">${esc(label)}</span><span class="research-detail-value">${esc(value)}</span></div>`:'';
+return `<article class="research-card"><h3 class="research-card-title">${esc(item.title)}</h3><div class="research-detail-list">${line('Research Type',item.type||'Research Work')}${line('Journal / Conference / Institution',item.venue)}${line('Publication Year / Date',item.date)}${line('Authors',item.authors)}</div>${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`}).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
 }
 function researchFields(item={}){return[
 {type:'text',key:'title',label:'Research Title',value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},

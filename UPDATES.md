@@ -194,3 +194,9 @@ The visual design, colors, animations, layout and existing working integrations 
 
 - Research Type and Honor/Achievement Type selectors now support custom type entry through the existing custom select option workflow.
 - Newly used custom types are remembered in portfolio data and appear in future Add/Edit forms.
+
+## Honors status card and full-width research detail layout
+
+- Added an Honors & Achievements number-only main card to the first-page Portfolio Status dashboard, with no breakdown section.
+- Research & Publications now uses one full-width card column in the same 1320px container width as the Final Year Design Project card.
+- Research cards show title, type, venue/institution, publication date, authors, description, link, tags and files as separate structured lines/areas.
