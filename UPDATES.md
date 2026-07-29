@@ -200,3 +200,11 @@ The visual design, colors, animations, layout and existing working integrations 
 - Added an Honors & Achievements number-only main card to the first-page Portfolio Status dashboard, with no breakdown section.
 - Research & Publications now uses one full-width card column in the same 1320px container width as the Final Year Design Project card.
 - Research cards show title, type, venue/institution, publication date, authors, description, link, tags and files as separate structured lines/areas.
+
+## Research field management, structured cards and rich text guide
+
+- Added Manage Research Headings to edit all default research labels, edit custom labels, remove custom labels by clearing them, and add a new custom heading.
+- Research Type and Publication Date display side-by-side on the first structured row; all other configured fields display on their own line.
+- Honors and Internships use separate labeled detail lines for their internal categories.
+- Added safe rich HTML rendering for descriptions/content and Ctrl/Cmd+B support in modal textareas.
+- Added an Admin-only HTML Text Formatting Guide with bold, italic, underline, line break and portfolio color examples.
