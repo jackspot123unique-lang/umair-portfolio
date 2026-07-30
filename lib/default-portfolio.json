@@ -756,15 +756,7 @@
     "title": "Research & <em>Publications</em>",
     "desc": "Research papers, technical studies and academic publications.",
     "items": [],
-    "types": [],
-    "fieldLabels": {
-      "title": "Research Title",
-      "type": "Research Type",
-      "venue": "Journal / Conference / Institution",
-      "date": "Publication Year / Date",
-      "authors": "Authors"
-    },
-    "customFields": []
+    "types": []
   },
   "sectionHeaders": {
     "exp": {
