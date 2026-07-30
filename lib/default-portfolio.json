@@ -649,49 +649,80 @@
         "name": "2-Day Workshop — SolidWorks",
         "year": "Aug 2022",
         "files": [],
-        "category": "Workshops"
+        "category": "Workshops",
+        "categoryId": "workshops",
+        "subcategoryId": ""
       },
       {
         "id": 2,
         "name": "Mechanical Workshop Technology",
         "year": "Sep 2022",
         "files": [],
-        "category": "Workshops"
+        "category": "Workshops",
+        "categoryId": "workshops",
+        "subcategoryId": ""
       },
       {
         "id": 3,
         "name": "4th Intl Workshop — Reverse Engineering",
         "year": "Dec 2022",
         "files": [],
-        "category": "Workshops"
+        "category": "Workshops",
+        "categoryId": "workshops",
+        "subcategoryId": ""
       },
       {
         "id": 4,
         "name": "5th Intl Workshop — Reverse Engineering",
         "year": "Dec 2023",
         "files": [],
-        "category": "Workshops"
+        "category": "Workshops",
+        "categoryId": "workshops",
+        "subcategoryId": ""
       },
       {
         "id": 5,
         "name": "6th Intl Workshop — Reverse Engineering",
         "year": "Dec 2024",
         "files": [],
-        "category": "Workshops"
+        "category": "Workshops",
+        "categoryId": "workshops",
+        "subcategoryId": ""
       },
       {
         "id": 6,
         "name": "Student Volunteer — Orientation, UET Mardan",
         "year": "Sep 2024",
         "files": [],
-        "category": "General Certifications"
+        "category": "General Certifications",
+        "categoryId": "general_certifications",
+        "subcategoryId": ""
       },
       {
         "id": 7,
         "name": "Student Volunteer — Welcome Party, UET Mardan",
         "year": "Oct 2024",
         "files": [],
-        "category": "General Certifications"
+        "category": "General Certifications",
+        "categoryId": "general_certifications",
+        "subcategoryId": ""
+      }
+    ],
+    "certCategories": [
+      {
+        "id": "workshops",
+        "name": "Workshops",
+        "subcategories": []
+      },
+      {
+        "id": "general_certifications",
+        "name": "General Certifications",
+        "subcategories": []
+      },
+      {
+        "id": "technical_certifications",
+        "name": "Technical Certifications",
+        "subcategories": []
       }
     ]
   },
@@ -756,15 +787,7 @@
     "title": "Research & <em>Publications</em>",
     "desc": "Research papers, technical studies and academic publications.",
     "items": [],
-    "types": [],
-    "fieldLabels": {
-      "title": "Research Title",
-      "type": "Research Type",
-      "venue": "Journal / Conference / Institution",
-      "date": "Publication Year / Date",
-      "authors": "Authors"
-    },
-    "customFields": []
+    "types": []
   },
   "sectionHeaders": {
     "exp": {

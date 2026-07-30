@@ -421,7 +421,6 @@ body.admin-mode #html-guide{display:block}
 .honor-detail-line,.intern-detail-line{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;background:rgba(41,128,185,.05);border-left:3px solid rgba(41,128,185,.35);border-radius:4px}
 .honor-detail-label,.intern-detail-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--sky);min-width:150px;line-height:1.5}
 .honor-detail-value,.intern-detail-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.5}
-.intern-value-line .intern-detail-value{width:100%}
 @media(max-width:600px){.honor-detail-line,.intern-detail-line{flex-direction:column;gap:2px}.honor-detail-label,.intern-detail-label{min-width:0}}
 @media(max-width:960px){.honors-grid{grid-template-columns:1fr}}
 #research .container{max-width:1320px}
@@ -465,6 +464,14 @@ body.admin-mode #html-guide{display:block}
 .cert-category-section{margin-bottom:30px}
 .cert-category-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);padding:0 0 10px;margin-bottom:12px;border-bottom:1px dashed rgba(41,128,185,.25)}
 .cert-category-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);font-weight:700}
+.cert-category-controls,.cert-subcategory-controls{display:inline-flex;gap:5px;margin-left:auto}
+.cert-category-controls button,.cert-subcategory-controls button{padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:var(--white);color:var(--sky);font-size:10px;font-weight:700;cursor:pointer}
+.cert-category-controls button:hover,.cert-subcategory-controls button:hover{background:var(--sky);color:#fff}
+.cert-subcategory-section{margin-top:18px}
+.cert-subcategory-heading{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--navy);padding:0 0 8px;margin-bottom:10px;border-bottom:1px dashed rgba(41,128,185,.20)}
+.cert-subcategory-count{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal)}
+body.admin-mode #certifications .cert-toolbar{display:flex!important;justify-content:space-between;margin:0 0 12px!important}
+body.admin-mode #certifications .cert-toolbar>span{display:none}
 .cert-category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 #certList .cert-item{margin-bottom:0}
 .edu-layout{display:grid;grid-template-columns:1fr 1fr;gap:44px}
@@ -751,7 +758,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 
 <section id="certifications"><button class="sec-add-btn" onclick="addCert()">＋ Add Certificate</button><div class="container">
 <div class="sec-head reveal"><div class="sec-eyebrow" id="certEy">Professional Development</div><h2 class="sec-title" id="certTitle">Certifications & <em>Workshops</em></h2><div class="sec-divider"></div><p class="sec-desc" id="certDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('cert')">✎ Edit Header</button></div></div>
-<div class="cert-single-layout reveal"><div class="edu-col-title"><span>Certifications & Workshops</span><button class="cc-btn cc-add" onclick="addCert()" style="display:none;font-size:10px;padding:5px 10px" id="addCertBtn">＋ Add</button></div><div id="certList"></div></div>
+<div class="cert-single-layout reveal"><div class="edu-col-title cert-toolbar"><span>Certifications & Workshops</span><div style="display:flex;gap:6px"><button class="cc-btn cc-add" onclick="addCert()" style="display:none;font-size:10px;padding:5px 10px" id="addCertBtn">＋ Add Certificate</button><button class="cc-btn cc-add" onclick="addCertificationCategory()" style="display:none;font-size:10px;padding:5px 10px" id="addCertCategoryBtn">＋ Add Category</button></div></div><div id="certList"></div></div>
 </div></section>
 
 <section id="contact"><button class="sec-add-btn" onclick="addContactCard()">＋ Add Contact Card</button>
@@ -1002,12 +1009,12 @@ try{
 const response=await fetch(CLOUD_API+'/auth/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:i.value})});
 const result=await response.json().catch(()=>({}));
 if(!response.ok)throw new Error(result.error||'Incorrect password.');
-isAdmin=true;closePwdModal();document.body.classList.add('admin-mode');$('adminBar').classList.add('show');$('adminToggle').classList.add('active');$('adminToggle').textContent='🔓';$('addDegBtn').style.display='inline-flex';$('addCertBtn').style.display='inline-flex';renderAll();if(projectWorkRetired){savePortfolio(true);projectWorkRetired=false}showToast('🔓 Admin mode activated!','success');
+isAdmin=true;closePwdModal();document.body.classList.add('admin-mode');$('adminBar').classList.add('show');$('adminToggle').classList.add('active');$('adminToggle').textContent='🔓';$('addDegBtn').style.display='inline-flex';$('addCertBtn').style.display='inline-flex';$('addCertCategoryBtn').style.display='inline-flex';renderAll();if(projectWorkRetired){savePortfolio(true);projectWorkRetired=false}showToast('🔓 Admin mode activated!','success');
 }catch(error){i.classList.add('wrong');$('pwdError').textContent='❌ '+(error.message||'Incorrect password.');i.value='';setTimeout(()=>{i.classList.remove('wrong');i.focus()},500)}
 finally{if(button)button.disabled=false}
 }
 function lockAdmin(){
-isAdmin=false;document.body.classList.remove('admin-mode');$('adminBar').classList.remove('show');$('adminToggle').classList.remove('active');$('adminToggle').textContent='🔒';$('addDegBtn').style.display='none';$('addCertBtn').style.display='none';renderAll();fetch(CLOUD_API+'/auth/logout',{method:'POST',credentials:'same-origin'}).catch(()=>{});showToast('🔒 Admin mode locked.','info')
+isAdmin=false;document.body.classList.remove('admin-mode');$('adminBar').classList.remove('show');$('adminToggle').classList.remove('active');$('adminToggle').textContent='🔒';$('addDegBtn').style.display='none';$('addCertBtn').style.display='none';$('addCertCategoryBtn').style.display='none';renderAll();fetch(CLOUD_API+'/auth/logout',{method:'POST',credentials:'same-origin'}).catch(()=>{});showToast('🔒 Admin mode locked.','info')
 }
 function togglePwdVis(){const i=$('pwdInput'),e=$('pwdEye');if(i.type==='password'){i.type='text';e.textContent='🙈'}else{i.type='password';e.textContent='👁️'}}
 $('pwdOverlay').addEventListener('click',e=>{if(e.target===$('pwdOverlay'))closePwdModal()});
@@ -1295,7 +1302,7 @@ $('expEy').textContent=data.sectionHeaders.exp.eyebrow;$('expTitle').innerHTML=d
 const expCard=(x,type)=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${(x.bullets||[]).map(b=>`<li><span>${safeRichHtml(b)}</span></li>`).join('')}</ul><div class="tag-row">${(x.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,type)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="${type==='exp'?`editExperience(${x.id})`:`editFreelanceItem(${x.id})`}">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('${type}',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="${type==='exp'?`removeExperience(${x.id})`:`removeFreelanceItem(${x.id})`}">✕ Remove</button></div></div></div>`;
 $('expTimeline').innerHTML=data.experiences.map(x=>expCard(x,'exp')).join('');
 $('freelanceTimeline').innerHTML=data.freelance.items.map(x=>expCard(x,'freelance')).join('');
-$('internRow').innerHTML=data.interns.map(x=>{const parts=String(x.co||'').split('·').map(part=>part.trim()).filter(Boolean);const location=parts.shift()||'';const duration=parts.join(' · ');const line=value=>value?`<div class="intern-detail-line intern-value-line"><span class="intern-detail-value">${esc(value)}</span></div>`:'';return `<div class="intern-card"><div class="intern-detail-list">${line(x.title)}${line(location)}${line(duration)}</div><div class="intern-desc">${safeRichHtml(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`}).join('')}
+$('internRow').innerHTML=data.interns.map(x=>{const parts=String(x.co||'').split('·').map(part=>part.trim()).filter(Boolean);const location=parts.shift()||'';const duration=parts.join(' · ');const line=(label,value)=>value?`<div class="intern-detail-line"><span class="intern-detail-label">${esc(label)}</span><span class="intern-detail-value">${esc(value)}</span></div>`:'';return `<div class="intern-card"><div class="intern-detail-list">${line('Internship Title',x.title)}${line('Location',location)}${line('Date / Duration',duration)}</div><div class="intern-desc">${safeRichHtml(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`}).join('')}
 
 function freelanceFields(item={}){return[{type:'text',key:'role',label:'Service / Job Title',value:item.role||'',required:true},{type:'text',key:'company',label:'Company / Location',value:item.company||'Independent Freelancer · Remote',required:true},{type:'text',key:'date',label:'Date Range',value:item.date||'',required:true},{type:'textarea',key:'bullets',label:'Bullets (one per line)',value:(item.bullets||[]).join('\n'),required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',value:(item.tags||[]).join(', ')},{type:'files',key:'files',label:item.id?'Upload More Files':'Upload Files'}]}
 function editFreelanceHeader(){ensureFreelanceContent();openEditModal('Edit Freelance Header','',[{type:'text',key:'title',label:'Heading',value:data.freelance.header,required:true}],v=>{data.freelance.header=v.title;renderExperience()})}
@@ -1565,38 +1572,54 @@ if(data.education.title==='Education & <em>Certifications</em>')data.education.t
 if(!data.certifications)data.certifications={eyebrow:'Professional Development',title:'Certifications & <em>Workshops</em>',desc:'Professional certifications, workshops and continuing learning.'};
 }
 
-const CERTIFICATE_CATEGORIES=['Workshops','General Certifications','Technical Certifications'];
-function inferCertificateCategory(cert){
-const text=`${cert.name||''} ${cert.year||''}`.toLowerCase();
-if(/workshop|reverse engineering|volunteer/.test(text))return text.includes('volunteer')?'General Certifications':'Workshops';
-if(/revit|bim|navisworks|autocad|solidworks|ansys|abaqus|comsol|hvac|mechanical/.test(text))return 'Technical Certifications';
-return 'General Certifications';
-}
+const DEFAULT_CERTIFICATION_CATEGORIES=[
+{id:'workshops',name:'Workshops',subcategories:[]},
+{id:'general_certifications',name:'General Certifications',subcategories:[]},
+{id:'technical_certifications',name:'Technical Certifications',subcategories:[]}
+];
 function certificateTimestamp(value){
-const text=String(value||'').trim();
-const parsed=Date.parse(text);if(!Number.isNaN(parsed))return parsed;
+const text=String(value||'').trim();const parsed=Date.parse(text);if(!Number.isNaN(parsed))return parsed;
 const year=text.match(/(19|20)\d{2}/);return year?Date.UTC(Number(year[0]),0,1):Number.MAX_SAFE_INTEGER;
 }
-function ensureCertificateCategories(){
-(data.education.certs||[]).forEach(cert=>{if(!CERTIFICATE_CATEGORIES.includes(cert.category))cert.category=inferCertificateCategory(cert)});
+function inferCertificateCategoryId(cert){
+const text=`${cert.name||''} ${cert.year||''}`.toLowerCase();
+if(/workshop|reverse engineering/.test(text))return 'workshops';
+if(/revit|bim|navisworks|autocad|solidworks|ansys|abaqus|comsol|hvac|mechanical/.test(text))return 'technical_certifications';
+return 'general_certifications';
 }
-function sortCertificatesOldToNew(){
-ensureCertificateCategories();
-data.education.certs.sort((a,b)=>certificateTimestamp(a.year)-certificateTimestamp(b.year)||String(a.name||'').localeCompare(String(b.name||'')));
+function ensureCertificationStructure(){
+if(!Array.isArray(data.education.certCategories)||!data.education.certCategories.length)data.education.certCategories=DEFAULT_CERTIFICATION_CATEGORIES.map(category=>({...category,subcategories:[]}));
+data.education.certCategories.forEach(category=>{if(!category.id)category.id=`category_${uid()}`;if(!Array.isArray(category.subcategories))category.subcategories=[];category.subcategories.forEach(sub=>{if(!sub.id)sub.id=`subcategory_${uid()}`})});
+(data.education.certs||[]).forEach(cert=>{
+if(!data.education.certCategories.some(category=>category.id===cert.categoryId)){
+const byName=data.education.certCategories.find(category=>category.name===cert.category);
+cert.categoryId=(byName||data.education.certCategories.find(category=>category.id===inferCertificateCategoryId(cert))||data.education.certCategories[0]).id;
 }
+if(!cert.subcategoryId)cert.subcategoryId='';
+});
+}
+function sortCertificatesOldToNew(){data.education.certs.sort((a,b)=>certificateTimestamp(a.year)-certificateTimestamp(b.year)||String(a.name||'').localeCompare(String(b.name||'')))}
+function categoryById(id){return data.education.certCategories.find(category=>category.id===id)}
+function allSubcategoryOptions(){return [{value:'',label:'No subcategory'},...data.education.certCategories.flatMap(category=>category.subcategories.map(sub=>({value:`${category.id}|${sub.id}`,label:`${category.name} — ${sub.name}`})))]}
 function renderCertificateCard(c){return `<div class="cert-item"><div class="cert-head"><span class="cert-name">${esc(c.name)}</span><span class="cert-yr">${esc(c.year)}</span></div>${renderFiles(c.files,c.id,'cert')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editCert(${c.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('cert',${c.id})">📎 Files</button><button class="cc-btn cc-remove" onclick="removeCert(${c.id})">✕ Remove</button></div></div>`}
 function renderEducation(){
-ensureSeparatedEducationContent();sortNewToOld(data.education.degrees,item=>sortTimestamp(item.year));ensureCertificateCategories();sortCertificatesOldToNew();
+ensureSeparatedEducationContent();sortNewToOld(data.education.degrees,item=>sortTimestamp(item.year));ensureCertificationStructure();sortCertificatesOldToNew();
 $('eduEy').textContent=data.education.eyebrow;$('eduTitle').innerHTML=data.education.title;
 $('certEy').textContent=data.certifications.eyebrow;$('certTitle').innerHTML=data.certifications.title;$('certDesc').textContent=data.certifications.desc||'';
 $('degList').innerHTML=data.education.degrees.map(d=>`<div class="edu-card"><div class="edu-deg">${esc(d.deg)}</div><div class="edu-sch">${esc(d.sch)}</div><div class="edu-meta"><span>${esc(d.year)}</span><span class="edu-gpa">${esc(d.gpa)}</span></div>${renderFiles(d.files,d.id,'deg')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editDegree(${d.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('deg',${d.id})">📎 Files</button><button class="cc-btn cc-remove" onclick="removeDegree(${d.id})">✕ Remove</button></div></div>`).join('');
-const visibleCertificateCategories=CERTIFICATE_CATEGORIES.filter(category=>isAdmin||data.education.certs.some(cert=>cert.category===category));setPublicVisibility('certifications',visibleCertificateCategories.length>0);$('certList').innerHTML=visibleCertificateCategories.map(category=>{const certificates=data.education.certs.filter(cert=>cert.category===category);return `<section class="cert-category-section"><div class="cert-category-heading"><span>${esc(category)}</span><span class="cert-category-count">${certificates.length} item${certificates.length===1?'':'s'}</span></div><div class="cert-category-grid">${certificates.length?certificates.map(renderCertificateCard).join(''):'<div class="cert-empty">No items in this category yet.</div>'}</div></section>`}).join('')}
-
+const visibleCategories=data.education.certCategories.filter(category=>isAdmin||data.education.certs.some(cert=>cert.categoryId===category.id));setPublicVisibility('certifications',visibleCategories.length>0);
+$('certList').innerHTML=visibleCategories.map(category=>{const direct=data.education.certs.filter(cert=>cert.categoryId===category.id&&!cert.subcategoryId);const subgroups=category.subcategories.filter(sub=>isAdmin||data.education.certs.some(cert=>cert.categoryId===category.id&&cert.subcategoryId===sub.id));const count=data.education.certs.filter(cert=>cert.categoryId===category.id).length;return `<section class="cert-category-section"><div class="cert-category-heading"><span>${esc(category.name)}</span><span class="cert-category-count">${count} item${count===1?'':'s'}</span>${isAdmin?`<span class="cert-category-controls"><button type="button" onclick="editCertificationCategory('${category.id}')">✎</button><button type="button" onclick="addCertificationSubcategory('${category.id}')">＋ Sub</button><button type="button" onclick="removeCertificationCategory('${category.id}')">✕</button></span>`:''}</div>${direct.length?`<div class="cert-category-grid">${direct.map(renderCertificateCard).join('')}</div>`:''}${subgroups.map(sub=>{const items=data.education.certs.filter(cert=>cert.categoryId===category.id&&cert.subcategoryId===sub.id);return `<div class="cert-subcategory-section"><div class="cert-subcategory-heading"><span>${esc(sub.name)}</span><span class="cert-subcategory-count">${items.length} item${items.length===1?'':'s'}</span>${isAdmin?`<span class="cert-subcategory-controls"><button type="button" onclick="editCertificationSubcategory('${category.id}','${sub.id}')">✎</button><button type="button" onclick="removeCertificationSubcategory('${category.id}','${sub.id}')">✕</button></span>`:''}</div><div class="cert-category-grid">${items.length?items.map(renderCertificateCard).join(''):'<div class="cert-empty">No items in this subcategory yet.</div>'}</div></div>`}).join('')}${isAdmin&&!direct.length&&!subgroups.length?'<div class="cert-empty">No items in this category yet.</div>':''}</section>`}).join('')}
+function addCertificationCategory(){openEditModal('Add Certification Category','',[{type:'text',key:'name',label:'Category Name',required:true,placeholder:'e.g. Professional Licenses'}],v=>{data.education.certCategories.push({id:`category_${uid()}`,name:v.name,subcategories:[]});renderAll()})}
+function editCertificationCategory(id){const category=categoryById(id);if(!category)return;openEditModal('Edit Certification Category','',[{type:'text',key:'name',label:'Category Name',value:category.name,required:true}],v=>{category.name=v.name;renderAll()})}
+function removeCertificationCategory(id){const category=categoryById(id);if(!category)return;const used=data.education.certs.some(cert=>cert.categoryId===id);if(used)return showToast('⚠️ Move or remove certificates in this category first.','error');if(category.subcategories.length)return showToast('⚠️ Remove subcategories first.','error');if(!confirm('Remove this certification category?'))return;data.education.certCategories=data.education.certCategories.filter(item=>item.id!==id);renderAll();savePortfolio(true)}
+function addCertificationSubcategory(categoryId){const category=categoryById(categoryId);if(!category)return;openEditModal('Add Certification Subcategory','',[{type:'text',key:'name',label:'Subcategory Name',required:true,placeholder:'e.g. BIM Certifications'}],v=>{category.subcategories.push({id:`subcategory_${uid()}`,name:v.name});renderAll()})}
+function editCertificationSubcategory(categoryId,subId){const category=categoryById(categoryId),sub=category?.subcategories.find(item=>item.id===subId);if(!sub)return;openEditModal('Edit Certification Subcategory','',[{type:'text',key:'name',label:'Subcategory Name',value:sub.name,required:true}],v=>{sub.name=v.name;renderAll()})}
+function removeCertificationSubcategory(categoryId,subId){const category=categoryById(categoryId);if(!category)return;const used=data.education.certs.some(cert=>cert.categoryId===categoryId&&cert.subcategoryId===subId);if(used)return showToast('⚠️ Move or remove certificates in this subcategory first.','error');if(!confirm('Remove this subcategory?'))return;category.subcategories=category.subcategories.filter(item=>item.id!==subId);renderAll();savePortfolio(true)}
 function addDegree(){openEditModal('Add Degree','',[{type:'text',key:'deg',label:'Degree',required:true},{type:'text',key:'sch',label:'School / University',required:true},{type:'row',fields:[{type:'text',key:'year',label:'Year',required:true},{type:'text',key:'gpa',label:'GPA / Grade'}]},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{data.education.degrees.push({id:uid(),deg:v.deg,sch:v.sch,year:v.year,gpa:v.gpa,files:v._files||[]});renderAll()})}
 function editDegree(id){const d=data.education.degrees.find(x=>x.id===id);if(!d)return;openEditModal('Edit Degree','',[{type:'text',key:'deg',label:'Degree',value:d.deg,required:true},{type:'text',key:'sch',label:'School',value:d.sch,required:true},{type:'row',fields:[{type:'text',key:'year',label:'Year',value:d.year,required:true},{type:'text',key:'gpa',label:'GPA',value:d.gpa}]},{type:'files',key:'files',label:'Upload More Files (multiple)'}],v=>{d.deg=v.deg;d.sch=v.sch;d.year=v.year;d.gpa=v.gpa;if(v._files&&v._files.length){if(!d.files)d.files=[];d.files=d.files.concat(v._files)}renderEducation()})}
 function removeDegree(id){if(!confirm('Remove?'))return;data.education.degrees=data.education.degrees.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
-function addCert(){openEditModal('Add Certificate','Add a workshop, general certification or technical certification',[{type:'text',key:'name',label:'Certificate Name',required:true},{type:'select',key:'category',label:'Category',value:'Workshops',options:CERTIFICATE_CATEGORIES.map(category=>({value:category,label:category}))},{type:'text',key:'year',label:'Year / Date',required:true,placeholder:'e.g. Dec 2024'},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{data.education.certs.push({id:uid(),name:v.name,category:v.category,year:v.year,files:v._files||[]});sortCertificatesOldToNew();renderAll()})}
-function editCert(id){const c=data.education.certs.find(x=>x.id===id);if(!c)return;ensureCertificateCategories();openEditModal('Edit Certificate','',[{type:'text',key:'name',label:'Certificate Name',value:c.name,required:true},{type:'select',key:'category',label:'Category',value:c.category,options:CERTIFICATE_CATEGORIES.map(category=>({value:category,label:category}))},{type:'text',key:'year',label:'Year / Date',value:c.year,required:true},{type:'files',key:'files',label:'Upload More Files (multiple)'}],v=>{c.name=v.name;c.category=v.category;c.year=v.year;if(v._files&&v._files.length){if(!c.files)c.files=[];c.files=c.files.concat(v._files)}sortCertificatesOldToNew();renderAll()})}
+function addCert(){ensureCertificationStructure();const categories=data.education.certCategories;openEditModal('Add Certificate','',[{type:'text',key:'name',label:'Certificate Name',required:true},{type:'select',key:'categoryId',label:'Main Category',value:categories[0]?.id,options:categories.map(category=>({value:category.id,label:category.name}))},{type:'select',key:'subcategory',label:'Subcategory (optional)',value:'',options:allSubcategoryOptions()},{type:'text',key:'year',label:'Year / Date',required:true,placeholder:'e.g. Dec 2024'},{type:'files',key:'files',label:'Upload Images & Files (multiple)'}],v=>{const split=v.subcategory.split('|');const categoryId=split.length===2?split[0]:v.categoryId;const subcategoryId=split.length===2?split[1]:'';data.education.certs.push({id:uid(),name:v.name,categoryId,subcategoryId,year:v.year,files:v._files||[]});sortCertificatesOldToNew();renderAll()})}
+function editCert(id){ensureCertificationStructure();const c=data.education.certs.find(x=>x.id===id);if(!c)return;const categories=data.education.certCategories;openEditModal('Edit Certificate','',[{type:'text',key:'name',label:'Certificate Name',value:c.name,required:true},{type:'select',key:'categoryId',label:'Main Category',value:c.categoryId,options:categories.map(category=>({value:category.id,label:category.name}))},{type:'select',key:'subcategory',label:'Subcategory (optional)',value:c.subcategoryId?`${c.categoryId}|${c.subcategoryId}`:'',options:allSubcategoryOptions()},{type:'text',key:'year',label:'Year / Date',value:c.year,required:true},{type:'files',key:'files',label:'Upload More Files (multiple)'}],v=>{const split=v.subcategory.split('|');c.name=v.name;c.categoryId=split.length===2?split[0]:v.categoryId;c.subcategoryId=split.length===2?split[1]:'';c.year=v.year;if(v._files&&v._files.length){if(!c.files)c.files=[];c.files=c.files.concat(v._files)}sortCertificatesOldToNew();renderAll()})}
 function removeCert(id){if(!confirm('Remove?'))return;data.education.certs=data.education.certs.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 // CONTACT - now with editable GCC banner
