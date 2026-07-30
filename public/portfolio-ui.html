@@ -418,6 +418,14 @@ body.admin-mode .sp-x{display:inline-block}
 .research-meta{font-size:11.5px;color:var(--sky);font-weight:700;margin-bottom:12px;line-height:1.6}
 .research-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
 .research-link{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-size:11.5px;color:var(--sky);font-weight:700;border-bottom:1px solid currentColor;padding-bottom:2px}
+.research-detail-list,.honor-detail-list,.intern-detail-list{display:flex;flex-direction:column;gap:7px;margin:12px 0}
+.research-detail-line,.honor-detail-line,.intern-detail-line{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;background:rgba(41,128,185,.05);border-left:3px solid rgba(41,128,185,.35);border-radius:4px}
+.research-detail-label,.honor-detail-label,.intern-detail-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--sky);min-width:180px;line-height:1.5}
+.research-detail-value,.honor-detail-value,.intern-detail-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.5}
+.research-title-line .research-detail-value{font-family:'Playfair Display',serif;font-size:20px;line-height:1.3;color:var(--navy)}
+.research-top-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.research-top-details .research-detail-line{margin:0}
+@media(max-width:600px){.research-top-details{grid-template-columns:1fr}.research-detail-line,.honor-detail-line,.intern-detail-line{flex-direction:column;gap:2px}.research-detail-label,.honor-detail-label,.intern-detail-label{min-width:0}}
 .research-detail-list{display:flex;flex-direction:column;gap:7px;margin:12px 0}
 .research-detail-line{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;background:rgba(41,128,185,.05);border-left:3px solid rgba(41,128,185,.35);border-radius:4px}
 .research-detail-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--sky);min-width:180px;line-height:1.5}
@@ -727,7 +735,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 
 <section id="research"><button class="sec-add-btn" onclick="addResearchItem()">＋ Add Research Item</button>
 <div class="container">
-<div class="sec-head reveal"><div class="sec-eyebrow" id="researchEy">Academic Contribution</div><h2 class="sec-title" id="researchTitle">Research & <em>Publications</em></h2><div class="sec-divider"></div><p class="sec-desc" id="researchDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('research')">✎ Edit Header</button></div></div>
+<div class="sec-head reveal"><div class="sec-eyebrow" id="researchEy">Academic Contribution</div><h2 class="sec-title" id="researchTitle">Research & <em>Publications</em></h2><div class="sec-divider"></div><p class="sec-desc" id="researchDesc"></p><div class="card-ctrl" style="margin-top:14px"><button class="cc-btn cc-edit" onclick="editSectionHeader('research')">✎ Edit Header</button><button class="cc-btn cc-edit" onclick="manageResearchHeadings()">✎ Manage Research Headings</button></div></div>
 <div class="research-grid" id="researchGrid"></div>
 </div></section>
 
@@ -1243,7 +1251,8 @@ $('expEy').textContent=data.sectionHeaders.exp.eyebrow;$('expTitle').innerHTML=d
 const expCard=(x,type)=>`<div class="exp-block"><div class="exp-card"><div class="exp-top"><div class="exp-role">${esc(x.role)}</div><div class="exp-badge">${esc(x.date)}</div></div><div class="exp-company">${esc(x.company)}</div><ul class="exp-list">${(x.bullets||[]).map(b=>`<li><span>${b}</span></li>`).join('')}</ul><div class="tag-row">${(x.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>${renderFiles(x.files,x.id,type)}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="${type==='exp'?`editExperience(${x.id})`:`editFreelanceItem(${x.id})`}">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('${type}',${x.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="${type==='exp'?`removeExperience(${x.id})`:`removeFreelanceItem(${x.id})`}">✕ Remove</button></div></div></div>`;
 $('expTimeline').innerHTML=data.experiences.map(x=>expCard(x,'exp')).join('');
 $('freelanceTimeline').innerHTML=data.freelance.items.map(x=>expCard(x,'freelance')).join('');
-$('internRow').innerHTML=data.interns.map(x=>`<div class="intern-card"><div class="intern-title">${esc(x.title)}</div><div class="intern-co">${esc(x.co)}</div><div class="intern-desc">${esc(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`).join('')}
+$('internRow').innerHTML=data.interns.map(x=>{const parts=String(x.co||'').split('·').map(part=>part.trim()).filter(Boolean);const location=parts.shift()||'';const duration=parts.join(' · ');const line=(label,value)=>value?`<div class="intern-detail-line"><span class="intern-detail-label">${esc(label)}</span><span class="intern-detail-value">${esc(value)}</span></div>`:'';return `<div class="intern-card"><div class="intern-detail-list">${line('Internship Title',x.title)}${line('Location',location)}${line('Date / Duration',duration)}</div><div class="intern-desc">${esc(x.desc)}</div>${(x.tags||[]).length?`<div class="tag-row">${x.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${renderFiles(x.files,x.id,'int')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editIntern(${x.id})">✎</button><button class="cc-btn cc-upload" onclick="uploadTo('int',${x.id})">📎</button><button class="cc-btn cc-remove" onclick="removeIntern(${x.id})">✕</button></div></div>`}).join('')}
+
 function freelanceFields(item={}){return[{type:'text',key:'role',label:'Service / Job Title',value:item.role||'',required:true},{type:'text',key:'company',label:'Company / Location',value:item.company||'Independent Freelancer · Remote',required:true},{type:'text',key:'date',label:'Date Range',value:item.date||'',required:true},{type:'textarea',key:'bullets',label:'Bullets (one per line)',value:(item.bullets||[]).join('\n'),required:true,rows:6,hint:'HTML allowed'},{type:'text',key:'tags',label:'Tags (comma separated)',value:(item.tags||[]).join(', ')},{type:'files',key:'files',label:item.id?'Upload More Files':'Upload Files'}]}
 function editFreelanceHeader(){ensureFreelanceContent();openEditModal('Edit Freelance Header','',[{type:'text',key:'title',label:'Heading',value:data.freelance.header,required:true}],v=>{data.freelance.header=v.title;renderExperience()})}
 function addFreelanceItem(){ensureFreelanceContent();openEditModal('Add Freelance Experience','',[...freelanceFields()],v=>{data.freelance.items.push({id:uid(),role:v.role,company:v.company,date:v.date,bullets:v.bullets.split('\n').filter(Boolean),tags:(v.tags||'').split(',').map(s=>s.trim()).filter(Boolean),files:v._files||[]});sortOldToNew(data.freelance.items,item=>sortTimestamp(item.date));renderAll()},true)}
@@ -1465,7 +1474,7 @@ if(!Array.isArray(data.honors.items))data.honors.items=[];if(!Array.isArray(data
 function renderHonors(){
 ensureHonorsContent();sortOldToNew(data.honors.items,item=>sortTimestamp(item.date));
 $('honorsEy').textContent=data.honors.eyebrow;$('honorsTitle').innerHTML=data.honors.title;$('honorsDesc').textContent=data.honors.desc||'';
-$('honorsGrid').innerHTML=data.honors.items.length?data.honors.items.map(item=>`<article class="honor-card"><div class="honor-type">${esc(item.type||'Achievement')}</div><h3 class="honor-title">${esc(item.title)}</h3>${item.issuer||item.date?`<div class="honor-meta">${[item.issuer,item.date].filter(Boolean).map(esc).join(' · ')}</div>`:''}${item.desc?`<p class="honor-desc">${esc(item.desc)}</p>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'honor')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editHonor(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('honor',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeHonor(${item.id})">✕ Remove</button></div></article>`).join(''):'<div class="pw-empty"><div class="pw-empty-icon">🏆</div><p>No honors or achievements added yet.<br>Use <strong>"＋ Add Honor / Achievement"</strong> to add an award, appreciation certificate or academic recognition.</p></div>';
+$('honorsGrid').innerHTML=data.honors.items.length?data.honors.items.map(item=>{const line=(label,value)=>value?`<div class="honor-detail-line"><span class="honor-detail-label">${esc(label)}</span><span class="honor-detail-value">${esc(value)}</span></div>`:'';return `<article class="honor-card"><div class="honor-detail-list">${line('Honor / Achievement Title',item.title)}${line('Type',item.type||'Achievement')}${line('Issuer / Institution',item.issuer)}${line('Date / Year',item.date)}</div>${item.desc?`<p class="honor-desc">${esc(item.desc)}</p>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'honor')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editHonor(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('honor',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeHonor(${item.id})">✕ Remove</button></div></article>`}).join(''):'<div class="pw-empty"><div class="pw-empty-icon">🏆</div><p>No honors or achievements added yet.<br>Use <strong>"＋ Add Honor / Achievement"</strong> to add an award, appreciation certificate or academic recognition.</p></div>';
 setPublicVisibility('honors',data.honors.items.length>0);
 }
 function honorFields(item={}){return[
@@ -1481,31 +1490,55 @@ function editHonor(id){ensureHonorsContent();const item=data.honors.items.find(x
 function removeHonor(id){ensureHonorsContent();if(!confirm('Remove this honor / achievement?'))return;data.honors.items=data.honors.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
 function ensureResearchContent(){
-if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[],types:[]};
-if(!Array.isArray(data.research.items))data.research.items=[];if(!Array.isArray(data.research.types))data.research.types=[];
+if(!data.research)data.research={eyebrow:'Academic Contribution',title:'Research & <em>Publications</em>',desc:'Research papers, technical studies and academic publications.',items:[],types:[],fieldLabels:{title:'Research Title',type:'Research Type',venue:'Journal / Conference / Institution',date:'Publication Year / Date',authors:'Authors'},customFields:[]};
+if(!Array.isArray(data.research.items))data.research.items=[];
+if(!Array.isArray(data.research.types))data.research.types=[];
+if(!data.research.fieldLabels)data.research.fieldLabels={};
+data.research.fieldLabels={title:'Research Title',type:'Research Type',venue:'Journal / Conference / Institution',date:'Publication Year / Date',authors:'Authors',...data.research.fieldLabels};
+if(!Array.isArray(data.research.customFields))data.research.customFields=[];
 }
-
-function safeResearchUrl(value){try{const url=new URL((value||'').trim());return['http:','https:'].includes(url.protocol)?url.href:''}catch{return''}}
+function manageResearchHeadings(){
+ensureResearchContent();const labels=data.research.fieldLabels,custom=data.research.customFields;
+const fields=[
+{type:'text',key:'title',label:'Research Title Heading',value:labels.title,required:true},
+{type:'text',key:'type',label:'Research Type Heading',value:labels.type,required:true},
+{type:'text',key:'venue',label:'Journal / Conference / Institution Heading',value:labels.venue,required:true},
+{type:'text',key:'date',label:'Publication Year / Date Heading',value:labels.date,required:true},
+{type:'text',key:'authors',label:'Authors Heading',value:labels.authors,required:true},
+...custom.map(field=>({type:'text',key:`label_${field.id}`,label:`Custom Heading: ${field.label} (clear text to remove)`,value:field.label})),
+{type:'text',key:'newHeading',label:'Add New Custom Heading',placeholder:'e.g. Research Supervisor'}
+];
+openEditModal('Manage Research Headings','Edit headings, add a new heading, or clear a custom heading to remove it.',fields,v=>{
+Object.keys(labels).forEach(key=>{labels[key]=v[key]||labels[key]});
+data.research.customFields=data.research.customFields.map(field=>({...field,label:(v[`label_${field.id}`]||'').trim()})).filter(field=>field.label);
+const heading=(v.newHeading||'').trim();if(heading)data.research.customFields.push({id:`custom_${uid()}`,label:heading});
+renderAll();
+});
+}
 function renderResearch(){
 ensureResearchContent();sortOldToNew(data.research.items,item=>sortTimestamp(item.date));
+const labels=data.research.fieldLabels,customFields=data.research.customFields;
 $('researchEy').textContent=data.research.eyebrow;$('researchTitle').innerHTML=data.research.title;$('researchDesc').textContent=data.research.desc||'';
 setPublicVisibility('research',data.research.items.length>0);
-$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>{
-const line=(label,value)=>value?`<div class="research-detail-line"><span class="research-detail-label">${esc(label)}</span><span class="research-detail-value">${esc(value)}</span></div>`:'';
-return `<article class="research-card"><h3 class="research-card-title">${esc(item.title)}</h3><div class="research-detail-list">${line('Research Type',item.type||'Research Work')}${line('Journal / Conference / Institution',item.venue)}${line('Publication Year / Date',item.date)}${line('Authors',item.authors)}</div>${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`}).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
+const line=(label,value,extra='')=>value?`<div class="research-detail-line ${extra}"><span class="research-detail-label">${esc(label)}</span><span class="research-detail-value">${esc(value)}</span></div>`:'';
+$('researchGrid').innerHTML=data.research.items.length?data.research.items.map(item=>{const customLines=customFields.map(field=>line(field.label,item.customValues?.[field.id])).join('');return `<article class="research-card"><div class="research-detail-list">${line(labels.title,item.title,'research-title-line')}<div class="research-top-details">${line(labels.type,item.type||'Research Work')}${line(labels.date,item.date)}</div>${line(labels.venue,item.venue)}${line(labels.authors,item.authors)}${customLines}</div>${item.desc?`<p class="research-desc">${esc(item.desc)}</p>`:''}${safeResearchUrl(item.url)?`<a class="research-link" href="${esc(safeResearchUrl(item.url))}" target="_blank" rel="noopener noreferrer">↗ View Research Link</a>`:''}${(item.tags||[]).length?`<div class="tag-row">${item.tags.map(tag=>`<span class="tag">${esc(tag)}</span>`).join('')}</div>`:''}${renderFiles(item.files,item.id,'research')}<div class="card-ctrl"><button class="cc-btn cc-edit" onclick="editResearchItem(${item.id})">✎ Edit</button><button class="cc-btn cc-upload" onclick="uploadTo('research',${item.id})">📎 Upload</button><button class="cc-btn cc-remove" onclick="removeResearchItem(${item.id})">✕ Remove</button></div></article>`}).join(''):'<div class="pw-empty"><div class="pw-empty-icon">📚</div><p>No research work added yet.<br>Use <strong>"＋ Add Research Item"</strong> to add a paper, publication or technical study.</p></div>';
 }
-function researchFields(item={}){return[
-{type:'text',key:'title',label:'Research Title',value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
-{type:'select',key:'type',label:'Research Type',value:item.type||'Research Paper',options:ensureCustomTypes('research',DEFAULT_RESEARCH_TYPES),allowCustom:true},
-{type:'text',key:'venue',label:'Journal / Conference / Institution',value:item.venue||'',placeholder:'Publication venue or institution'},
-{type:'row',fields:[{type:'text',key:'date',label:'Publication Year / Date',value:item.date||'',placeholder:'e.g. 2026'},{type:'text',key:'authors',label:'Authors',value:item.authors||'',placeholder:'e.g. Umair Ahmad et al.'}]},
+function researchFields(item={}){
+ensureResearchContent();const labels=data.research.fieldLabels,custom=data.research.customFields;
+return[
+{type:'text',key:'title',label:labels.title,value:item.title||'',required:true,placeholder:'e.g. Thermal Performance Analysis of...'},
+{type:'select',key:'type',label:labels.type,value:item.type||'Research Paper',options:ensureCustomTypes('research',DEFAULT_RESEARCH_TYPES),allowCustom:true},
+{type:'text',key:'venue',label:labels.venue,value:item.venue||'',placeholder:'Publication venue or institution'},
+{type:'text',key:'date',label:labels.date,value:item.date||'',placeholder:'e.g. 2026'},
+{type:'text',key:'authors',label:labels.authors,value:item.authors||'',placeholder:'e.g. Umair Ahmad et al.'},
+...custom.map(field=>({type:'text',key:field.id,label:field.label,value:item.customValues?.[field.id]||''})),
 {type:'textarea',key:'desc',label:'Abstract / Description',value:item.desc||'',rows:5,placeholder:'Brief research summary'},
 {type:'text',key:'url',label:'Research URL (optional)',value:item.url||'',placeholder:'https://doi.org/... or publication URL'}
 ]}
-function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
-function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
+function researchCustomValues(values){ensureResearchContent();return Object.fromEntries(data.research.customFields.map(field=>[field.id,values[field.id]||'']))}
+function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode first.','error');ensureResearchContent();openEditModal('Add Research Item','Add a paper, publication, thesis or technical research',[...researchFields(),{type:'files',key:'files',label:'Upload Research Files'}],v=>{rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);data.research.items.unshift({id:uid(),title:v.title,type:v.type,venue:v.venue,date:v.date,authors:v.authors,customValues:researchCustomValues(v),desc:v.desc,url:v.url,files:v._files||[]});renderAll()},true)}
+function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.customValues=researchCustomValues(v);item.desc=v.desc;item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
 function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
-
 function ensureSeparatedEducationContent(){
 if(!data.education)data.education={};
 if(data.education.title==='Education & <em>Certifications</em>')data.education.title='Education';
