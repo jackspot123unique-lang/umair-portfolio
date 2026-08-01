@@ -78,13 +78,10 @@ export async function POST(request: NextRequest) {
                             <div style="font-size:11px;letter-spacing:1px;font-weight:700;color:#16a085;text-transform:uppercase;margin-bottom:11px">Message</div>
                             <div style="font-size:15px;line-height:1.8;color:#2c3e50">${safeMessage}</div>
                           </div>
-                          <div style="margin-top:26px">
-                            <a href="mailto:${safeEmail}?subject=${encodeURIComponent(`Re: ${cleanSubject || "Your Portfolio Message"}`)}" style="display:inline-block;padding:13px 22px;background:#2980b9;border-radius:8px;color:#ffffff;text-decoration:none;font-size:13px;font-weight:700">Reply to ${safeName}</a>
-                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td style="padding:18px 42px;background:#e4f0f9;border-top:1px solid #c6ddea;color:#7f8c8d;font-size:11px;line-height:1.65">This message was sent from the contact form on Engr. Umair Ahmad's portfolio. Use Reply to respond directly to ${safeName}.</td>
+                        <td style="padding:18px 42px;background:#e4f0f9;border-top:1px solid #c6ddea;color:#7f8c8d;font-size:11px;line-height:1.65">This message was sent from the contact form on Engr. Umair Ahmad's portfolio. Use your email client's Reply action to respond directly to ${safeName}.</td>
                       </tr>
                     </table>
                   </td>
