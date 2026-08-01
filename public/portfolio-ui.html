@@ -294,6 +294,16 @@ body.admin-mode .afile-x{display:inline-flex}
 .project-category-jump{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--navy);font-size:11px;font-weight:700;cursor:pointer;transition:all var(--tr)}
 .project-category-jump:hover{border-color:var(--sky);background:rgba(41,128,185,.10);color:var(--sky);transform:translateY(-1px)}
 .project-category-jump-count{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal)}
+/* Sticky in-section navigation: it remains available only while its own Projects or Certifications section is being read. */
+#projects .project-category-jumps,#certifications .certification-category-jumps{position:sticky;top:78px;z-index:100;padding:10px;border:1px solid rgba(41,128,185,.24);border-radius:var(--radius);background:rgba(255,255,255,.96);backdrop-filter:blur(16px);box-shadow:0 8px 24px rgba(26,46,74,.12)}
+#projects .project-category-jumps{margin:0 0 20px}
+#certifications .certification-category-jumps{margin:0 0 28px}
+/* A transform ancestor can prevent sticky behavior in some browsers; remove the completed reveal transform only for this navigation parent. */
+#certifications .cert-single-layout.reveal.visible{transform:none}
+/* These margins keep a chosen category visible below both the fixed header and its sticky navigator. */
+#projects .project-category-section{scroll-margin-top:168px}
+#certifications .cert-category-section,#certifications .cert-subcategory-section{scroll-margin-top:294px}
+@media(max-width:960px){#projects .project-category-jumps,#certifications .certification-category-jumps{position:relative;top:auto;z-index:auto;backdrop-filter:none;box-shadow:var(--shadow-sm)}#projects .project-category-section,#certifications .cert-category-section,#certifications .cert-subcategory-section{scroll-margin-top:92px}}
 /* Certification & Workshop navigation: compact category row followed by full-width subcategory rows. */
 .certification-category-jumps{display:flex;flex-direction:column;gap:12px;margin:0 0 28px}
 .certification-main-jumps{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:12px}
@@ -306,7 +316,6 @@ body.admin-mode .afile-x{display:inline-flex}
 .certification-subcategory-jumps{flex:1;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
 .certification-subcategory-jump{min-width:0;padding:9px 10px;border:1px solid rgba(41,128,185,.18);border-radius:6px;background:rgba(255,255,255,.82);color:var(--sky);font-family:'Playfair Display',serif;font-size:12px;font-style:italic;font-weight:700;line-height:1.35;text-align:left;white-space:normal;overflow-wrap:anywhere;word-break:break-word;hyphens:auto;cursor:pointer;transition:all var(--tr)}
 .certification-subcategory-jump:hover{border-color:var(--teal);background:rgba(26,188,156,.10);color:var(--teal);transform:translateY(-1px)}
-#certifications .cert-category-section,#certifications .cert-subcategory-section{scroll-margin-top:92px}
 .degree-heading-actions{display:flex;align-items:center;gap:6px}
 .degree-heading-edit{display:none}
 body.admin-mode .degree-heading-edit{display:inline-flex}
@@ -1236,7 +1245,15 @@ statsHtml+=detail(researchItems,'Research Item','research',item=>item.title||ite
 $('heroStats').innerHTML=statsHtml;
 }
 
-function scrollAndTab(key){const category=document.getElementById('project-category-'+key);(category||document.querySelector('#projects'))?.scrollIntoView({behavior:'smooth',block:'start'})}
+function scrollBelowStickyNavigation(target,navigationId){
+if(!target)return;
+const fixedHeader=$('mainNav'),navigation=$(navigationId);
+const headerHeight=fixedHeader?fixedHeader.getBoundingClientRect().height:72;
+const navigationHeight=navigation?navigation.getBoundingClientRect().height:0;
+const top=window.scrollY+target.getBoundingClientRect().top-headerHeight-navigationHeight-16;
+window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+}
+function scrollAndTab(key){const category=document.getElementById('project-category-'+key);scrollBelowStickyNavigation(category||document.querySelector('#projects'),'projCategoryJumps')}
 
 function editHero(){openEditModal('Edit Hero Section','Update main introduction',[{type:'text',key:'eyebrowName',label:'Name',value:data.hero.eyebrowName,required:true},{type:'row',fields:[{type:'text',key:'line1',label:'Line 1',value:data.hero.line1},{type:'text',key:'line2',label:'Accent',value:data.hero.line2},{type:'text',key:'line3',label:'Line 3',value:data.hero.line3}]},{type:'textarea',key:'desc',label:'Description',value:data.hero.desc,rows:5,hint:'HTML allowed'}],v=>{data.hero.eyebrowName=v.eyebrowName;data.hero.line1=v.line1;data.hero.line2=v.line2;data.hero.line3=v.line3;data.hero.desc=v.desc;renderHero()},true)}
 
@@ -1618,8 +1635,8 @@ function allSubcategoryOptions(){return [{value:'',label:'No subcategory'},...da
 function moveCertificationCategory(id,direction){const index=data.education.certCategories.findIndex(c=>c.id===id),next=index+direction;if(index<0||next<0||next>=data.education.certCategories.length)return;const [c]=data.education.certCategories.splice(index,1);data.education.certCategories.splice(next,0,c);renderAll();savePortfolio(true)}
 function moveCertificationSubcategory(categoryId,subId,direction){const category=categoryById(categoryId);if(!category)return;const index=category.subcategories.findIndex(s=>s.id===subId),next=index+direction;if(index<0||next<0||next>=category.subcategories.length)return;const [sub]=category.subcategories.splice(index,1);category.subcategories.splice(next,0,sub);renderAll();savePortfolio(true)}
 function moveCertificateWithinSameDate(id,direction){const cert=data.education.certs.find(c=>c.id===id);if(!cert)return;const same=data.education.certs.filter(c=>c.categoryId===cert.categoryId&&(c.subcategoryId||'')===(cert.subcategoryId||'')&&certificateTimestamp(c.year)===certificateTimestamp(cert.year)).sort((a,b)=>a.manualOrder-b.manualOrder);const current=same.findIndex(c=>c.id===id),offset=direction==='left'?-1:direction==='right'?1:direction==='up'?-2:2,target=current+offset;if(target<0||target>=same.length)return showToast('⚠️ No same-date certificate in that direction.','info');const other=same[target],order=cert.manualOrder;cert.manualOrder=other.manualOrder;other.manualOrder=order;sortCertificatesOldToNew();renderAll();savePortfolio(true)}
-function scrollToCertificationCategory(categoryId){const target=$('cert-category-'+categoryId);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}
-function scrollToCertificationSubcategory(categoryId,subId){const target=$('cert-subcategory-'+categoryId+'-'+subId);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}
+function scrollToCertificationCategory(categoryId){scrollBelowStickyNavigation($('cert-category-'+categoryId),'certificationCategoryJumps')}
+function scrollToCertificationSubcategory(categoryId,subId){scrollBelowStickyNavigation($('cert-subcategory-'+categoryId+'-'+subId),'certificationCategoryJumps')}
 function renderCertificationJumps(categories){
 const jumps=$('certificationCategoryJumps');if(!jumps)return;
 const total=category=>data.education.certs.filter(cert=>cert.categoryId===category.id).length;
