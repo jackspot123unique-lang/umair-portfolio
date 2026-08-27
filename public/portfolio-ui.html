@@ -1147,18 +1147,37 @@ return `<div class="file-preview ${compressed?'compressed':''}">
 }).join('');
 }
 
+function safeFilePreviewSource(value){
+const raw=String(value||'').trim();
+if(/^data:(?:application\/pdf|image\/[^;,]+)(?:;base64)?,/i.test(raw))return raw;
+try{const url=new URL(raw);return['https:','http:'].includes(url.protocol)?url.href:''}catch{return''}
+}
+function openDirectFileInCurrentTab(file){
+const source=safeFilePreviewSource(file&&((file.url||file.data)||''));
+if(source)window.location.assign(source);
+}
+// A card click opens the normal portfolio file-preview screen in a safe separate browser tab.
 function openFileInNewTab(file){
-const source=file&&((file.url||file.data)||'');
+const source=safeFilePreviewSource(file&&((file.url||file.data)||''));
+if(!source){showToast('⚠️ This file preview URL is unavailable.','error');return}
+const previewUrl=new URL(window.location.href);previewUrl.search='';previewUrl.hash='';
+previewUrl.searchParams.set('filePreview',source);previewUrl.searchParams.set('fileName',file.name||'Attached File');
+const a=document.createElement('a');a.href=previewUrl.href;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove();
+}
+// If a file-preview tab was opened from a card, show the normal portfolio preview screen in that tab.
+function openRequestedFilePreview(){
+const query=new URLSearchParams(window.location.search),source=safeFilePreviewSource(query.get('filePreview'));
 if(!source)return;
-const a=document.createElement('a');a.href=source;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove();
+const name=query.get('fileName')||'Attached File';
+window.history.replaceState({},document.title,window.location.pathname+window.location.hash);
+openFsPreview({name,url:source});
 }
 function openFsPreview(file){
 const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload'),openAlternative=$('fsOpenAlternative');
 const source=file.url||file.data;
 title.textContent=file.name;
-// Public visitors can preview and use the normal browser/Office viewer controls.
-// Both visible actions intentionally use this same direct browser-preview behavior.
-const openInNativePreview=()=>openFileInNewTab(file);
+// Both buttons deliberately replace this preview tab with the browser's native direct-file viewer.
+const openInNativePreview=()=>openDirectFileInCurrentTab(file);
 dl.style.display='inline-flex';
 openAlternative.style.display='inline-flex';
 dl.onclick=openInNativePreview;
@@ -1741,6 +1760,7 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderHonors();renderResearch();renderContact();attachReveal()}
 
 async function bootPortfolio(){await loadData();ensureHonorsContent();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureFreelanceContent();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
+openRequestedFilePreview();
 bootPortfolio();
 </script>
 </body>
