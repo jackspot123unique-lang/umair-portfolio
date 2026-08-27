@@ -840,8 +840,6 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="fs-toolbar">
 <div class="fs-title" id="fsTitle"></div>
 <div class="fs-actions">
-<button class="fs-btn" id="fsOpenAlternative" title="Open the file in the browser's native preview">↗ Open Alternatively</button>
-<button class="fs-btn" id="fsDownload">⬇ Download</button>
 <button class="fs-close" onclick="closeFsPreview()">✕</button>
 </div>
 </div>
@@ -1152,36 +1150,17 @@ const raw=String(value||'').trim();
 if(/^data:(?:application\/pdf|image\/[^;,]+)(?:;base64)?,/i.test(raw))return raw;
 try{const url=new URL(raw);return['https:','http:'].includes(url.protocol)?url.href:''}catch{return''}
 }
-function openDirectFileInCurrentTab(file){
-const source=safeFilePreviewSource(file&&((file.url||file.data)||''));
-if(source)window.location.assign(source);
-}
-// A card click opens the normal portfolio file-preview screen in a safe separate browser tab.
+// Every attachment chip opens the uploaded file directly in a safe separate browser tab.
+// PDFs therefore show the browser's native preview and print/download/save controls immediately.
 function openFileInNewTab(file){
 const source=safeFilePreviewSource(file&&((file.url||file.data)||''));
 if(!source){showToast('⚠️ This file preview URL is unavailable.','error');return}
-const previewUrl=new URL(window.location.href);previewUrl.search='';previewUrl.hash='';
-previewUrl.searchParams.set('filePreview',source);previewUrl.searchParams.set('fileName',file.name||'Attached File');
-const a=document.createElement('a');a.href=previewUrl.href;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove();
-}
-// If a file-preview tab was opened from a card, show the normal portfolio preview screen in that tab.
-function openRequestedFilePreview(){
-const query=new URLSearchParams(window.location.search),source=safeFilePreviewSource(query.get('filePreview'));
-if(!source)return;
-const name=query.get('fileName')||'Attached File';
-window.history.replaceState({},document.title,window.location.pathname+window.location.hash);
-openFsPreview({name,url:source});
+const a=document.createElement('a');a.href=source;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove();
 }
 function openFsPreview(file){
-const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload'),openAlternative=$('fsOpenAlternative');
+const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent');
 const source=file.url||file.data;
 title.textContent=file.name;
-// Both buttons deliberately replace this preview tab with the browser's native direct-file viewer.
-const openInNativePreview=()=>openDirectFileInCurrentTab(file);
-dl.style.display='inline-flex';
-openAlternative.style.display='inline-flex';
-dl.onclick=openInNativePreview;
-openAlternative.onclick=openInNativePreview;
 content.oncontextmenu=null;
 if(isImage(file.name)){
 content.innerHTML=`<img src="${source}" alt="${esc(file.name)}">`;
@@ -1194,7 +1173,7 @@ const officeViewer=`https://view.officeapps.live.com/op/embed.aspx?src=${encodeU
 content.innerHTML=`<iframe src="${officeViewer}" title="${esc(file.name)}"></iframe>`;
 }else{
 const ext=file.name.split('.').pop().toUpperCase();
-content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This is a ${esc(ext)} file. Browser preview is not available for this format. Use Download to open it.</p><button class="fs-btn" style="background:var(--sky);color:#fff" onclick="document.getElementById('fsDownload').click()">⬇ Download File</button></div>`;
+content.innerHTML=`<div class="fs-doc"><div class="fs-doc-icon">${getFileIcon(file.name)}</div><h3>${esc(file.name)}</h3><p>This file type does not have an embedded browser preview.</p></div>`;
 }
 ov.classList.add('open');
 }
@@ -1760,7 +1739,6 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderHonors();renderResearch();renderContact();attachReveal()}
 
 async function bootPortfolio(){await loadData();ensureHonorsContent();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureFreelanceContent();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
-openRequestedFilePreview();
 bootPortfolio();
 </script>
 </body>
