@@ -1657,16 +1657,21 @@ if(!data.footer||typeof data.footer!=='object')data.footer={};
 data.footer={...DEFAULT_FOOTER_LINE,...data.footer};
 }
 function renderFooterLine(){
-ensureFooterLine();const footer=data.footer;
-$('footerText').innerHTML=`${esc(footer.prefix)} <span>${esc(footer.name)}</span>${footer.details?` · ${esc(footer.details)}`:''}`;
+ensureFooterLine();const footer=data.footer,element=$('footerText');if(!element)return;
+// Replace the visible nodes every time, so additions and removals appear immediately without a refresh.
+element.replaceChildren();
+const prefix=String(footer.prefix||'').trim(),name=String(footer.name||'').trim(),details=String(footer.details||'').trim();
+if(prefix)element.append(document.createTextNode(prefix));
+if(name){if(prefix)element.append(document.createTextNode(' '));const highlightedName=document.createElement('span');highlightedName.textContent=name;element.append(highlightedName)}
+if(details){if(prefix||name)element.append(document.createTextNode(' · '));element.append(document.createTextNode(details))}
 }
 function editFooterLine(){
 ensureFooterLine();const footer=data.footer;
-openEditModal('Edit Footer Line','Update the copyright/year, highlighted name and professional details at the bottom of the portfolio.',[
-{type:'text',key:'prefix',label:'Copyright / Year',value:footer.prefix,required:true,placeholder:'e.g. © 2026'},
-{type:'text',key:'name',label:'Highlighted Name',value:footer.name,required:true,placeholder:'e.g. Umair Ahmad'},
+openEditModal('Edit Footer Line','Update or remove any part of the footer line. Each change appears immediately after Save.',[
+{type:'text',key:'prefix',label:'Copyright / Year',value:footer.prefix,placeholder:'e.g. © 2026'},
+{type:'text',key:'name',label:'Highlighted Name',value:footer.name,placeholder:'e.g. Umair Ahmad'},
 {type:'text',key:'details',label:'Professional Details',value:footer.details,placeholder:'e.g. BIM Engineer · MEP Revit Modeler & Detailer'}
-],v=>{footer.prefix=v.prefix.trim()||DEFAULT_FOOTER_LINE.prefix;footer.name=v.name.trim()||DEFAULT_FOOTER_LINE.name;footer.details=(v.details||'').trim();renderFooterLine()});
+],v=>{data.footer={prefix:(v.prefix||'').trim(),name:(v.name||'').trim(),details:(v.details||'').trim()};renderFooterLine()});
 }
 function ensureSeparatedEducationContent(){
 if(!data.education)data.education={};
