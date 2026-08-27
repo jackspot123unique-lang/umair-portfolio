@@ -34,6 +34,9 @@ ul{list-style:none}
 
 .admin-bar{position:fixed;bottom:90px;left:20px;right:160px;z-index:798;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;gap:12px;border-radius:14px;transform:translateY(150%);transition:transform .35s var(--tr);box-shadow:0 -4px 24px rgba(0,0,0,.2)}
 .admin-bar.show{transform:translateY(0)}
+/* Strict public safeguard: the full Admin Mode bar can never appear unless Admin Mode is actually unlocked. */
+body:not(.admin-mode) #adminBar{display:none!important}
+body.admin-mode #adminBar{display:flex}
 .admin-bar .ab-left{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;flex-wrap:wrap}
 .admin-bar .ab-dot{width:10px;height:10px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
