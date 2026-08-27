@@ -840,6 +840,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 <div class="fs-toolbar">
 <div class="fs-title" id="fsTitle"></div>
 <div class="fs-actions">
+<button class="fs-btn" id="fsOpenAlternative" title="Open the file in the browser's native preview">↗ Open Alternatively</button>
 <button class="fs-btn" id="fsDownload">⬇ Download</button>
 <button class="fs-close" onclick="closeFsPreview()">✕</button>
 </div>
@@ -924,7 +925,7 @@ const isPdf=n=>(n||'').toLowerCase().endsWith('.pdf');
 const isOfficeFile=n=>['doc','docx','xls','xlsx','ppt','pptx'].includes((n||'').split('.').pop().toLowerCase());
 const fmtSize=b=>b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB';
 
-function showToast(m,t='info'){const e=$('toast');e.textContent=m;e.className=`toast toast-${t} show`;clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),3800)}
+function showToast(m,t='info',duration=3800){const e=$('toast');e.textContent=m;e.className=`toast toast-${t} show`;clearTimeout(e._t);e._t=null;if(duration>0)e._t=setTimeout(()=>e.classList.remove('show'),duration)}
 
 // ════════ CLOUD UPLOADS & SERVER PERSISTENCE ════════
 // Files never enter localStorage or a Vercel function body. The browser receives a
@@ -936,13 +937,25 @@ const result=await response.json().catch(()=>({}));
 if(!response.ok)throw new Error(result.error||'Request failed.');
 return result;
 }
+// XMLHttpRequest is deliberately used for signed R2 uploads because it provides true browser upload-progress events.
+function putToCloudWithProgress(uploadUrl,body,contentType,onProgress){
+return new Promise((resolve,reject)=>{
+const request=new XMLHttpRequest();
+request.open('PUT',uploadUrl,true);
+if(contentType)request.setRequestHeader('Content-Type',contentType);
+request.upload.onprogress=event=>{if(onProgress)onProgress(event.loaded,event.lengthComputable?event.total:body.size)};
+request.onload=()=>{if(request.status>=200&&request.status<300)resolve({etag:request.getResponseHeader('etag')});else reject(new Error('Cloud storage rejected the upload.'))};
+request.onerror=()=>reject(new Error('Network error while uploading to cloud storage.'));
+request.onabort=()=>reject(new Error('Cloud upload was cancelled.'));
+request.send(body);
+});
+}
 async function uploadToCloud(file,onProgress){
 if(!file.type)throw new Error('This file has no recognised file type.');
 const meta={fileName:file.name,contentType:file.type,size:file.size};
 if(file.size<=DIRECT_UPLOAD_THRESHOLD){
 const signed=await apiJson('/admin/uploads/presign',meta);
-const response=await fetch(signed.uploadUrl,{method:'PUT',headers:{'Content-Type':file.type},body:file});
-if(!response.ok)throw new Error('Cloud storage rejected the upload.');
+await putToCloudWithProgress(signed.uploadUrl,file,file.type,(loaded,total)=>{if(onProgress)onProgress(Math.min(99,Math.round((loaded/(total||file.size))*100)))});
 if(onProgress)onProgress(100);
 return signed.publicUrl;
 }
@@ -952,14 +965,16 @@ const count=Math.ceil(file.size/partSize),parts=[];
 try{
 for(let partNumber=1;partNumber<=count;partNumber++){
 const signed=await apiJson('/admin/uploads/multipart/part',{key:started.key,uploadId:started.uploadId,partNumber});
-const chunk=file.slice((partNumber-1)*partSize,Math.min(partNumber*partSize,file.size));
-const response=await fetch(signed.uploadUrl,{method:'PUT',body:chunk});
-const ETag=response.headers.get('etag');
-if(!response.ok||!ETag)throw new Error('Upload part failed. Check the R2 CORS ETag setting.');
+const chunkStart=(partNumber-1)*partSize;
+const chunk=file.slice(chunkStart,Math.min(partNumber*partSize,file.size));
+const uploaded=await putToCloudWithProgress(signed.uploadUrl,chunk,'',(loaded,total)=>{if(onProgress)onProgress(Math.min(99,Math.round(((chunkStart+loaded)/(file.size||total))*100)))});
+const ETag=uploaded.etag;
+if(!ETag)throw new Error('Upload part failed. Check the R2 CORS ETag setting.');
 parts.push({ETag,PartNumber:partNumber});
-if(onProgress)onProgress(Math.round(partNumber/count*100));
+if(onProgress)onProgress(Math.min(99,Math.round(Math.min(partNumber*partSize,file.size)/file.size*100)));
 }
 const completed=await apiJson('/admin/uploads/multipart/complete',{key:started.key,uploadId:started.uploadId,parts});
+if(onProgress)onProgress(100);
 return completed.publicUrl;
 }catch(error){
 apiJson('/admin/uploads/multipart/abort',{key:started.key,uploadId:started.uploadId}).catch(()=>{});
@@ -968,8 +983,11 @@ throw error;
 }
 async function processFile(file){
 try{
-showToast(`☁️ Uploading "${file.name}" directly to cloud storage...`,'info');
-const url=await uploadToCloud(file,pct=>showToast(`☁️ Uploading "${file.name}" — ${pct}%`,'info'));
+let lastPercent=-1;
+const progressMessage=pct=>`☁️ Uploading "${file.name}" to cloud storage — ${pct}%`;
+// Duration 0 keeps the upload notification on screen until this upload resolves or fails.
+showToast(progressMessage(0),'info',0);
+const url=await uploadToCloud(file,pct=>{const safePercent=Math.max(0,Math.min(100,Math.round(pct)));if(safePercent!==lastPercent){lastPercent=safePercent;showToast(progressMessage(safePercent),'info',0)}});
 return{name:file.name,type:file.type,url,size:file.size,origSize:file.size};
 }catch(error){
 showToast(`⚠️ ${error.message||'Failed to upload '+file.name}`,'error');
@@ -1129,14 +1147,22 @@ return `<div class="file-preview ${compressed?'compressed':''}">
 }).join('');
 }
 
+function openFileInNewTab(file){
+const source=file&&((file.url||file.data)||'');
+if(!source)return;
+const a=document.createElement('a');a.href=source;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove();
+}
 function openFsPreview(file){
-const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload');
+const ov=$('fsOverlay'),title=$('fsTitle'),content=$('fsContent'),dl=$('fsDownload'),openAlternative=$('fsOpenAlternative');
 const source=file.url||file.data;
 title.textContent=file.name;
 // Public visitors can preview and use the normal browser/Office viewer controls.
-// Administrators retain the same controls, with no separate restriction.
+// Both visible actions intentionally use this same direct browser-preview behavior.
+const openInNativePreview=()=>openFileInNewTab(file);
 dl.style.display='inline-flex';
-dl.onclick=()=>{const a=document.createElement('a');a.href=source;a.download=file.name;document.body.appendChild(a);a.click();a.remove()};
+openAlternative.style.display='inline-flex';
+dl.onclick=openInNativePreview;
+openAlternative.onclick=openInNativePreview;
 content.oncontextmenu=null;
 if(isImage(file.name)){
 content.innerHTML=`<img src="${source}" alt="${esc(file.name)}">`;
@@ -1185,7 +1211,7 @@ else if(type==='deg'){const o=data.education.degrees.find(x=>x.id===id);if(o)f=o
 else if(type==='cert'){const o=data.education.certs.find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='research'){const o=(data.research&&data.research.items||[]).find(x=>x.id===id);if(o)f=o.files[idx]}
 else if(type==='honor'){const o=(data.honors&&data.honors.items||[]).find(x=>x.id===id);if(o)f=o.files[idx]}
-if(f)openFsPreview(f);
+if(f)openFileInNewTab(f);
 }
 
 function removeAttachedFile(type,id,idx,projectCategory=null){
