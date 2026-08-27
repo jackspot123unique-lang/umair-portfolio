@@ -660,6 +660,12 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 .modal-header,.modal-body,.modal-footer{padding-left:22px;padding-right:22px}
 .sec-remove-cat-btn{right:auto;left:22px}
 }
+
+/* Admin Mode controls without the full-width dark bar. Public visitors remain protected by the existing strict hide rule. */
+body.admin-mode #adminBar{background:transparent;box-shadow:none;padding:0}
+body.admin-mode #adminBar .ab-left{padding:10px 14px;background:rgba(255,255,255,.96);color:var(--navy);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-sm)}
+body.admin-mode #adminBar .ab-btn{box-shadow:var(--shadow-sm)}
+@media(max-width:960px){body.admin-mode #adminBar{left:10px;right:10px;bottom:92px;padding:0;flex-direction:row;justify-content:space-between}}
 </style>
 </head>
 <body>
