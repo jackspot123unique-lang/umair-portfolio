@@ -556,6 +556,8 @@ body.admin-mode .gcc-edit-btn{display:inline-flex}
 
 footer{text-align:center;padding:24px 56px 110px;background:#cfe0ef;border-top:1px solid rgba(41,128,185,.15);font-size:12px;color:var(--muted)}
 footer span{color:var(--sky);font-weight:600}
+.footer-edit-btn{display:none;margin:12px auto 0}
+body.admin-mode .footer-edit-btn{display:inline-flex}
 
 /* MODALS */
 .overlay{display:none;position:fixed;inset:0;z-index:900;background:rgba(20,36,60,.72);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
@@ -833,7 +835,7 @@ section{padding:68px 22px}.hero{padding:120px 22px 70px}.hero-inner{grid-templat
 
 <section id="html-guide"><div class="container"><div class="sec-head"><div class="sec-eyebrow">Admin Reference</div><h2 class="sec-title">HTML Text <em>Formatting Guide</em></h2><div class="sec-divider"></div><p class="sec-desc">Visible only in Admin Mode. Select text inside a description textarea, then use a code or keyboard shortcut.</p></div><div class="html-guide-grid"><article class="html-guide-card"><h3>Basic Formatting</h3><span class="html-code">&lt;strong&gt;Bold Text&lt;/strong&gt;</span><span class="html-shortcut">Ctrl / Cmd + B</span><span class="html-code">&lt;em&gt;Italic Text&lt;/em&gt;</span><span class="html-shortcut">Ctrl / Cmd + I</span><span class="html-code">&lt;u&gt;Underlined Text&lt;/u&gt;</span><span class="html-shortcut">Ctrl / Cmd + U</span><span class="html-code">&lt;br&gt;</span><span>Creates a new line.</span></article><article class="html-guide-card"><h3>Portfolio Colors</h3><div class="html-color-row"><span class="html-swatch" style="background:#2980b9"></span><code>#2980b9 — Sky Blue</code><span class="html-shortcut">Ctrl+Alt+1</span></div><div class="html-color-row"><span class="html-swatch" style="background:#16a085"></span><code>#16a085 — Teal</code><span class="html-shortcut">Ctrl+Alt+2</span></div><div class="html-color-row"><span class="html-swatch" style="background:#27ae60"></span><code>#27ae60 — Green</code><span class="html-shortcut">Ctrl+Alt+3</span></div><div class="html-color-row"><span class="html-swatch" style="background:#e67e22"></span><code>#e67e22 — Gold</code><span class="html-shortcut">Ctrl+Alt+4</span></div><div class="html-color-row"><span class="html-swatch" style="background:#c0392b"></span><code>#c0392b — Red</code><span class="html-shortcut">Ctrl+Alt+5</span></div><div class="html-color-row"><span class="html-swatch" style="background:#8e44ad"></span><code>#8e44ad — Lavender</code><span class="html-shortcut">Ctrl+Alt+6</span></div><span class="html-code">&lt;span style=&quot;color:#2980b9&quot;&gt;Blue Text&lt;/span&gt;</span></article><article class="html-guide-card"><h3>Font Size</h3><span class="html-code">&lt;span style=&quot;font-size:12px&quot;&gt;Small Text&lt;/span&gt;</span><span class="html-shortcut">Ctrl+Alt+S</span><span class="html-code">&lt;span style=&quot;font-size:16px&quot;&gt;Medium Text&lt;/span&gt;</span><span class="html-shortcut">Ctrl+Alt+M</span><span class="html-code">&lt;span style=&quot;font-size:20px&quot;&gt;Large Text&lt;/span&gt;</span><span class="html-shortcut">Ctrl+Alt+L</span></article><article class="html-guide-card"><h3>Font Family</h3><span class="html-code">&lt;span style=&quot;font-family:'Playfair Display'&quot;&gt;Elegant Text&lt;/span&gt;</span><span class="html-shortcut">Ctrl+Alt+P</span><span class="html-code">&lt;span style=&quot;font-family:'JetBrains Mono'&quot;&gt;Code Text&lt;/span&gt;</span><span class="html-shortcut">Ctrl+Alt+J</span><span class="html-code">&lt;span style=&quot;font-family:'Plus Jakarta Sans'&quot;&gt;Normal Text&lt;/span&gt;</span><span class="html-shortcut">Ctrl+Alt+A</span></article></div></div></section>
 
-<footer><p>© 2026 <span>Umair Ahmad</span> · BIM Engineer · MEP Revit Modeler & Detailer</p></footer>
+<footer><p id="footerText">© 2026 <span>Umair Ahmad</span> · BIM Engineer · MEP Revit Modeler & Detailer</p><button class="cc-btn cc-edit footer-edit-btn" type="button" onclick="editFooterLine()">✎ Edit Footer Line</button></footer>
 
 <div class="overlay" id="pwdOverlay"><div class="modal-box pwd-modal-box"><div class="pwd-lock">🔐</div><h3>Admin Access</h3><p>Enter admin password to edit portfolio.</p><div class="pwd-wrap"><input type="password" id="pwdInput" placeholder="Password" maxlength="40" onkeydown="if(event.key==='Enter')checkPassword()"><button class="pwd-eye" id="pwdEye" onclick="togglePwdVis()">👁️</button></div><div class="pwd-error" id="pwdError"></div><div class="modal-footer"><button class="btn btn-outline" onclick="closePwdModal()">Cancel</button><button class="btn btn-primary" onclick="checkPassword()">Unlock ⟶</button></div><div class="pwd-hint">Only <span>Umair Ahmad</span> has admin access.</div></div></div>
 
@@ -1649,6 +1651,23 @@ function addResearchItem(){if(!isAdmin)return showToast('⚠️ Enter admin mode
 function editResearchItem(id){ensureResearchContent();const item=data.research.items.find(x=>x.id===id);if(!item)return;openEditModal('Edit Research Item','',[...researchFields(item),{type:'files',key:'files',label:'Upload More Research Files'}],v=>{item.title=v.title;item.type=v.type;rememberCustomType('research',v.type,DEFAULT_RESEARCH_TYPES);item.venue=v.venue;item.date=v.date;item.authors=v.authors;item.desc=v.desc;item.note=v.note||'';item.url=v.url;if(v._files&&v._files.length){if(!item.files)item.files=[];item.files=item.files.concat(v._files)}renderAll()},true)}
 function removeResearchItem(id){if(!isAdmin||!confirm('Remove this research item?'))return;data.research.items=data.research.items.filter(x=>x.id!==id);renderAll();savePortfolio(true)}
 
+const DEFAULT_FOOTER_LINE={prefix:'© 2026',name:'Umair Ahmad',details:'BIM Engineer · MEP Revit Modeler & Detailer'};
+function ensureFooterLine(){
+if(!data.footer||typeof data.footer!=='object')data.footer={};
+data.footer={...DEFAULT_FOOTER_LINE,...data.footer};
+}
+function renderFooterLine(){
+ensureFooterLine();const footer=data.footer;
+$('footerText').innerHTML=`${esc(footer.prefix)} <span>${esc(footer.name)}</span>${footer.details?` · ${esc(footer.details)}`:''}`;
+}
+function editFooterLine(){
+ensureFooterLine();const footer=data.footer;
+openEditModal('Edit Footer Line','Update the copyright/year, highlighted name and professional details at the bottom of the portfolio.',[
+{type:'text',key:'prefix',label:'Copyright / Year',value:footer.prefix,required:true,placeholder:'e.g. © 2026'},
+{type:'text',key:'name',label:'Highlighted Name',value:footer.name,required:true,placeholder:'e.g. Umair Ahmad'},
+{type:'text',key:'details',label:'Professional Details',value:footer.details,placeholder:'e.g. BIM Engineer · MEP Revit Modeler & Detailer'}
+],v=>{footer.prefix=v.prefix.trim()||DEFAULT_FOOTER_LINE.prefix;footer.name=v.name.trim()||DEFAULT_FOOTER_LINE.name;footer.details=(v.details||'').trim();renderFooterLine()});
+}
 function ensureSeparatedEducationContent(){
 if(!data.education)data.education={};
 if(data.education.title==='Education & <em>Certifications</em>')data.education.title='Education';
@@ -1739,9 +1758,9 @@ fetch(CLOUD_API+'/contact',{method:'POST',credentials:'same-origin',headers:{'Co
 .finally(()=>{btn.disabled=false;btn.style.opacity='1'});
 }
 
-function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderHonors();renderResearch();renderContact();attachReveal()}
+function renderAll(){renderProfile();renderLogo();renderHero();renderAbout();renderCC();renderExperience();renderProjects();renderSkills();renderEducation();renderHonors();renderResearch();renderContact();renderFooterLine();attachReveal()}
 
-async function bootPortfolio(){await loadData();ensureHonorsContent();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureFreelanceContent();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
+async function bootPortfolio(){await loadData();ensureHonorsContent();retireProjectWorkData();ensureSeparatedEducationContent();ensureResearchContent();ensureFreelanceContent();ensureFooterLine();ensureEditableHeaders();ensureMediaLayout();renderAll();setTimeout(typeLoop,800)}
 bootPortfolio();
 </script>
 </body>
